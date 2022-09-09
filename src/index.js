@@ -3,11 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import {AppContextProvider} from './context/AppContext';
+import {BrowserRouter,Routes,Route} from "react-router-dom";
+import Legendary from './pages/Legendary.js';
+import Base from './pages/Base.js';
+import Skills from './pages/Skills.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AppContextProvider>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<App />} >
+                  <Route path="legendary" element={<Legendary />} />
+                  <Route path="base" element={<Base />}/>
+                  <Route path="skills" element={<Skills/>}/>
+              </Route>
+          </Routes>
+      </BrowserRouter>
+    </AppContextProvider>
   </React.StrictMode>
 );
 
