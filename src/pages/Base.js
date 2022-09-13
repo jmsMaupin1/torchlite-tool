@@ -1,56 +1,70 @@
-import React, { useState } from "react"
+import React, { useState,useContext } from "react"
 import base from './../data/item_base.json';
 import en from './../data/en.json';
+import { AppContext } from "../context/AppContext";
 
 function Base()
 {
-    const translate = (key) => {
-        let data = en.find((e) => e.index === key);
-        if(data !== undefined) {
-            return data.value;
-        } else {
-            return key;
-        }
-    }
+    const {translate,replaceTag} = useContext(AppContext);
 
     const [baseList,setBaseList] = useState(base.map((x) => {x.enabled = true;return x}));
-    const [listType,setListType] = useState([...new Set(base.map((x) => {return x.weapon_type}))]);
+    
+    let typeUniq = [...new Set(base.map((x) => {return x.weapon_type}))]
+    let test = [...new Set(base.map((x) => {return x.description2_display}))].sort();
+    console.log(test);
+    let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
+    console.log(tempType);
+    
+
+    const [listType,setListType] = useState(tempType);
     const [currentType,setCurrentType] = useState(null);
 
     const onChangeType = (e) => {
-        setCurrentType(e.target.value);
+        if(e.target.value === "") {
+            setCurrentType(null);    
+        } else {
+            setCurrentType(e.target.value);
+        }
+        
     }
     return (
         <>
-        <div>
-            <div className='flex flex-col'>
-            <select onChange={onChangeType}>
-            {listType.map((type) => (
-                <option key={type} value={type}>{translate(type)}</option>
-            ))}
+        <div className='flex flex-row gap-2 items-center mb-2'>
+            <label>Type</label>
+            <select onChange={onChangeType} className='w-auto bg-[#282828] border rounded border-slate-500'>
+                <option value=""> -- Select type --</option>
+                {listType.map((type,index) => (
+                    <option key={type} value={type}>{type}</option>
+                ))}
             </select>
-            </div>
         </div>
         <div className='grid grid-cols-4 gap-10 mx-auto'>
-            {base.filter((el) => el.icon !== "" && el.base_attr_display !== undefined && (el.weapon_type === currentType || currentType == null)).map((b) => (
-                <div key={b.id} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2'>
+            {base.filter((el) => el.icon !== "" && el.base_attr_display !== undefined && (el.description2_display === currentType || currentType == null)).sort((a,b) => a.require_level - b.require_level).map((b) => (
+                <div key={b.id} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-between'>
                     <div className='flex flex-row gap-2 items-center'>
                         <div><img src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>
                         <div className='flex flex-col'>
-                            <div className='title'>{b.id} {translate(b.name)}</div>
+                            <div className='title'>{translate(b.name)}</div>
                             <div className='border border-[#333] rounded-md  px-2 text-[#bfbfbf] text-sm'>Require level {b.require_level}</div>
                             <div className='border border-[#333] rounded-md px-2 text-[#bfbfbf] text-sm'>{translate(b.description1)}</div>
                         </div>
                     </div>
-                    
-                    {b.base_attr_display !== undefined ?
-                    <><div>Base stats : </div>
-                    <div className='base_list flex flex-col'>
-                        {b.base_attr_display.map((attr,i) => (
-                            <div key={i}>{attr}</div>
-                        ))}
+                    <div className='flex flex-col'>
+                    {b.suffix !== undefined && b.suffix !== [] ? 
+                        b.suffix.map((s) => (
+                            <div className='text-center' dangerouslySetInnerHTML={{__html: replaceTag(s)}}></div>
+                        ))
+                     : null}
                     </div>
-                    </>
+                    {/* position = "2/3" weapon, we don't display base_attr for  */}
+                    {b.base_attr_display !== undefined && b.position.indexOf("2") === -1 && b.position.indexOf("2|3") === -1 ?
+                    <div className=''>
+                        <div className='base_list flex flex-col text-center'>
+                            {b.base_attr_display.map((attr,i) => (
+                                <div key={i}>{attr}</div>
+                            ))}
+                        </div>
+                    </div>
                     :null}
                 </div>
             ))}
