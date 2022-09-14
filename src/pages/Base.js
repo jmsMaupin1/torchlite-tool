@@ -7,15 +7,10 @@ function Base()
 {
     const {translate,replaceTag} = useContext(AppContext);
 
-    const [baseList,setBaseList] = useState(base.map((x) => {x.enabled = true;return x}));
-    
     let typeUniq = [...new Set(base.map((x) => {return x.weapon_type}))]
     let test = [...new Set(base.map((x) => {return x.description2_display}))].sort();
-    console.log(test);
     let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
-    console.log(tempType);
     
-
     const [listType,setListType] = useState(tempType);
     const [currentType,setCurrentType] = useState(null);
 
@@ -25,7 +20,6 @@ function Base()
         } else {
             setCurrentType(e.target.value);
         }
-        
     }
     return (
         <>
@@ -39,10 +33,10 @@ function Base()
             </select>
         </div>
         <div className='grid grid-cols-4 gap-10 mx-auto'>
-            {base.filter((el) => el.icon !== "" && el.base_attr_display !== undefined && (el.description2_display === currentType || currentType == null)).sort((a,b) => a.require_level - b.require_level).map((b) => (
+            {base.filter((el) => el.type1 == "1" && el.icon !== "" && el.name != translate(el.name) && (el.description2_display === currentType || currentType == null)).sort((a,b) => a.require_level - b.require_level).map((b) => (
                 <div key={b.id} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-between'>
                     <div className='flex flex-row gap-2 items-center'>
-                        <div><img src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>
+                        <div><img loading="lazy" src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>
                         <div className='flex flex-col'>
                             <div className='title'>{translate(b.name)}</div>
                             <div className='border border-[#333] rounded-md  px-2 text-[#bfbfbf] text-sm'>Require level {b.require_level}</div>
@@ -51,8 +45,8 @@ function Base()
                     </div>
                     <div className='flex flex-col'>
                     {b.suffix !== undefined && b.suffix !== [] ? 
-                        b.suffix.map((s) => (
-                            <div className='text-center' dangerouslySetInnerHTML={{__html: replaceTag(s)}}></div>
+                        b.suffix.map((s,i) => (
+                            <div key={"suffix-"+i} className='text-center' dangerouslySetInnerHTML={{__html: replaceTag(s)}}></div>
                         ))
                      : null}
                     </div>

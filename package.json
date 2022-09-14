@@ -2,7 +2,6 @@
   "name": "torchlight_site",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://th3conc3pt3ur.github.io/torchlight-helper",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

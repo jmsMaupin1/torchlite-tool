@@ -8,6 +8,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Legendary from './pages/Legendary.js';
 import Base from './pages/Base.js';
 import Skills from './pages/Skills.js';
+import Home from './pages/Home.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ root.render(
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<App />} >
+                  <Route index element={<Home />} />
                   <Route path="legendary" element={<Legendary />} />
                   <Route path="base" element={<Base />}/>
                   <Route path="skills" element={<Skills/>}/>

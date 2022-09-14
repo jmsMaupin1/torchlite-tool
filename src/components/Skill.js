@@ -51,7 +51,7 @@ function Skill({skill,index}) {
     return (
     <div key={skill.id+"-"+index} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2'>
         <div className='flex flex-row gap-2 items-start'>
-            <div><img src={`img/icons/skills/${skill.icon}.png`} className="w-[64px]" alt="Icon"/></div>
+            <div><img loading="lazy" src={`img/icons/skills/${skill.icon}.png`} className="w-[64px]" alt="Icon"/></div>
             <div className='flex flex-col'>
                 <div className='title'>{translate(skill.name)}</div>
                 <div className='flex gap-2'>
