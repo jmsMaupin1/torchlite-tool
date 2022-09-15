@@ -16,8 +16,14 @@ const AppContextProvider = (props) => {
         }
     }
     const replaceTag = (str) => {
+        if(Array.isArray(str)) {
+            str = str[0];
+        }
+        if(str === null){
+            return "";
+        }
         let myReg = /<e[^>]*>(.*?)<\/e>/img;
-        return str.replace(myReg,"<a style='color:white;font-weight:bold' href=''>$1</a>").replace("\\n","<br>");
+        return str.replace(myReg,"<a style='color:#00ffff;font-weight:bold' href=''>$1</a>").replace("\\n","<br>");
     }
     return (
         <AppContext.Provider value={{translate,replaceTag,setCurrentPage,currentPage}}>

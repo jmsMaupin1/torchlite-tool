@@ -5,10 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {AppContextProvider} from './context/AppContext';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
-import Legendary from './pages/Legendary.js';
+import Legendaries from './pages/Legendaries.js';
 import Base from './pages/Base.js';
 import Skills from './pages/Skills.js';
 import Home from './pages/Home.js';
+import Modifier from './pages/Modifier.js';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -17,9 +19,10 @@ root.render(
           <Routes>
               <Route path="/" element={<App />} >
                   <Route index element={<Home />} />
-                  <Route path="legendary" element={<Legendary />} />
+                  <Route path="legendary" element={<Legendaries />} />
                   <Route path="base" element={<Base />}/>
                   <Route path="skills" element={<Skills/>}/>
+                  <Route path="mod" element={<Modifier/>}/>
               </Route>
           </Routes>
       </BrowserRouter>
