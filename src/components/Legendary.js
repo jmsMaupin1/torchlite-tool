@@ -43,7 +43,7 @@ function Legendary(props) {
                         
                         {b.prefix !== undefined && b.prefix !== [] ? 
                             b.prefix.filter((e) => e !== null).map((s,i) => (
-                                <>
+                                <div className='prefix'>
                                     {s.tier0[0] !== null && currentDisplay === 0 ? 
                                     <div className='flex flex-row gap-2 items-start'>
                                         <div className='text-[#f67370] border rounded-tl-lg rounded-br-lg px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]'>T0</div>
@@ -57,12 +57,12 @@ function Legendary(props) {
                                     </div>
                                     :null}
                                     
-                                </>
+                                </div>
                             ))
                         : null}
                         {b.suffix !== undefined && b.suffix !== [] ? 
                             b.suffix.filter((e) => e !== null).map((s,i) => (
-                                <>
+                                <div className='suffix'>
                                 {s.tier0[0] !== null && currentDisplay === 0 ? 
                                     <div className='flex flex-row gap-2 items-start'>
                                         <div className='text-[#f67370] border rounded-tl-lg rounded-br-lg px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]'>T0</div>
@@ -75,7 +75,7 @@ function Legendary(props) {
                                         <div key={"suffix-"+i} className='' dangerouslySetInnerHTML={{__html: replaceTag(s.tier1)}}></div>
                                     </div>
                                 :null}
-                                </>
+                                </div>
                             ))
                         : null}
                     </div>
