@@ -13,7 +13,7 @@ function App() {
         <nav className="px-2 sm:px-4 py-2.5 bg-gray-900  mb-2 w-full z-20 border-b border-gray-200 border-gray-600">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className="flex items-center">
-                    <img src={"/logo.png"} className="mr-3 h-[52px] " alt="TorchLight Helper Logo" />
+                    <img src={"logo.png"} className="mr-3 h-[52px] " alt="TorchLight Helper Logo" />
                     <span className="self-center text-xl font-semibold whitespace-nowrap text-white">Torchlight Helper</span>
                 </div>
                 <div className="flex md:order-2">
