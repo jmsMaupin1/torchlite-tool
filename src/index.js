@@ -10,6 +10,7 @@ import Base from './pages/Base.js';
 import Skills from './pages/Skills.js';
 import Home from './pages/Home.js';
 import Modifier from './pages/Modifier.js';
+import Talent from './pages/Talent.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,6 +24,7 @@ root.render(
                   <Route path="base" element={<Base />}/>
                   <Route path="skills" element={<Skills/>}/>
                   <Route path="mod" element={<Modifier/>}/>
+                  <Route path="talent" element={<Talent/>}/>
               </Route>
           </Routes>
       </BrowserRouter>
