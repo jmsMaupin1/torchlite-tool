@@ -3,7 +3,6 @@ import talent from './../data/talent.json';
 import {useContext,useEffect,useState} from 'react';
 import { AppContext } from '../context/AppContext';
 import {Tooltip} from 'flowbite-react'
-import { unset } from 'lodash';
 
 function Talent() {
     const {translate,replaceTag} = useContext(AppContext);
@@ -104,30 +103,30 @@ function Talent() {
                 
             }
         }
-        console.table(tabTalent);
-        console.log(tabTalent.length);
-        let needDelete = true;
-        for(let i=1;i<=9;i++) {
-            if(tabTalent[9][i] !== undefined) {
-                needDelete = false;
-            }
-        }
-        if(needDelete) {
-            for(let i=1;i<=9;i++) {
-                tabTalent[i].splice(9,1)
-            }
-        }
-        needDelete = true
-        for(let i=1;i<=9;i++) {
-            if(tabTalent[8][i] !== undefined) {
-                needDelete = false;
-            }
-        }
-        if(needDelete) {
-            for(let i=1;i<=9;i++) {
-                tabTalent[i].splice(8,1)
-            }
-        }
+        // console.table(tabTalent);
+        // console.log(tabTalent.length);
+        // let needDelete = true;
+        // for(let i=1;i<=9;i++) {
+        //     if(tabTalent[9][i] !== undefined) {
+        //         needDelete = false;
+        //     }
+        // }
+        // if(needDelete) {
+        //     for(let i=1;i<=9;i++) {
+        //         tabTalent[i].splice(9,1)
+        //     }
+        // }
+        // needDelete = true
+        // for(let i=1;i<=9;i++) {
+        //     if(tabTalent[8][i] !== undefined) {
+        //         needDelete = false;
+        //     }
+        // }
+        // if(needDelete) {
+        //     for(let i=1;i<=9;i++) {
+        //         tabTalent[i].splice(8,1)
+        //     }
+        // }
         
         return tabTalent
     }
