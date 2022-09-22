@@ -422,7 +422,7 @@ function Talent() {
                         <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" /></div>
                         <div>remove point</div>
                     </div>                    
-                    <div className='flex flex-row gap-2 items-center'>(for mobile : go on pc <img loading="lazy" src="/img/Kappa.png" style={{display: "inline-block"}} alt="Kappa"/> )</div>
+                    <div className='flex flex-row gap-2 items-center'>(for mobile : go on pc <img loading="lazy" src="img/Kappa.png" style={{display: "inline-block"}} alt="Kappa"/> )</div>
                 </div>
                 <div className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
                 <div className={`${currentMainProf === null ? "": "hidden"} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
