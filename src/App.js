@@ -24,6 +24,7 @@ function App() {
                 </div>
                 <div className="hidden justify-between items-center w-full md:flex md:w-auto md:order-1">
                     <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
+                        
                         <li>
                             <Link onClick={() => setCurrentPage('home')} className={`block py-2 pr-4 pl-3 ${currentPage === "home" || currentPage === null ? "text-white":"text-gray-700"}  bg-blue-700 rounded md:bg-transparent  md:p-0 `} aria-current="page" to="/">Home</Link>
                         </li>
@@ -36,6 +37,7 @@ function App() {
                         <li>
                             <Link onClick={() => setCurrentPage('legendary')} className={`block py-2 pr-4 pl-3 ${currentPage === "legendary" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="legendary">Legendary</Link>
                         </li>
+                        
                         <li>
                             {/* <Link onClick={() => setCurrentPage('mod')} className={`block py-2 pr-4 pl-3 ${currentPage === "mod" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="mod">Mod</Link> */}
                         </li>
