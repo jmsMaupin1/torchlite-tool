@@ -11,6 +11,7 @@ import Skills from './pages/Skills.js';
 import Home from './pages/Home.js';
 import Modifier from './pages/Modifier.js';
 import Talent from './pages/Talent.js';
+import Build from './pages/Build.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
                   <Route path="skills" element={<Skills/>}/>
                   <Route path="mod" element={<Modifier/>}/>
                   <Route path="talent" element={<Talent/>}/>
+                  <Route path="build" element={<Build/>}/>
               </Route>
           </Routes>
       </BrowserRouter>

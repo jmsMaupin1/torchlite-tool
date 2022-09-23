@@ -4,6 +4,7 @@ import React, {useContext,useEffect,useRef,useState} from 'react';
 import { AppContext } from '../context/AppContext';
 import {Tooltip} from 'flowbite-react'
 import CoreTooltip from '../components/CoreTooltip';
+import BuildSkill from '../components/BuildSkill';
 
 function Talent() {
     const {translate,replaceTag} = useContext(AppContext);
@@ -382,6 +383,19 @@ function Talent() {
         
         return tabTalent
     }
+    const onChangeSkill = (e,ind) => {
+        //console.log(e,ind);
+        
+    }
+    const onChangeSupport = (e,ind,index) =>
+    {
+        //console.log(e,ind,index);
+        let skillIndex = ind;
+        let supportIndex = index;
+        //let value = e.value;
+    }
+    
+
     return (
         <div className='flex md:flex-row flex-col '>
             <div className='md:w-[20%] mr-2 gap-2 flex flex-col'>
@@ -393,7 +407,7 @@ function Talent() {
                         </div>
                         <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setCurrentMainProf(null)}>x</button></div>
                     </div>
-                :<div>Select initial Profession</div>}
+                :<div>1. Select initial Profession</div>}
                 {spec1 !== null ? 
                     <div className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
                         <div className='flex flex-row gap-2'>
@@ -402,7 +416,7 @@ function Talent() {
                         </div>
                         <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec1(null)}>x</button></div>
                     </div>
-                :<div>Select Sub profession 1</div>}
+                :<div>2. Select Sub profession 1</div>}
 
                 {spec2 !== null ? 
                     <div className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
@@ -412,9 +426,28 @@ function Talent() {
                         </div>
                         <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
                     </div>
-                :<div>Select Sub profession 2</div>}
+                :<div>3. Select Sub profession 2</div>}
+                <div>4. Select skills</div>
             </div>
             <div className='w-full'>
+                {spec2 !== null ? 
+                    <div className='mb-2'>
+                        <div className={`text-center text-xl font-bold`}>Actives Skills</div>
+                        <div className='flex flex-col gap-2'>
+                        {/* 5 actif skills */}
+                        {[1,2,3,4,5].map((ind) => (
+                            <BuildSkill key={ind} ind={ind} onChangeSupport={onChangeSupport} onChangeSkill={onChangeSkill}/>
+                        ))}
+                        </div>
+                        <div className={`text-center text-xl font-bold`}>Passives Skills</div>
+                        <div className='flex flex-col gap-2'>
+                        {/* 3 passives skills */}
+                        {[1,2,3].map((ind) => (
+                            <BuildSkill key={ind} tag="Passive" ind={ind} onChangeSupport={onChangeSupport} onChangeSkill={onChangeSkill}/>
+                        ))}
+                        </div>
+                    </div>
+                :null}
                 <div className='border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between'>
                     <div className='flex flex-row gap-2 items-center'>
                         <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{transform: 'rotateY(180deg)'}}/></div>
@@ -424,6 +457,7 @@ function Talent() {
                     </div>                    
                     <div className='flex flex-row gap-2 items-center'>(for mobile : go on pc <img loading="lazy" src="img/Kappa.png" style={{display: "inline-block"}} alt="Kappa"/> )</div>
                 </div>
+
                 <div className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
                 <div className={`${currentMainProf === null ? "": "hidden"} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
                     {profession.filter((p) => p.before_id === "0").map((p) => (
@@ -440,26 +474,25 @@ function Talent() {
                     ))}
                 </div>
                 {/* SPEC 1 */}
-                <div className={`${spec1 === null ? "": "hidden"} text-center text-xl font-bold`}>Select 2nd Profession</div>
-                {profession.filter((p) => p.before_id === "0").map((p) => (
-                    <div key={p.id} className={`${currentMainProf !== null && spec1 === null  ? "":"hidden"} subProf-${p.id} flex flex-col md:flex-row gap-2 mb-2`}>
-                        {profession.filter((p2) => p2.before_id === p.id).map((subp) => (
-                            <div key={p.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`}}  className='bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg '>
-                                <div className='text-center font-bold'>{translate(p.name)}</div>
-                                <div className='flex flex-row justify-between items-center gap-4'>
-                                    <div className='flex flex-col items-center'>
-                                        <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className='h-20' alt="Icon"/>
-                                        <div className='text-center font-bold text-xl'>{translate(subp.name)}</div>
-                                    </div>
-                                    <div dangerouslySetInnerHTML={{__html: replaceTag(translate(subp.des).replaceAll("#4","").replace("|","<br>"))}}></div> 
+                <div className={`${spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
+                <div className={`${currentMainProf !== null && spec1 === null  ? "":"hidden"} subProf-${currentMainProf != null ? currentMainProf.id: ""} flex flex-col md:flex-row gap-2 mb-2`}>
+                    {profession.filter((p) => currentMainProf !== null && p.before_id === currentMainProf.id).map((subp) => (
+                        <div key={subp.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`}}  className='bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg '>
+                            <div className='text-center font-bold'>{translate(subp.name)}</div>
+                            <div className='flex flex-row justify-between items-center gap-4'>
+                                <div className='flex flex-col items-center'>
+                                    <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className='h-20' alt="Icon"/>
+                                    <div className='text-center font-bold text-xl'>{translate(subp.name)}</div>
                                 </div>
-                                <div className='text-center'><input type="radio" value={subp.id} checked={spec1 !== null && spec1.id === subp.id} name="profession1" onChange={onProf1ValueChange}/></div>
+                                <div dangerouslySetInnerHTML={{__html: replaceTag(translate(subp.des).replaceAll("#4","").replace("|","<br>"))}}></div> 
                             </div>
-                        ))}
-                    </div>
-                ))}
+                            <div className='text-center'><input type="radio" value={subp.id} checked={spec1 !== null && spec1.id === subp.id} name="profession1" onChange={onProf1ValueChange}/></div>
+                        </div>
+                    ))}
+                </div>
+                
                 {/* SPEC 2 */}
-                <div className={`${spec2 === null ? "": "hidden"} text-center text-xl font-bold`}>Select 3th Profession</div>
+                <div className={`${spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
                 {profession.filter((p) => p.before_id === "0").map((p) => (
                     <div key={p.id} className={`${currentMainProf !== null && spec2 === null && spec1 !== null  ? "":"hidden"} subProf-${p.id} flex flex-col md:flex-row gap-2 mb-2`}>
                         {profession.filter((p2) => p2.before_id === p.id).map((subp) => (
@@ -477,7 +510,7 @@ function Talent() {
                         ))}
                     </div>
                 ))}
-
+                
                 {currentTree !== null ? 
                 <div style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 '>
                 <div className='text-center flex flex-col justify-center'>

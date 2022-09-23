@@ -44,6 +44,9 @@ function App() {
                         <li>
                             { <Link onClick={() => setCurrentPage('talent')} className={`block py-2 pr-4 pl-3 ${currentPage === "talent" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="talent">Talent</Link> }
                         </li>
+                        <li>
+                        { <Link onClick={() => setCurrentPage('build')} className={`block py-2 pr-4 pl-3 ${currentPage === "build" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="build">Build</Link> }
+                        </li>
                     </ul>
                 </div>
             </div>
