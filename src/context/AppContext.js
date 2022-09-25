@@ -1,6 +1,6 @@
 import {createContext,useState,useEffect} from 'react';
 import en from './../data/en.json';
-
+import {Tooltip} from 'flowbite-react'
 
 const AppContext = createContext();
 
@@ -25,6 +25,17 @@ const AppContextProvider = (props) => {
         } else {
             return key;
         }
+
+        /*
+                <Tooltip key={tree.id+"-"+index} content={<div>{tree.affix.map((affix) => (
+                    <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
+                ))}</div>}>
+                <div onClick={() => setVisible(!visible)} className={`relative border rounded-md p-2 hover:cursor-pointer items-center flex flex-col ${index === 2 ? 'mr-10':''} `}>
+                    <div><img loading="lazy" className='w-[54px]' src={`img/icons/CoreTalentIcon/${tree.icon}.png`} alt="Icon"/></div>
+                    <div>{translate(tree.name)}</div>
+                </div>     
+                </Tooltip>
+        */
     }
     const replaceTag = (str) => {
         if(Array.isArray(str)) {

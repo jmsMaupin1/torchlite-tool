@@ -5,6 +5,10 @@ function Home() {
     const {currentPage,setCurrentPage} = useContext(AppContext);
 
     return (
+    <>
+    <div className="text-2xl font-bold title">
+        Databases
+    </div>
     <div className="grid grid-cols-3 gap-4">
         <div className="border rounded-lg relative">
             <Link onClick={() => setCurrentPage('skills')} to="skills">
@@ -25,6 +29,7 @@ function Home() {
             </Link>
         </div>
     </div>
+    </>
     );
 }
 export default Home;

@@ -36,7 +36,12 @@ function BuildSkill(props) {
         setTabSupport(temp);
     }
     const _onChangeSkill = (e,ind) => {
-        setSkill(e.value);
+        if(e == null) {
+            setSkill(null);
+        } else {
+            setSkill(e.value);
+        }
+        
         onChangeSkill(e,ind);
     }
 

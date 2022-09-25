@@ -14,7 +14,7 @@ function App() {
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <div className="flex items-center">
                     <img src={"logo.png"} className="mr-3 h-[52px] " alt="TorchLight Helper Logo" />
-                    <span className="self-center text-xl font-semibold whitespace-nowrap text-white">Torchlight Helper</span>
+                    <span className="title self-center text-xl font-semibold whitespace-nowrap text-white">Torchlight Helper</span>
                 </div>
                 <div className="flex md:order-2">
                     <button data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center p-2 text-sm  rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
@@ -26,26 +26,26 @@ function App() {
                     <ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
                         
                         <li>
-                            <Link onClick={() => setCurrentPage('home')} className={`block py-2 pr-4 pl-3 ${currentPage === "home" || currentPage === null ? "text-white":"text-gray-700"}  bg-blue-700 rounded md:bg-transparent  md:p-0 `} aria-current="page" to="/">Home</Link>
+                            <Link onClick={() => setCurrentPage('home')} className={`title hover:text-white block py-2 pr-4 pl-3 ${currentPage === "home" || currentPage === null ? "text-white":"text-gray-700"}  bg-blue-700 rounded md:bg-transparent  md:p-0 `} aria-current="page" to="/"><div className='flex flex-row gap-2'><img className='w-[20px]' src="img/icons/ui/UI_Fight_MenuIconTP.png" />Home</div></Link>
                         </li>
                         <li>
-                            <Link onClick={() => setCurrentPage('skills')} className={`block py-2 pr-4 pl-3 ${currentPage === "skills" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="skills">Skills</Link>
+                            <Link onClick={() => setCurrentPage('skills')} className={`title hover:text-white block py-2 pr-4 pl-3 ${currentPage === "skills" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="skills"><div className='flex flex-row gap-2'><img className='w-[20px]' src="img/icons/ui/UI_Fight_MenuIconSKL.png"/>Skills</div></Link>
                         </li>
                         <li>
-                            <Link onClick={() => setCurrentPage('base')} className={`block py-2 pr-4 pl-3 ${currentPage === "base" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="base">Base</Link>
+                            <Link onClick={() => setCurrentPage('base')} className={`title hover:text-white block py-2 pr-4 pl-3 ${currentPage === "base" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="base"><div className='flex flex-row gap-2'><img className='w-[20px]' src="img/icons/ui/UI_Fight_MenuIconDZ.png" />Base</div></Link>
                         </li>
                         <li>
-                            <Link onClick={() => setCurrentPage('legendary')} className={`block py-2 pr-4 pl-3 ${currentPage === "legendary" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="legendary">Legendary</Link>
+                            <Link onClick={() => setCurrentPage('legendary')} className={`title hover:text-white block py-2 pr-4 pl-3 ${currentPage === "legendary" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="legendary"><div className='flex flex-row gap-2'><img className='w-[20px]' src="img/icons/ui/UI_Fight_MenuIconST.png" />Legendary</div></Link>
                         </li>
-                        
+                        <li>
+                            { <Link onClick={() => setCurrentPage('talent')} className={`title hover:text-white block py-2 pr-4 pl-3 ${currentPage === "talent" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="talent"><div className='flex flex-row gap-2'><img className='w-[20px]' src="img/icons/ui/UI_Fight_MenuIconTAL.png" />Talent</div></Link> }
+                        </li>
                         <li>
                             {/* <Link onClick={() => setCurrentPage('mod')} className={`block py-2 pr-4 pl-3 ${currentPage === "mod" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="mod">Mod</Link> */}
                         </li>
+                        
                         <li>
-                            { <Link onClick={() => setCurrentPage('talent')} className={`block py-2 pr-4 pl-3 ${currentPage === "talent" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="talent">Talent</Link> }
-                        </li>
-                        <li>
-                        { <Link onClick={() => setCurrentPage('build')} className={`block py-2 pr-4 pl-3 ${currentPage === "build" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="build">Build</Link> }
+                        { <Link onClick={() => setCurrentPage('build')} className={`title hover:text-white block py-2 pr-4 pl-3 ${currentPage === "build" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`} to="build"><div className='flex flex-row gap-2'><img className='w-[20px]' src="img/icons/ui/UI_Fight_MenuIconCHA.png"/>Build</div></Link> }
                         </li>
                     </ul>
                 </div>
