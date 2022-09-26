@@ -50,7 +50,7 @@ function BuildSkill2(props) {
     return (
         <>
         
-        <div className='grid grid-cols-5 grid-rows-4 relative border p-2'>
+        <div className='grid grid-cols-5 grid-rows-4 relative border pb-10 px-5 gap-2'>
             {/* 1st line */}
             <div></div>
             <div></div>
@@ -63,10 +63,10 @@ function BuildSkill2(props) {
             <div></div>
             {/* main skill */}
             <div className='flex flex-col items-center row-span-2 self-center'>
-                <div onClick={() => onClickSkill(ind,0)} style={{fontSize:"80px"}} className='w-[6rem] h-[6rem] hover:cursor-pointer border rounded-full items-center justify-center flex flex-col'>
+                <div onClick={() => onClickSkill(ind,0)} style={{fontSize:"50px"}} className='w-[70px] h-[70px] mt-7 hover:cursor-pointer border rounded-full items-center justify-center flex flex-col'>
                     {Object.keys(currentSkill).length > 0 ? 
                         <div>
-                            <img loading="lazy" src={`img/icons/skills/${currentSkill.img}.png`} className="w-[80px]" alt="Icon"/>
+                            <img loading="lazy" src={`img/icons/skills/${currentSkill.img}.png`} className="w-[70px]" alt="Icon"/>
                         </div>
                         :
                         <div className='-mt-[14px]'>+</div>

@@ -37,18 +37,18 @@ function BuildSkillSlot(props)
     }
     return(
         <div className='flex flex-col justify-center items-center'>
-            <div onClick={() => onClickSkill()} style={{fontSize:"80px"}} className='w-20 h-20 hover:cursor-pointer border rounded-full items-center justify-center flex flex-col'>
+            <div onClick={() => onClickSkill()} style={{fontSize:"35px"}} className='w-[50px] h-[50px] hover:cursor-pointer border rounded-full items-center justify-center flex flex-col'>
                 {currentSupport !== undefined && Object.keys(currentSupport).length > 0 ? 
                     <>
                     <div>
-                        <img loading="lazy" src={`img/icons/skills/${currentSupport.img}.png`} className="w-[80px]" alt="Icon"/>
+                        <img loading="lazy" src={`img/icons/skills/${currentSupport.img}.png`} className="w-[50px]" alt="Icon"/>
                     </div>
                     </>
                     :
-                    <div className='-mt-[14px]'>+</div>
+                    <div className='-mt-[5px]'>+</div>
                 }
             </div>
-            {currentSupport !== undefined && Object.keys(currentSupport).length > 0 ? <div className='mt-[20%] absolute text-sm text-center'>{currentSupport.label}</div>:null}    
+            {currentSupport !== undefined && Object.keys(currentSupport).length > 0 ? <div className='mt-[20%] max-w-[120px] absolute flex-wrap text-sm text-center'>{currentSupport.label}</div>:null}    
         </div>
     )
 }
