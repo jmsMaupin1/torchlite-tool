@@ -3,13 +3,22 @@ import { AppContext } from '../context/AppContext';
 import {Tooltip} from 'flowbite-react'
 import CoreTooltip from '../components/CoreTooltip';
 import BuildSkill from '../components/BuildSkill';
+import BuildSkill2 from '../components/BuildSkill2';
 import { debounce } from "lodash";
 import profession from './../data/profession.json';
 import talent from './../data/talent.json';
 import TalentNode from '../components/TalentNode';
+import {Modal} from 'flowbite-react'
+import Select, {createFilter} from 'react-select'
+import { BuildContext } from '../context/BuildContext';
 
 function Build() {
-    const {translate,replaceTag} = useContext(AppContext);
+    const {translate,replaceTag,topMenu,sortAlpha,skills} = useContext(AppContext);
+    const {closeModal,modalVisible,currentModalType,currentPrimary,currentSecondary,onChangeSkill,skill1,
+        skill2,
+        skill3,
+        skill4,
+        skill5,} = useContext(BuildContext)
     const [currentMainProf,setCurrentMainProf] = useState(null);
     const [spec1,setSpec1] = useState(null);
     const [spec2,setSpec2] = useState(null);
@@ -27,22 +36,38 @@ function Build() {
         tree1: [],
         tree2: []
     }*/
+
+    // navigation
+    const fieldRefSkills = React.useRef(null);
+    const fieldRefMainProf = React.useRef(null);
+    const fieldRefSpec1 = React.useRef(null);
+    const fieldRefSpec2 = React.useRef(null);
+
+    // modal for selected gems
+    const [sticky,setSticky] = useState(false);
+    
+    
+    // keep track of point
+    
     const [mainProfPoint,setMainProfPoint] = useState({"nb": 0,"core1":null,"core2":null});
     const [spec1Point,setSpec1Point] = useState({"nb": 0,"core1":null,"core2":null});
     const [spec2Point,setSpec2Point] = useState({"nb": 0,"core1":null,"core2":null});
     
+    // keep track of stat
     const [mainProfStat,setMainProfStat] = useState(null);
     const [spec1Stat,setSpec1Stat] = useState(null);
     const [spec2Stat,setSpec2Stat] = useState(null);
 
+    // spec1 tree
     const [currentTreeSpec1,setCurrentTreeSpec1] = useState(null);
     const [currentTreeOrderSpec1,setCurrentTreeOrderSpec1] = useState(null);
 
-
+    //spec2 tree
     const [currentTreeSpec2,setCurrentTreeSpec2] = useState(null);
     const [currentTreeOrderSpec2,setCurrentTreeOrderSpec2] = useState(null);
 
-
+    // skills
+    const [buildSkills,setBuildSkills] = useState([[],[],[],[],[],[]])
     const talentStep = [0,3,6,9,12,15,18,21,24]
 
     const _setCurrentMainProf = (data) => {
@@ -386,10 +411,13 @@ function Build() {
         
         return tabTalent
     }
-    const onChangeSkill = (e,ind) => {
-        //console.log(e,ind);
-        
-    }
+    // const onChangeSkill = (value) => {
+    //     console.log(value,currentPrimary,currentSecondary);
+    //     let temp = [...buildSkills]
+    //     temp[currentPrimary][currentSecondary] = value;
+    //     setBuildSkills(temp)        
+    //     closeModal();
+    // }
     const filterNode = (e) => {
         console.log("filter",e.target.value);
         setCurrentNodeFilter(e.target.value);
@@ -401,58 +429,126 @@ function Build() {
         let supportIndex = index;
         //let value = e.value;
     }
+    const handleScroll = () => {
+        if(topMenu.current !== null)
+            window.scrollY > topMenu.current.getBoundingClientRect().bottom ? setSticky(true): setSticky(false)
+    }
     
+    // This function handles the scroll performance issue
+    const debounce = (func, wait = 20, immediate = true) => {
+        let timeOut
+        return () => {
+            let context = this,
+            args = arguments
+            const later = () => {
+            timeOut = null
+            if (!immediate) func.apply(context, args)
+            }
+            const callNow = immediate && !timeOut
+            clearTimeout(timeOut)
+            timeOut = setTimeout(later, wait)
+            if (callNow) func.apply(context, args)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", debounce(handleScroll))
+        return () => {
+          window.removeEventListener("scroll", () => handleScroll)
+        }
+      }, [debounce, handleScroll])
 
     return (
         <div className='flex md:flex-row flex-col '>
-            <div className='md:w-[20%] mr-2 gap-2 flex flex-col'>
-                {currentMainProf !== null ? 
-                    <div className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
-                        <div className='flex flex-row gap-2'>
-                            <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
-                            <div>{translate(currentMainProf.name)}</div>
+            <div className={`md:w-[20%] gap-2 flex flex-col`}>
+                <div className={`gap-2 flex flex-col ${sticky ? 'fixed top-2':''}`}>
+                    {currentMainProf !== null ? 
+                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(currentMainProf.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setCurrentMainProf(null)}>x</button></div>
                         </div>
-                        <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setCurrentMainProf(null)}>x</button></div>
-                    </div>
-                :<div>1. Select initial Profession</div>}
-                {spec1 !== null ? 
-                    <div className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
-                        <div className='flex flex-row gap-2'>
-                            <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon"/></div>
-                            <div>{translate(spec1.name)}</div>
+                    :<div>1. Select initial Profession</div>}
+                    {spec1 !== null ? 
+                        <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(spec1.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec1(null)}>x</button></div>
                         </div>
-                        <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec1(null)}>x</button></div>
-                    </div>
-                :<div>2. Select Sub profession 1</div>}
+                    :<div>2. Select Sub profession 1</div>}
 
-                {spec2 !== null ? 
-                    <div className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
-                        <div className='flex flex-row gap-2'>
-                            <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon"/></div>
-                            <div>{translate(spec2.name)}</div>
+                    {spec2 !== null ? 
+                        <div onClick={() => fieldRefSpec2.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(spec2.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
                         </div>
-                        <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
-                    </div>
-                :<div>3. Select Sub profession 2</div>}
-                <div>4. Select skills</div>
+                    :<div>3. Select Sub profession 2</div>}
+                    {skill1.skill !== {} ?
+                        <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between'>
+                            <div className='flex flex-row gap-2'>
+                                <div className='flex flex-row items-center gap-2'>
+                                    {skill1.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill1.skill.img}.png`} alt="Icon"/></div>:null}
+                                    {skill2.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill2.skill.img}.png`} alt="Icon"/></div>:null}
+                                    {skill3.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill3.skill.img}.png`} alt="Icon"/></div>:null}
+                                    {skill4.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill4.skill.img}.png`} alt="Icon"/></div>:null}
+                                    {skill5.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill5.skill.img}.png`} alt="Icon"/></div>:null}
+                                </div>
+                            </div>
+                        </div>
+                    :<div>4. Select skills</div>}
+                </div>
             </div>
             <div className='w-full'>
+                {skills !== null ?
+                <Modal className='dark' show={modalVisible} size="md" popup={true} onClose={closeModal}>
+                    <Modal.Header>
+                        Select skills
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className=''>
+                            <Select className="w-full" classNamePrefix="select" 
+                                isClearable={true}
+                                isSearchable={true}
+                                captureMenuScroll={false}
+                                filterOption={createFilter({ ignoreAccents: false })}
+                                onChange={(e) => onChangeSkill(e)}
+                                options={skills.filter((x) => x.tag.includes(currentModalType) && x.name !== translate(x.name)).sort(sortAlpha).map((s) => {return {"value":s.id,"label":translate(s.name),"img":s.icon}})}
+                                formatOptionLabel={skill => (
+                                    <div className="skill-option flex flex-row gap-2">
+                                        <div><img loading="lazy" src={`img/icons/skills/${skill.img}.png`} className="w-[24px] aspect-square" alt="Icon"/></div>
+                                        <div><span>{skill.label}</span></div>
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    </Modal.Body>
+                </Modal>
+                :null}
                 {spec2 !== null ? 
-                    <div className='mb-2'>
-                        <div className={`text-center text-xl font-bold`}>Actives Skills</div>
-                        <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col'>
+                    <div ref={fieldRefSkills} className={`mb-2`}>
+                    <div className={`text-center text-xl font-bold`}>Actives Skills</div>
+                        <div className='grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2'>
                         {/* 5 actif skills */}
                         {[1,2,3,4,5].map((ind) => (
-                            <BuildSkill key={ind} ind={ind} onChangeSupport={onChangeSupport} onChangeSkill={onChangeSkill}/>
+                            <BuildSkill2 key={"actif"+ind} ind={ind} tag="Active"/>
                         ))}
                         </div>
                         <div className={`text-center text-xl font-bold`}>Passives Skills</div>
-                        <div className='flex flex-col gap-2'>
+                        <div className='grid gap-2'>
                         {/* 3 passives skills */}
                         {[1,2,3].map((ind) => (
-                            <BuildSkill key={ind} tag="Passive" ind={ind} onChangeSupport={onChangeSupport} onChangeSkill={onChangeSkill}/>
+                            <BuildSkill2 key={"passives"+ind} ind={ind} tag="Passive"/>
                         ))}
                         </div>
+                    </div>
                     </div>
                 :null}
                 <div className='border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between'>
@@ -519,7 +615,7 @@ function Build() {
                 ))}
                 
                 {currentTree !== null ? 
-                <div style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 '>
+                <div ref={fieldRefMainProf} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 flex flex-col'>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(currentMainProf.name)}</div>
                     <div>Core Talent</div>
@@ -591,7 +687,7 @@ function Build() {
                 </div>
                 :null}
                 {currentTreeSpec1 !== null ? 
-                <div style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2'>
+                <div ref={fieldRefSpec1} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2'>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(spec1.name)}</div>
                     <div>Core Talent</div>
@@ -661,7 +757,7 @@ function Build() {
                 </div>
                 :null}
                 {currentTreeSpec2 !== null ? 
-                <div style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2'>
+                <div ref={fieldRefSpec2} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2'>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(spec2.name)}</div>
                     <div>Core Talent</div>
@@ -731,7 +827,6 @@ function Build() {
                 </div>
                 :null}
             </div>
-            
         </div>
     )
 

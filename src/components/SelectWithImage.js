@@ -1,10 +1,9 @@
 import React,{useContext} from 'react'
 import Select, {createFilter} from 'react-select'
 import { AppContext } from "../context/AppContext";
-import skills from './../data/skills.json';
 
 function SelectWithImage(props){
-    const {translate,sortAlpha} = useContext(AppContext)
+    const {translate,sortAlpha,skills} = useContext(AppContext)
     let index = props.index
     let ind = props.ind
     let onChange = props.onChange

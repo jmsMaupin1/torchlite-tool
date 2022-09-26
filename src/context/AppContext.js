@@ -1,4 +1,4 @@
-import {createContext,useState,useEffect} from 'react';
+import {createContext,useState,useEffect,useRef} from 'react';
 import en from './../data/en.json';
 import {Tooltip} from 'flowbite-react'
 
@@ -9,6 +9,7 @@ const AppContextProvider = (props) => {
     const [currentPage,setCurrentPage] = useState(null);
 
     const [skills,setSkills] = useState(null);
+    const topMenu = useRef(null);
     
     useEffect(() => {
         import('./../data/skills.json').then(data => {
@@ -55,7 +56,7 @@ const AppContextProvider = (props) => {
     }
 
     return (
-        <AppContext.Provider value={{translate,replaceTag,setCurrentPage,currentPage,sortAlpha,skills}}>
+        <AppContext.Provider value={{translate,replaceTag,setCurrentPage,currentPage,sortAlpha,skills,topMenu}}>
             { props.children }
         </AppContext.Provider>
     )

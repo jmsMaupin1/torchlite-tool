@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {AppContextProvider} from './context/AppContext';
+import {BuildContextProvider} from './context/BuildContext';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Legendaries from './pages/Legendaries.js';
 import Base from './pages/Base.js';
@@ -26,7 +27,7 @@ root.render(
                   <Route path="skills" element={<Skills/>}/>
                   <Route path="mod" element={<Modifier/>}/>
                   <Route path="talent" element={<Talent/>}/>
-                  <Route path="build" element={<Build/>}/>
+                  <Route path="build" element={<BuildContextProvider><Build/></BuildContextProvider>}/>
               </Route>
           </Routes>
       </BrowserRouter>
