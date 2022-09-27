@@ -12,7 +12,6 @@ const AppContextProvider = (props) => {
     
     useEffect(() => {
         import('./../data/skills.json').then(data => {
-            console.log("loaded skills");
             setSkills(data.default);
         })
     },[]) 

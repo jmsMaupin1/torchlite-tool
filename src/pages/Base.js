@@ -22,7 +22,8 @@ function Base()
     }
     return (
         <>
-        <div className='flex flex-row gap-2 items-center mb-2'>
+        <div className='md:hidden title text-xl p-2 text-center border-b border-slate-500'>Base</div>
+        <div className='flex flex-row gap-2 items-center p-2'>
             <label>Type</label>
             <select onChange={onChangeType} className='w-auto bg-[#282828] border rounded border-slate-500'>
                 <option value=""> -- Select type --</option>
@@ -31,7 +32,7 @@ function Base()
                 ))}
             </select>
         </div>
-        <div className='grid grid-cols-4 gap-10 mx-auto'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-10 mx-auto px-2'>
             {base.filter((el) => el.type1 === "1" && el.icon !== "" && el.name !== translate(el.name) && (el.description2_display === currentType || currentType == null)).sort((a,b) => a.require_level - b.require_level).map((b) => (
                 <div key={b.id} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-between'>
                     <div className='flex flex-row gap-2 items-center'>

@@ -37,7 +37,8 @@ function Legendaries () {
 
     return (
         <>
-        <div className='flex flex-row gap-2 items-center mb-2'>
+        <div className='md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2'>Legendaries</div>
+        <div className='flex flex-row gap-2 items-center mb-2 p-2'>
             <label>Type</label>
             <select onChange={onChangeType} className='w-auto bg-[#282828] border rounded border-slate-500'>
                 <option value=""> -- Select type --</option>
@@ -46,7 +47,7 @@ function Legendaries () {
                 ))}
             </select>
         </div>
-        <div className='grid grid-cols-3 gap-10 mx-auto'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mx-auto p-2'>
             {gold.filter(findBase).sort((a,b) => a.require_level - b.require_level).map((b) => (
                 <Legendary key={b.id} legendary={b}/>
             ))}

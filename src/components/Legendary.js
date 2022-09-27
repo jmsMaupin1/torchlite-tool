@@ -16,7 +16,7 @@ function Legendary(props) {
     }
     const currentBase = base.find((e) => e.id === b.base_id);
     return (
-        <div className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-between'>
+        <div className='flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-between shadow-lg shadow-black'>
                     <div className='flex flex-row gap-2 items-center justify-between'>
                         <div className='flex flex-row gap-2 items-center'>
                             <div><img loading="lazy" src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>

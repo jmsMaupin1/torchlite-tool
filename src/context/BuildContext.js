@@ -109,8 +109,6 @@ const BuildContextProvider = (props) => {
                 break;
         }
         currentFnc(value);
-        console.log("buildContext value: ",value);
-        console.log("buildContext index: ",index);
     }
     const onChangeSkill = (e) => {
         //primary skill

@@ -6,10 +6,10 @@ function Home() {
 
     return (
     <>
-    <div className="text-2xl font-bold title">
+    <div className="text-xl font-bold title text-center p-2 md:hidden border-b border-slate-500 mb-2">
         Databases
     </div>
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="border rounded-lg relative">
             <Link onClick={() => setCurrentPage('skills')} to="skills">
                 <img className='rounded-lg' src={"img/skills.png"} />
@@ -26,6 +26,12 @@ function Home() {
             <Link onClick={() => setCurrentPage('legendary')} to="legendary">
                 <img className='rounded-lg' src={"img/legendary.png"} />
                 <h2 className='bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4'>Legendary</h2>
+            </Link>
+        </div>
+        <div className="border rounded-lg relative">
+            <Link onClick={() => setCurrentPage('talent')} to="talent" className='flex'>
+                <div><img className='rounded-lg' src={"img/talent_big.png"} /></div>
+                <h2 className='bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4'>Talent</h2>
             </Link>
         </div>
     </div>

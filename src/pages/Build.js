@@ -12,6 +12,7 @@ import { BuildContext } from '../context/BuildContext';
 import {useSearchParams } from "react-router-dom";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { FaShareAlt } from "react-icons/fa";
+import {MdTouchApp} from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -506,7 +507,6 @@ function Build() {
         }
         string += "core1:"+spec2Point.core1+"-core2:"+spec2Point.core2+"-"+tabSpec2Tree.join("-")
         
-        console.log(string)
         const currentURL = window.location.href
         const pathname = window.location.pathname
         let _buildUrl = currentURL.replace(pathname,"")+"/build?"+string;
@@ -577,14 +577,11 @@ function Build() {
             setCurrentTreeOrderSpec2(test([...currentTalent]));
         }
             
-        console.log("specs",myMainSpec,mySpec1,mySpec2)
-        
         let myTrees = searchParams.get("trees").split(",")
         let _mainProfPoint = {"nb": 0,"core1":null,"core2":null}
         let _spec1Point = {"nb": 0,"core1":null,"core2":null}
         let _spec2Point = {"nb": 0,"core1":null,"core2":null}
         myTrees.forEach((tree,index) => {
-            console.log(tree);
             let data = tree.split('-');
             let cptPointMain = 0;
             let cptPointSpec1 = 0;
@@ -621,21 +618,18 @@ function Build() {
             if(index === 2)
                 _spec2Point.nb = cptPointSpec2
         })
-        console.log(_mainProfPoint,_spec1Point,_spec2Point);
         setMainProfPoint(_mainProfPoint)
         setSpec1Point(_spec1Point)
         setSpec2Point(_spec2Point)
     }
     return (
-        <div className='flex md:flex-row flex-col gap-2 '>
+        <div className='flex md:flex-row flex-col gap-2 p-2'>
             <ToastContainer theme={"dark"} autoClose={2000} />
             <div className={`md:w-[20%] gap-2 flex flex-col relative`}>
-            <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
-                <button className='hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
-            </CopyToClipboard>
-            
-            
                 <div className={`gap-2  flex flex-col ${sticky ? 'sticky top-2':''}`}>
+                    <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
+                        <button className='hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
+                    </CopyToClipboard>
                     <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
                         <div className='flex flex-row gap-2 px-2'>
                             <div className='flex flex-row items-center gap-2'>
@@ -730,10 +724,12 @@ function Build() {
                     <div className='flex flex-row gap-2 items-center'>
                         <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{transform: 'rotateY(180deg)'}}/></div>
                         <div>add point</div>
-                        <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" /></div>
+                        <div>
+                            <img loading="lazy" className='hidden md:block' src="img/rightBtn.png" alt="Right click" />
+                            <div><MdTouchApp className='md:hidden' alt="Long Press" /></div>
+                        </div>
                         <div>remove point</div>
-                    </div>                    
-                    <div className='flex flex-row gap-2 items-center'>(for mobile : go on pc <img loading="lazy" src="img/Kappa.png" style={{display: "inline-block"}} alt="Kappa"/> )</div>
+                    </div>
                 </div>
                 <div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
                 <div><input type="text" onChange={(e) => filterNode(e)} className={`w-auto bg-[#282828] border rounded border-slate-500 ${currentMainProf === null ? "hidden": "hidden"}`} placeholder={"Filter node..."} /></div>
@@ -752,7 +748,7 @@ function Build() {
                     ))}
                 </div>
                 {/* SPEC 1 */}
-                <div ref={fieldRefSelectSpec1} className={`${spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
+                <div ref={fieldRefSelectSpec1} className={`${currentMainProf === null || spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
                 <div className={`${currentMainProf !== null && spec1 === null  ? "":"hidden"} subProf-${currentMainProf != null ? currentMainProf.id: ""} flex flex-col md:flex-row gap-2 mb-2`}>
                     {profession.filter((p) => currentMainProf !== null && p.before_id === currentMainProf.id).map((subp) => (
                         <div key={subp.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`}}  className='bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg '>
@@ -770,11 +766,11 @@ function Build() {
                 </div>
                 
                 {/* SPEC 2 */}
-                <div ref={fieldRefSelectSpec2} className={`${spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
+                <div ref={fieldRefSelectSpec2} className={`${spec1 === null || spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
                 {profession.filter((p) => p.before_id === "0").map((p) => (
                     <div key={p.id} className={`${currentMainProf !== null && spec2 === null && spec1 !== null  ? "":"hidden"} subProf-${p.id} flex flex-col md:flex-row gap-2 mb-2`}>
                         {profession.filter((p2) => p2.before_id === p.id).map((subp) => (
-                            <div key={p.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`}}  className={`${spec1 !== null && spec1.id === subp.id ? "grayscale text-gray-500":""} bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg `}>
+                            <div key={p.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`}}  className={`${spec1 !== null && spec1.id === subp.id ? "grayscale text-gray-500":""} bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg `}>
                                 <div className='text-center font-bold'>{translate(p.name)}</div>
                                 <div className='flex flex-row justify-between items-center gap-4'>
                                     <div className='flex flex-col items-center'>
