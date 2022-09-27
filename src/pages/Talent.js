@@ -1,5 +1,5 @@
 
-import React, {useContext,useEffect,useRef,useState} from 'react';
+import React, {useContext,useState} from 'react';
 import { AppContext } from '../context/AppContext';
 import profession from './../data/profession.json';
 import talent from './../data/talent.json';
@@ -12,11 +12,11 @@ function Talent() {
         let talentId = _currentProf.talent_id.split('|');
         let startId = talentId[0];
         let endId = talentId[1];
-        let currentTalent = talent.filter((t) => t.id <= endId && t.id >= startId && t.position == "0|0");
+        let currentTalent = talent.filter((t) => t.id <= endId && t.id >= startId && t.position === "0|0");
         return currentTalent;
     }
     const onChangeClass = (e) => {
-        if(e.target.value == "") {
+        if(e.target.value === "") {
             setCurrentClass(null);    
         } else {
             setCurrentClass(e.target.value);
@@ -34,10 +34,9 @@ function Talent() {
                     ))}
                 </select>
             </div>
-            {profession.filter((e) => (e.id == currentClass || e.before_id == currentClass) || currentClass== null).map((subp) => (
+            {profession.filter((e) => (e.id === currentClass || e.before_id === currentClass) || currentClass== null).map((subp) => (
                 <div key={subp.id} className={`subProf-${subp.id} flex flex-col md:flex-row mb-2 w-full`}>
-                    <div className={`relative flex flex-row justify-between border p-2 rounded-lg shadow-lg `}>
-                        <div className='absolute left-0 top-0' style={{transform: "rotateY(180deg)",opacity: '0.5'}}><img loading="lazy" src={`img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`}/></div>
+                    <div className={`relative flex flex-row justify-between border p-2 rounded-lg shadow-lg bg-no-repeat bg-contain bg-right-top`} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png")`}}>
                         <div className='flex flex-col items-center w-1/5'>
                             <div className='text-center font-bold text-xl title'>{translate(subp.name)}</div>
                             <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className={`h-20`} alt="Icon"/>

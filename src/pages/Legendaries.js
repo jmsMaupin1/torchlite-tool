@@ -7,6 +7,7 @@ function Legendaries () {
     let test = [...new Set(base.map((x) => {return x.description2_display}))].sort();
     let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
     
+    // eslint-disable-next-line
     const [listType,setListType] = useState(tempType);
     const [currentType,setCurrentType] = useState(null);
 
@@ -19,12 +20,11 @@ function Legendaries () {
     }
     const findBase = (e) => {
         let baseTemp = base.find((b) => b.id === e.base_id);
-        console.log(baseTemp.description2_display);
         if(e.icon !== "" && (baseTemp.description2_display === currentType || currentType == null)){
             // filter for test item
             if(
-                (e.prefix[0] != null && e.prefix[0].tier1[0] == "(40-60) strength") && (e.prefix[1] != null && e.prefix[1].tier1[0] == "(40-60) strength")
-            || ((e.suffix[0] != null && e.suffix[0].tier1[0] == "(40-60) strength") && (e.suffix[1] != null && e.suffix[1].tier1[0] == "(40-60) strength"))
+                ((e.prefix[0] != null && e.prefix[0].tier1[0] === "(40-60) strength") && (e.prefix[1] != null && e.prefix[1].tier1[0] === "(40-60) strength"))
+            || ((e.suffix[0] != null && e.suffix[0].tier1[0] === "(40-60) strength") && (e.suffix[1] != null && e.suffix[1].tier1[0] === "(40-60) strength"))
             ) {
                 return false
             } else {

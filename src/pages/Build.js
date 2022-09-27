@@ -1,33 +1,41 @@
-import React, {useContext,useEffect,useRef,useState} from 'react';
+import React, {useContext,useEffect,useState} from 'react';
 import { AppContext } from '../context/AppContext';
-import {Tooltip} from 'flowbite-react'
 import CoreTooltip from '../components/CoreTooltip';
-import BuildSkill from '../components/BuildSkill';
 import BuildSkill2 from '../components/BuildSkill2';
-import { debounce } from "lodash";
 import profession from './../data/profession.json';
+import skills from './../data/skills.json';
 import talent from './../data/talent.json';
 import TalentNode from '../components/TalentNode';
 import {Modal} from 'flowbite-react'
 import Select, {createFilter} from 'react-select'
 import { BuildContext } from '../context/BuildContext';
+import {useSearchParams } from "react-router-dom";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { FaShareAlt } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function Build() {
-    const {translate,replaceTag,topMenu,sortAlpha,skills} = useContext(AppContext);
-    const {closeModal,modalVisible,currentModalType,currentPrimary,currentSecondary,onChangeSkill,skill1,
+    const {translate,replaceTag,topMenu,sortAlpha} = useContext(AppContext);
+     // eslint-disable-next-line
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const {closeModal,modalVisible,currentModalType,onChangeSkill,
+        skill1,
+        setSkill,
         skill2,
         skill3,
         skill4,
-        skill5,} = useContext(BuildContext)
+        skill5,skill6,skill7,skill8,modalValue} = useContext(BuildContext)
     const [currentMainProf,setCurrentMainProf] = useState(null);
     const [spec1,setSpec1] = useState(null);
     const [spec2,setSpec2] = useState(null);
-
+    
     const [currentTree,setCurrentTree] = useState(null);
     const [currentTreeOrder,setCurrentTreeOrder] = useState(null);
     const [currentNodeFilter,setCurrentNodeFilter] = useState(null);
     
-    const [encodeSpec,setEncodeSpec] = useState(null);
+    const [buildUrl,setBuildUrl] = useState(null);
     /* {
         "spec" : currentMainProf.id,
         "spec1": spec1.id,
@@ -40,8 +48,12 @@ function Build() {
     // navigation
     const fieldRefSkills = React.useRef(null);
     const fieldRefMainProf = React.useRef(null);
+    const fieldRefSelectMainProf = React.useRef(null);
     const fieldRefSpec1 = React.useRef(null);
+    const fieldRefSelectSpec1 = React.useRef(null);
     const fieldRefSpec2 = React.useRef(null);
+    const fieldRefSelectSpec2 = React.useRef(null);
+    
 
     // modal for selected gems
     const [sticky,setSticky] = useState(false);
@@ -52,6 +64,7 @@ function Build() {
     const [mainProfPoint,setMainProfPoint] = useState({"nb": 0,"core1":null,"core2":null});
     const [spec1Point,setSpec1Point] = useState({"nb": 0,"core1":null,"core2":null});
     const [spec2Point,setSpec2Point] = useState({"nb": 0,"core1":null,"core2":null});
+    
     
     // keep track of stat
     const [mainProfStat,setMainProfStat] = useState(null);
@@ -67,9 +80,6 @@ function Build() {
     const [currentTreeOrderSpec2,setCurrentTreeOrderSpec2] = useState(null);
 
     // skills
-    const [buildSkills,setBuildSkills] = useState([[],[],[],[],[],[]])
-    const talentStep = [0,3,6,9,12,15,18,21,24]
-
     const _setCurrentMainProf = (data) => {
         if(data == null) {
             setMainProfPoint({"nb": 0,"core1":null,"core2":null})
@@ -136,35 +146,39 @@ function Build() {
         //this.refs.Tooltip.hide();
         setSpec2Point(temp);
     }
-
+     
     useEffect(() => {
-        if(currentMainProf !== null)
+        if(currentMainProf !== null){
             displayTalent()
-
+        }
+        // eslint-disable-next-line
     },[currentMainProf])
 
     useEffect(() => {
-        computedStatFromTree()
+            computedStatFromTree()
+            // eslint-disable-next-line
     },[mainProfPoint])
 
     useEffect(() => {
-        computedStatFromSpec1Tree()
+            computedStatFromSpec1Tree()
+            // eslint-disable-next-line
     },[spec1Point])
 
     useEffect(() => {
-        computedStatFromSpec2Tree()
+            computedStatFromSpec2Tree()
+            // eslint-disable-next-line
     },[spec2Point])
 
     useEffect(() => {
         if(spec1 !== null)
             displayTalentSpec1()
-
+        // eslint-disable-next-line
     },[spec1])
 
     useEffect(() => {
         if(spec2 !== null)
             displayTalentSpec2()
-
+        // eslint-disable-next-line
     },[spec2])
 
     const displayTalent = () => {
@@ -195,8 +209,8 @@ function Build() {
     const removePoint = (e,object,current) => {
         e.preventDefault();
         let position = object.position
-        let max = object.level_up_time
-        let pointNeed = object.need_points;
+        //let max = object.level_up_time
+        //let pointNeed = object.need_points;
         switch (current) {
             case "main":
                 let _mainProfPoint = {...mainProfPoint}
@@ -256,14 +270,14 @@ function Build() {
 
                 
                 if(_mainProfPoint[position] === parseInt(max)) {
-                    console.log("already at max");
+                    toast.error("Already at max !")
                 } else {
                     if(pointNeed <= _mainProfPoint.nb) {
                         _mainProfPoint[position] += 1                     
                         _mainProfPoint.nb++
                         setMainProfPoint(_mainProfPoint);
                     } else {
-                        console.log("not enought point");
+                        toast.error("Not enought point !")
                     }                    
                 }
                 break;
@@ -273,14 +287,14 @@ function Build() {
                     _spec1Point[position] = 0;
                 }
                 if(_spec1Point[position] === parseInt(max)) {
-                    console.log("already at max");
+                    toast.error("Already at max !")
                 } else {
                     if(pointNeed <= _spec1Point.nb) {
                     _spec1Point.nb++
                     _spec1Point[position] += 1 
                     setSpec1Point(_spec1Point);
                     } else {
-                        console.log("not enought point");
+                        toast.error("Not enought point !")
                     }
                 }
                 break;
@@ -290,25 +304,20 @@ function Build() {
                     _spec2Point[position] = 0;
                 }
                 if(_spec2Point[position] === parseInt(max)) {
-                    console.log("already at max");
+                    toast.error("Already at max !")
                 } else {
                     if(pointNeed <= _spec2Point.nb) {
                     _spec2Point.nb++
                     _spec2Point[position] += 1 
                     setSpec2Point(_spec2Point);
                     } else {
-                        console.log("not enought point");
+                        toast.error("Not enought point !")
                     }
                 }
                 break;
             default:
                 break;
-        }
-        // console.log("mainProfPoint",mainProfPoint)
-        // console.log("spec1Point",spec1Point)
-        // console.log("spec2Point",spec2Point)
-        // console.log("currentTree",currentTree)
-        
+        }        
     }
     const computedStatFromTree = () => {
         //mainProfPoint
@@ -411,30 +420,18 @@ function Build() {
         
         return tabTalent
     }
-    // const onChangeSkill = (value) => {
-    //     console.log(value,currentPrimary,currentSecondary);
-    //     let temp = [...buildSkills]
-    //     temp[currentPrimary][currentSecondary] = value;
-    //     setBuildSkills(temp)        
-    //     closeModal();
-    // }
     const filterNode = (e) => {
         console.log("filter",e.target.value);
         setCurrentNodeFilter(e.target.value);
     }
-    const onChangeSupport = (e,ind,index) =>
-    {
-        //console.log(e,ind,index);
-        let skillIndex = ind;
-        let supportIndex = index;
-        //let value = e.value;
-    }
+    // eslint-disable-next-line
     const handleScroll = () => {
         if(topMenu.current !== null)
             window.scrollY > topMenu.current.getBoundingClientRect().bottom ? setSticky(true): setSticky(false)
     }
     
     // This function handles the scroll performance issue
+    // eslint-disable-next-line
     const debounce = (func, wait = 20, immediate = true) => {
         let timeOut
         return () => {
@@ -458,51 +455,229 @@ function Build() {
         }
       }, [debounce, handleScroll])
 
+    useEffect(() => {
+        if(searchParams.get("skills") !== null) {
+            loadBuild();
+        }
+        // eslint-disable-next-line
+    },[searchParams.get("skills")])
+
+    useEffect(() => {
+        saveBuild();
+    // eslint-disable-next-line
+    },[skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,currentMainProf,spec1,spec2,mainProfPoint,spec1Point,spec2Point])
+    const saveBuild = () => {
+        // skills
+            let string = "skills="+skill1.skill.value+":"+skill1.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill2.skill.value !== undefined ? skill2.skill.value : 0)+":"+skill2.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill3.skill.value !== undefined ? skill3.skill.value : 0)+":"+skill3.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill4.skill.value !== undefined ? skill4.skill.value : 0)+":"+skill4.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill5.skill.value !== undefined ? skill5.skill.value : 0)+":"+skill5.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill6.skill.value !== undefined ? skill6.skill.value : 0)+":"+skill6.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill7.skill.value !== undefined ? skill7.skill.value : 0)+":"+skill7.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
+            string += (skill8.skill.value !== undefined ? skill8.skill.value : 0)+":"+skill8.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")
+            
+        // specs
+            string += "&specs="+(currentMainProf != null ? currentMainProf.id: 0)+","+(spec1 !== null ? spec1.id : 0)+","+(spec2 !== null ? spec2.id : 0)
+
+        // tree point
+        let tabMainTree = [];
+        for (const [position, value] of Object.entries(mainProfPoint)) {
+            if(position !== "nb" && position !== "core1" && position !== "core2") {
+                tabMainTree.push(position+":"+value);
+            }
+        }
+        string += "&trees=core1:"+mainProfPoint.core1+"-core2:"+mainProfPoint.core2+"-"+tabMainTree.join("-")+","
+
+        
+        let tabSpec1Tree = [];
+        for (const [position, value] of Object.entries(spec1Point)) {
+            if(position !== "nb" && position !== "core1" && position !== "core2") {
+                tabSpec1Tree.push(position+":"+value);
+            }
+        }
+        string += "core1:"+spec1Point.core1+"-core2:"+spec1Point.core2+"-"+tabSpec1Tree.join("-")+","
+
+        let tabSpec2Tree = [];
+        for (const [position, value] of Object.entries(spec2Point)) {
+            if(position !== "nb" && position !== "core1" && position !== "core2") {
+                tabSpec2Tree.push(position+":"+value);
+            }
+        }
+        string += "core1:"+spec2Point.core1+"-core2:"+spec2Point.core2+"-"+tabSpec2Tree.join("-")
+        
+        console.log(string)
+        const currentURL = window.location.href
+        const pathname = window.location.pathname
+        let _buildUrl = currentURL.replace(pathname,"")+"/build?"+string;
+        setBuildUrl(_buildUrl);
+    }
+
+    const loadBuild = () => {
+        // load Skills
+        // skill / support = {"value":"","label": "","img": ""}
+        //const [skill1,setSkill1] = useState({skill: {},support: [{},{},{},{},{}]})
+
+        let mySkills = searchParams.get("skills")
+        let tabSkills = mySkills.split(',');
+        tabSkills.forEach((skill,index) => {
+            let tempSkill = skill.split(":");
+            let mainSkill = tempSkill[0];
+            let supportSkill = tempSkill[1].split('-')
+            let dataSkill = skills.find((e) => e.id === mainSkill);
+            supportSkill = supportSkill.map((supp) => {
+                let currentSupp = skills.find((e) => e.id === supp);
+                if(currentSupp === undefined) {
+                    return {}
+                } else {
+                    return {"value":currentSupp.id,"label": translate(currentSupp.name),"img": currentSupp.icon}
+                }
+                
+            })
+            let currentSkill = null;
+            if(dataSkill !== undefined) {
+                currentSkill = {"skill": {"value": dataSkill.id,"label": translate(dataSkill.name),"img": dataSkill.icon},"support": supportSkill}
+                setSkill((index+1),currentSkill)
+            } else {
+                setSkill((index+1),{skill: {},support: [{},{},{},{},{}]})
+            }
+        })
+        
+        // load Specs
+        let mySpecs = searchParams.get('specs').split(',');
+        let myMainSpec = profession.find((p) => p.id === mySpecs[0]);
+        let mySpec1 = profession.find((p) => p.id === mySpecs[1]);
+        let mySpec2 = profession.find((p) => p.id === mySpecs[2]);
+        if(myMainSpec !== undefined) {
+            setCurrentMainProf(myMainSpec)
+            let talentId = myMainSpec.talent_id.split('|');
+            let startId = talentId[0];
+            let endId = talentId[1];
+            let currentTalent = talent.filter((t) => t.id <= endId && t.id >= startId);
+            setCurrentTree(currentTalent);
+            setCurrentTreeOrder(test([...currentTalent]));
+
+        }   
+        if(mySpec1 !== undefined) {
+            setSpec1(mySpec1)
+            let talentId = mySpec1.talent_id.split('|');
+            let startId = talentId[0];
+            let endId = talentId[1];
+            let currentTalent = talent.filter((t) => t.id <= endId && t.id >= startId);
+            setCurrentTreeSpec1(currentTalent);
+            setCurrentTreeOrderSpec1(test([...currentTalent]));
+        }
+        if(mySpec2 !== undefined){
+            setSpec2(mySpec2)
+            let talentId = mySpec2.talent_id.split('|');
+            let startId = talentId[0];
+            let endId = talentId[1];
+            let currentTalent = talent.filter((t) => t.id <= endId && t.id >= startId);
+            setCurrentTreeSpec2(currentTalent);
+            setCurrentTreeOrderSpec2(test([...currentTalent]));
+        }
+            
+        console.log("specs",myMainSpec,mySpec1,mySpec2)
+        
+        let myTrees = searchParams.get("trees").split(",")
+        let _mainProfPoint = {"nb": 0,"core1":null,"core2":null}
+        let _spec1Point = {"nb": 0,"core1":null,"core2":null}
+        let _spec2Point = {"nb": 0,"core1":null,"core2":null}
+        myTrees.forEach((tree,index) => {
+            console.log(tree);
+            let data = tree.split('-');
+            let cptPointMain = 0;
+            let cptPointSpec1 = 0;
+            let cptPointSpec2 = 0;
+            
+            data.forEach((node) => {
+                if(node !== '') {
+                    let temp = node.split(':');
+                    let position = temp[0];
+                    let value = temp[1];
+                    if(value !== "0") {
+                        if(index === 0) {
+                            _mainProfPoint[position] = value
+                            if(position !== "core1" && position !== "core2")
+                                cptPointMain += parseInt(value);
+                        }
+                        if(index === 1) {
+                            _spec1Point[position] = value
+                            if(position !== "core1" && position !== "core2")
+                                cptPointSpec1+= parseInt(value);
+                        }
+                        if(index === 2) {
+                            _spec2Point[position] = value
+                            if(position !== "core1" && position !== "core2")
+                                cptPointSpec2+= parseInt(value);
+                        }
+                    }
+                }
+            })
+            if(index === 0) 
+                _mainProfPoint.nb = cptPointMain
+            if(index === 1)
+                _spec1Point.nb = cptPointSpec1
+            if(index === 2)
+                _spec2Point.nb = cptPointSpec2
+        })
+        console.log(_mainProfPoint,_spec1Point,_spec2Point);
+        setMainProfPoint(_mainProfPoint)
+        setSpec1Point(_spec1Point)
+        setSpec2Point(_spec2Point)
+    }
     return (
-        <div className='flex md:flex-row flex-col '>
-            <div className={`md:w-[20%] gap-2 flex flex-col`}>
-                <div className={`gap-2 flex flex-col ${sticky ? 'fixed top-2':''}`}>
+        <div className='flex md:flex-row flex-col gap-2 '>
+            <ToastContainer theme={"dark"} autoClose={2000} />
+            <div className={`md:w-[20%] gap-2 flex flex-col relative`}>
+            <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
+                <button className='hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
+            </CopyToClipboard>
+            
+            
+                <div className={`gap-2  flex flex-col ${sticky ? 'sticky top-2':''}`}>
+                    <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
+                        <div className='flex flex-row gap-2 px-2'>
+                            <div className='flex flex-row items-center gap-2'>
+                                <div>Skills</div>
+                                {skill1.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill1.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill2.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill2.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill3.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill3.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill4.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill4.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill5.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill5.skill.img}.png`} alt="Icon"/></div>:null}
+                            </div>
+                        </div>
+                    </div>
+                    
                     {currentMainProf !== null ? 
-                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
                                 <div>{translate(currentMainProf.name)}</div>
                             </div>
-                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setCurrentMainProf(null)}>x</button></div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
                         </div>
-                    :<div>1. Select initial Profession</div>}
+                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
                     {spec1 !== null ? 
-                        <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
+                        <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon"/></div>
                                 <div>{translate(spec1.name)}</div>
                             </div>
-                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec1(null)}>x</button></div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setSpec1(null)}>x</button></div>
                         </div>
-                    :<div>2. Select Sub profession 1</div>}
+                    :<div onClick={() => fieldRefSelectSpec1.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>2. Select Sub profession 1</div>}
 
                     {spec2 !== null ? 
-                        <div onClick={() => fieldRefSpec2.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
+                        <div onClick={() => fieldRefSpec2.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon"/></div>
                                 <div>{translate(spec2.name)}</div>
                             </div>
-                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
+                            <div className='mr-2'><button className='text-gray-300 hover:bg-gray-900 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
                         </div>
-                    :<div>3. Select Sub profession 2</div>}
-                    {skill1.skill !== {} ?
-                        <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='hover:cursor-pointer flex flex-row h-10 gap-2 items-center border bg-no-repeat bg-right-top justify-between'>
-                            <div className='flex flex-row gap-2'>
-                                <div className='flex flex-row items-center gap-2'>
-                                    {skill1.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill1.skill.img}.png`} alt="Icon"/></div>:null}
-                                    {skill2.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill2.skill.img}.png`} alt="Icon"/></div>:null}
-                                    {skill3.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill3.skill.img}.png`} alt="Icon"/></div>:null}
-                                    {skill4.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill4.skill.img}.png`} alt="Icon"/></div>:null}
-                                    {skill5.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill5.skill.img}.png`} alt="Icon"/></div>:null}
-                                </div>
-                            </div>
-                        </div>
-                    :<div>4. Select skills</div>}
+                    :<div onClick={() => fieldRefSelectSpec2.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>3. Select Sub profession 2</div>}
+                    
                 </div>
             </div>
             <div className='w-full'>
@@ -513,7 +688,7 @@ function Build() {
                     </Modal.Header>
                     <Modal.Body>
                         <div className=''>
-                            <Select className="w-full" classNamePrefix="select" 
+                            <Select id="selectModal" className="w-full" classNamePrefix="select" menuIsOpen={true}
                                 isClearable={true}
                                 isSearchable={true}
                                 captureMenuScroll={false}
@@ -526,31 +701,31 @@ function Build() {
                                         <div><span>{skill.label}</span></div>
                                     </div>
                                 )}
+                                value={modalValue}
                             />
                         </div>
                     </Modal.Body>
                 </Modal>
                 :null}
-                {spec2 !== null ? 
-                    <div className='flex flex-col'>
-                    <div ref={fieldRefSkills} className={`mb-2`}>
-                    <div className={`text-center text-xl font-bold`}>Actives Skills</div>
+                
+                <div className='flex flex-col'>
+                    <div ref={fieldRefSkills} className={`mb-2 `}>
+                        <div className={`text-center text-xl font-bold rounded-t-md bg-gradient-to-b from-yellow-400 to-yellow-600 text-black`}>Actives Skills</div>
+                        <div className='grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2 rounded-b-md '>
+                            {/* 5 actif skills */}
+                            {[1,2,3,4,5].map((ind) => (
+                                <BuildSkill2 key={"actif"+ind} ind={ind} tag="Active"/>
+                            ))}
+                        </div>
+                        <div className={`mt-2 text-center text-xl font-bold rounded-t-md bg-gradient-to-b from-yellow-400 to-yellow-600 text-black`}>Passives Skills</div>
                         <div className='grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2'>
-                        {/* 5 actif skills */}
-                        {[1,2,3,4,5].map((ind) => (
-                            <BuildSkill2 key={"actif"+ind} ind={ind} tag="Active"/>
-                        ))}
-                        </div>
-                        <div className={`text-center text-xl font-bold`}>Passives Skills</div>
-                        <div className='grid gap-2'>
-                        {/* 3 passives skills */}
-                        {[1,2,3].map((ind) => (
-                            <BuildSkill2 key={"passives"+ind} ind={ind} tag="Passive"/>
-                        ))}
+                            {/* 3 passives skills */}
+                            {[6,7,8].map((ind) => (
+                                <BuildSkill2 key={"passives"+ind} ind={ind} tag="Passive"/>
+                            ))}
                         </div>
                     </div>
-                    </div>
-                :null}
+                </div>
                 <div className='border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between'>
                     <div className='flex flex-row gap-2 items-center'>
                         <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{transform: 'rotateY(180deg)'}}/></div>
@@ -560,7 +735,7 @@ function Build() {
                     </div>                    
                     <div className='flex flex-row gap-2 items-center'>(for mobile : go on pc <img loading="lazy" src="img/Kappa.png" style={{display: "inline-block"}} alt="Kappa"/> )</div>
                 </div>
-                <div className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
+                <div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
                 <div><input type="text" onChange={(e) => filterNode(e)} className={`w-auto bg-[#282828] border rounded border-slate-500 ${currentMainProf === null ? "hidden": "hidden"}`} placeholder={"Filter node..."} /></div>
                 <div className={`${currentMainProf === null ? "": "hidden"} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
                     {profession.filter((p) => p.before_id === "0").map((p) => (
@@ -577,7 +752,7 @@ function Build() {
                     ))}
                 </div>
                 {/* SPEC 1 */}
-                <div className={`${spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
+                <div ref={fieldRefSelectSpec1} className={`${spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
                 <div className={`${currentMainProf !== null && spec1 === null  ? "":"hidden"} subProf-${currentMainProf != null ? currentMainProf.id: ""} flex flex-col md:flex-row gap-2 mb-2`}>
                     {profession.filter((p) => currentMainProf !== null && p.before_id === currentMainProf.id).map((subp) => (
                         <div key={subp.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`}}  className='bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg '>
@@ -595,7 +770,7 @@ function Build() {
                 </div>
                 
                 {/* SPEC 2 */}
-                <div className={`${spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
+                <div ref={fieldRefSelectSpec2} className={`${spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
                 {profession.filter((p) => p.before_id === "0").map((p) => (
                     <div key={p.id} className={`${currentMainProf !== null && spec2 === null && spec1 !== null  ? "":"hidden"} subProf-${p.id} flex flex-col md:flex-row gap-2 mb-2`}>
                         {profession.filter((p2) => p2.before_id === p.id).map((subp) => (
@@ -654,31 +829,7 @@ function Build() {
                     {currentTreeOrder.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
-                            <TalentNode search={currentNodeFilter} key={"talentNode"+y} column={column} y={y} profPoint={mainProfPoint} x={x} removePoint={removePoint} addPoint={addPoint} />
-                            // <React.Fragment key={"column"+y}>
-                            // <div className={`separator w-[54px] h-[1px] ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" }`}></div>
-                            // <div className={`flex flex-col justify-between min-w-[54px] ${(x-1) === 0 ? "place-self-start items-center" : ""}`}>
-                            //     {(x-1) === 0 ? <div className='mb-2 font-bold bg-white text-black rounded-md px-1'>{(y-1)*3}</div>:null}
-                            //     {column !== undefined ? 
-                            //     <Tooltip key={column.id} className='' content={<>
-                            //             {/* <div>ID: {column.id}</div><div>level up time {column.level_up_time}</div>
-                            //             <div>need points {column.need_points}</div>
-                            //             <div>before {column.before_id}</div>
-                            //             <div>position {column.position}</div> */}
-                            //             <div>{column.affix.map((affix) => (
-                            //                 <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
-                            //         ))}</div>
-                            //         </>} trigger="hover">
-                            //         <div className='hover:cursor-pointer flex flex-col items-center text-sm' onContextMenu={(e) => removePoint(e,column,"main")} onClick={() => addPoint(column,"main")}>
-                            //             <div className='rounded-full' style={{boxShadow: "0px 0px 2px 3px red"}}>
-                            //                 <img loading="lazy" className={`${mainProfPoint[column.position] === undefined || mainProfPoint[column.position] === 0 ? "contrast-0":""} rounded-full border-4 w-[54px] `} src={`img/icons/${column.position === "0|0" ? "CoreTalentIcon": "TalentIcon"}/${column.icon}.png`} alt="Icon"/>
-                            //             </div>
-                            //             <div>{mainProfPoint[column.position] !== undefined ? mainProfPoint[column.position] : 0}/{column.level_up_time}</div>
-                            //         </div>
-                            //     </Tooltip>
-                            //     :null}
-                            // </div>
-                            // </React.Fragment>
+                            <TalentNode search={currentNodeFilter} key={"talentNode"+y} type={"main"} column={column} y={y} profPoint={mainProfPoint} x={x} removePoint={removePoint} addPoint={addPoint} />
                         ))}
                         </div>
                     ))}
@@ -726,7 +877,7 @@ function Build() {
                     {currentTreeOrderSpec1.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
-                            <TalentNode search={currentNodeFilter} key={"talentNode"+y} column={column} y={y} profPoint={spec1Point} x={x} removePoint={removePoint} addPoint={addPoint} />
+                            <TalentNode search={currentNodeFilter} key={"talentNode"+y} type={"spec1"} column={column} y={y} profPoint={spec1Point} x={x} removePoint={removePoint} addPoint={addPoint} />
                             // <React.Fragment key={"column"+y}>
                             // <div className={`separator w-[54px] h-[1px] ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" }`}></div>
                             // <div className={`flex flex-col justify-between min-w-[54px] ${(x-1) === 0 ? "place-self-start items-center" : ""}`}>
@@ -796,7 +947,7 @@ function Build() {
                         {currentTreeOrderSpec2.map((line,x) => (
                             <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                             {line.map((column,y) => (
-                                <TalentNode search={currentNodeFilter} key={"talentNode"+y} column={column} y={y} profPoint={spec2Point} x={x} removePoint={removePoint} addPoint={addPoint} />
+                                <TalentNode search={currentNodeFilter} key={"talentNode"+y} type={"spec2"} column={column} y={y} profPoint={spec2Point} x={x} removePoint={removePoint} addPoint={addPoint} />
                                 // <React.Fragment key={"column"+y}>
                                 // <div className={`separator w-[54px] h-[1px] ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" }`}></div>
                                 // <div className={`flex flex-col justify-between min-w-[54px] ${(x-1) === 0 ? "place-self-start items-center" : ""}`}>

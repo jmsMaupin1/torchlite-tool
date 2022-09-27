@@ -3,7 +3,7 @@ import {useContext} from 'react';
 
 function BuildSkillSlot(props)
 {
-    const {changePrimarySecondary,setCurrentModalType,openModal,skill1,skill2,skill3,skill4,skill5} = useContext(BuildContext);
+    const {changePrimarySecondary,setCurrentModalType,openModal,skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8} = useContext(BuildContext);
     const primary = props.primary;
     const secondary = props.secondary
     let currentSkill = null;
@@ -23,13 +23,22 @@ function BuildSkillSlot(props)
         case 5:
             currentSkill = skill5
             break;
+        case 6:
+            currentSkill = skill6
+            break;
+        case 7:
+            currentSkill = skill7
+            break;
+        case 8:
+            currentSkill = skill8
+            break;
         default:
             break;
     }
+    if(currentSkill == null) {
+        return null
+    }
     let currentSupport = currentSkill.support[secondary]
-    console.log("currentSupport",currentSupport)
-    console.log("currentSkill",currentSkill)
-    console.log("secondary",secondary)
     const onClickSkill = () => {
         setCurrentModalType("Support");
         changePrimarySecondary(primary,secondary);
@@ -38,7 +47,7 @@ function BuildSkillSlot(props)
     return(
         <div className='flex flex-col justify-center items-center'>
             <div onClick={() => onClickSkill()} style={{fontSize:"35px"}} className='w-[50px] h-[50px] hover:cursor-pointer border rounded-full items-center justify-center flex flex-col'>
-                {currentSupport !== undefined && Object.keys(currentSupport).length > 0 ? 
+                {currentSupport !== undefined && currentSupport !== null && Object.keys(currentSupport).length > 0 ? 
                     <>
                     <div>
                         <img loading="lazy" src={`img/icons/skills/${currentSupport.img}.png`} className="w-[50px]" alt="Icon"/>

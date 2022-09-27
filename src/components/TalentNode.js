@@ -5,10 +5,11 @@ import { AppContext } from '../context/AppContext';
 
 function TalentNode(props)
 {
-    const {translate,replaceTag} = useContext(AppContext);
+    const {replaceTag} = useContext(AppContext);
     const column = props.column;
     const y = props.y
     const x = props.x
+    const type = props.type
     const removePoint = props.removePoint
     const addPoint = props.addPoint;
     const profPoint= props.profPoint;
@@ -18,12 +19,13 @@ function TalentNode(props)
     let shouldHl = false;
 
     useEffect(() => {
-        if(column != undefined && column.affix !== undefined && search !== null)
+        if(column !== undefined && column.affix !== undefined && search !== null)
         {
             console.log("a",column.affix);
             column.affix.forEach((a) => {
                 if(a.toLowerCase().indexOf(search.toLowerCase()) > -1) {
                     console.log("here true");
+                    // eslint-disable-next-line
                     shouldHl = true;
                 }
             })
@@ -42,7 +44,7 @@ function TalentNode(props)
                             <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
                     ))}</div>
                     </>} trigger="hover">
-                    <div className='hover:cursor-pointer flex flex-col items-center text-sm' onContextMenu={(e) => removePoint(e,column,"main")} onClick={() => addPoint(column,"main")}>
+                    <div className='hover:cursor-pointer flex flex-col items-center text-sm' onContextMenu={(e) => removePoint(e,column,type)} onClick={() => addPoint(column,type)}>
                         <div className='rounded-full' style={{boxShadow: (isHightlight ? "0px 0px 2px 3px red": "")}}>
                             <img loading="lazy" className={`${profPoint[column.position] === undefined || profPoint[column.position] === 0 ? "contrast-0":""} rounded-full border-4 w-[54px] `} src={`img/icons/${column.position === "0|0" ? "CoreTalentIcon": "TalentIcon"}/${column.icon}.png`} alt="Icon"/>
                         </div>

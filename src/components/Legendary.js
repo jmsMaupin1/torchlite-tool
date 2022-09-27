@@ -47,7 +47,7 @@ function Legendary(props) {
                                     {s.tier0[0] !== null && currentDisplay === 0 ? 
                                     <div className='flex flex-row gap-2 items-start'>
                                         <div className='text-[#f67370] border rounded-tl-lg rounded-br-lg px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]'>T0</div>
-                                        <div key={"prefix-"+i} style={{filter: 'contrast(0.5) brightness(2.5)',backgroundImage: 'url(T_Fx_Tile_015_LXJ.png)'}} className='font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900' dangerouslySetInnerHTML={{__html: replaceTag(s.tier0)}}></div>
+                                        <div key={"prefix-"+i} style={{filter: 'contrast(0.5) brightness(2.5)',backgroundImage: 'url(img/T_Fx_Tile_015_LXJ.png)'}} className='font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900' dangerouslySetInnerHTML={{__html: replaceTag(s.tier0)}}></div>
                                     </div>
                                     :null}
                                     {currentDisplay === 1 ?
@@ -66,7 +66,7 @@ function Legendary(props) {
                                 {s.tier0[0] !== null && currentDisplay === 0 ? 
                                     <div className='flex flex-row gap-2 items-start'>
                                         <div className='text-[#f67370] border rounded-tl-lg rounded-br-lg px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]'>T0</div>
-                                        <div key={"suffix-"+i} style={{filter: 'contrast(0.5) brightness(2.5)',backgroundImage: 'url(T_Fx_Tile_015_LXJ.png)'}} className='font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900' dangerouslySetInnerHTML={{__html: replaceTag(s.tier0)}}></div>
+                                        <div key={"suffix-"+i} style={{filter: 'contrast(0.5) brightness(2.5)',backgroundImage: 'url(img/T_Fx_Tile_015_LXJ.png)'}} className='font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900' dangerouslySetInnerHTML={{__html: replaceTag(s.tier0)}}></div>
                                     </div>
                                 :null}
                                 {currentDisplay === 1 ?
