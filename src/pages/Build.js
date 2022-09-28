@@ -513,7 +513,7 @@ function Build() {
         //tricks for github pages
         let prefix = "";
         if(currentURL.includes("th3conc3pt3ur.github.io")) {
-            prefix = "/torchlight-helper/"
+            prefix = "/torchlight-helper"
         }
 
         let _buildUrl = currentURL.replace(pathname,"")+prefix+"/build?"+string;
