@@ -3,10 +3,12 @@ import React, {useContext,useState} from 'react';
 import { AppContext } from '../context/AppContext';
 import profession from './../data/profession.json';
 import talent from './../data/talent.json';
+import { DebounceInput } from 'react-debounce-input'
 
 function Talent() {
     const {translate,replaceTag} = useContext(AppContext);
     const [currentClass,setCurrentClass] = useState(null);
+    const [currentSearch,setCurrentSearch] = useState(null);
 
     const displayCore = (_currentProf) => {
         let talentId = _currentProf.talent_id.split('|');
@@ -21,7 +23,26 @@ function Talent() {
         } else {
             setCurrentClass(e.target.value);
         }
-        
+    }
+    const onChangeSearch = (value) => {
+        if(value !== "") {
+            setCurrentSearch(value)
+        } else {
+            setCurrentSearch(null);
+        }
+    }
+    const filterAffix = (tree) => {
+        if(currentSearch == null) {
+            return true;
+        } else {
+            let isFind = false
+            tree.affix.map((affix) => {
+                if(replaceTag(affix).toLowerCase().includes(currentSearch.toLowerCase())) {
+                    isFind = true;
+                }
+            })
+            return isFind;
+        }
     }
 
     return (
@@ -34,23 +55,26 @@ function Talent() {
                         <option key={p.id} value={p.id}>{translate(p.name)}</option>                        
                     ))}
                 </select>
+                <label>Effect</label>
+                <DebounceInput className='w-auto bg-[#282828] border rounded border-slate-500' placeholder="Search talent by effect..." debounceTimeout={500} onChange={event => (onChangeSearch(event.target.value))}/>
             </div>
             {profession.filter((e) => (e.id === currentClass || e.before_id === currentClass) || currentClass== null).map((subp) => (
+                displayCore(subp).filter(filterAffix).length !== 0 ?
                 <div key={subp.id} className={`subProf-${subp.id} flex flex-col md:flex-row mb-2 w-full`}>
-                    <div className={`relative flex flex-col md:flex-row justify-between border p-2 rounded-lg md:shadow-lg md:shadow-black bg-no-repeat bg-contain bg-right-top`} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png")`}}>
+                    <div className={`w-full relative flex flex-col md:flex-row justify-between border p-2 rounded-lg md:shadow-lg md:shadow-black bg-no-repeat bg-contain bg-right-top`} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png")`}}>
                         <div className='flex flex-col items-center w-full md:w-1/5'>
                             <div className='text-center font-bold text-xl title'>{translate(subp.name)}</div>
                             <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className={`h-20`} alt="Icon"/>
                             <div className='w-full' dangerouslySetInnerHTML={{__html: replaceTag(translate(subp.des).replaceAll("#4","").replace("|","<br>"))}}></div> 
                         </div>
+                        
                         <div className='grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-2 md:w-4/5'>
-                            {displayCore(subp).map((tree) => (
+                            {displayCore(subp).filter(filterAffix).map((tree) => (
                                 <div key={tree.id} className='shadow-md shadow-black border-[#212121] border p-2'>
                                     <div className='flex flex-row gap-4 items-center border-b border-[#212121] pb-1 mb-1'>
                                         <img loading="lazy" className='w-[54px]' src={`img/icons/CoreTalentIcon/${tree.icon}.png`} alt="Icon"/>
                                         <div className='title'>{translate(tree.name)}</div>
                                     </div>
-                                    
                                     <div>
                                         {tree.affix.map((affix) => (
                                             <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
@@ -61,8 +85,8 @@ function Talent() {
                             ))}
                         </div>
                     </div>
-                    
                 </div>
+                :null
             ))}
         </div>
     )

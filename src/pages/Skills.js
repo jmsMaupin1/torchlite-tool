@@ -81,7 +81,7 @@ function Skills()
         
         <div className='grid grid-cols-1 gap-10 mx-auto p-2'>
             {computedSkillList().map((b,index) => (
-                <Skill key={"skill"+index}skill={b} index={index}/>
+                <Skill key={"skill"+index} skill={b} index={index}/>
             ))}
         </div>
         </>

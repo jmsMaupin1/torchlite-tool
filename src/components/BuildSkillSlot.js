@@ -1,9 +1,13 @@
 import { BuildContext } from '../context/BuildContext';
 import {useContext} from 'react';
+import { AppContext } from "../context/AppContext";
+import {Tooltip} from 'flowbite-react'
+import Skill from '../components/Skill';
 
 function BuildSkillSlot(props)
 {
-    const {changePrimarySecondary,setCurrentModalType,openModal,skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8} = useContext(BuildContext);
+    const {skills} = useContext(AppContext)
+    const {changePrimarySecondary,setCurrentModalType,openModal,skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,onChangeSkillForced} = useContext(BuildContext);
     const primary = props.primary;
     const secondary = props.secondary
     let currentSkill = null;
@@ -40,19 +44,34 @@ function BuildSkillSlot(props)
     }
     let currentSupport = currentSkill.support[secondary]
     const onClickSkill = () => {
-        setCurrentModalType("Support");
+        if(primary > 5) {
+            setCurrentModalType("");
+        } else {
+            setCurrentModalType("Support");
+        }
+        
         changePrimarySecondary(primary,secondary);
         openModal();
     }
+    const removeSkill = () => {
+        onChangeSkillForced(null,primary,secondary)
+    }
     return(
         <div className='flex flex-col justify-center items-center'>
+            {currentSupport !== undefined && currentSupport !== null && Object.keys(currentSupport).length > 0 ? 
+                <div className='relative'>
+                    <div className='z-10 text-lg absolute -right-8 -top-4'>
+                        <button title="remove skill" onClick={(e) => removeSkill()}>x</button>
+                    </div>
+                </div>
+                :null}
             <div onClick={() => onClickSkill()} style={{fontSize:"35px"}} className='w-[50px] h-[50px] hover:cursor-pointer border rounded-full items-center justify-center flex flex-col'>
                 {currentSupport !== undefined && currentSupport !== null && Object.keys(currentSupport).length > 0 ? 
-                    <>
+                    <Tooltip content={<Skill showDetail={false} skill={skills.find((s) => s.id === currentSupport.value)}/>} trigger="hover">
                     <div>
                         <img loading="lazy" src={`img/icons/skills/${currentSupport.img}.png`} className="w-[50px]" alt="Icon"/>
                     </div>
-                    </>
+                    </Tooltip>
                     :
                     <div className='-mt-[5px]'>+</div>
                 }
@@ -62,3 +81,5 @@ function BuildSkillSlot(props)
     )
 }
 export default BuildSkillSlot;
+
+

@@ -151,13 +151,79 @@ const BuildContextProvider = (props) => {
                 break;
         }
         if(currentSecondary === 0) {
-            currentSkill.skill = e;    
+            if(e === null) {
+                currentSkill.skill = {skill: {},support: [{},{},{},{},{}]}
+            } else {
+                currentSkill.skill = e;    
+            }
+            
         } else {
-            currentSkill.support[currentSecondary] = e;
+            if(e === null) {
+                currentSkill.support[currentSecondary] = {};
+            } else {
+                currentSkill.support[currentSecondary] = e;
+            }
+            
         }
         
         currentFnc(currentSkill);
         closeModal();
+    }
+    const onChangeSkillForced = (e,primary,secondary) => {
+        //primary skill
+        let currentSkill = null;
+        let currentFnc = null;
+        switch (primary) {
+            case 1:
+                currentSkill = {...skill1}
+                currentFnc = setSkill1
+                break;
+            case 2:
+                currentSkill = {...skill2}
+                currentFnc = setSkill2
+                break;
+            case 3:
+                currentSkill = {...skill3}
+                currentFnc = setSkill3
+                break;
+            case 4:
+                currentSkill = {...skill4}
+                currentFnc = setSkill4
+                break;
+            case 5:
+                currentSkill = {...skill5}
+                currentFnc = setSkill5
+                break;
+            case 6:
+                currentSkill = {...skill6}
+                currentFnc = setSkill6
+                break;
+            case 7:
+                currentSkill = {...skill7}
+                currentFnc = setSkill7
+                break;
+            case 8:
+                currentSkill = {...skill8}
+                currentFnc = setSkill8
+                break;
+            default:
+                break;
+        }
+        if(secondary === 0) {
+            if(e === null) {
+                currentSkill.skill = {}
+            } else {
+                currentSkill.skill = e;    
+            }
+            
+        } else {
+            if(e === null) {
+                currentSkill.support[secondary] = {};
+            } else {
+                currentSkill.support[secondary] = e;
+            }
+        }
+        currentFnc(currentSkill);
     }
 
     return (
@@ -180,6 +246,7 @@ const BuildContextProvider = (props) => {
             setSkill7,
             setSkill8,
             setSkill,
+            onChangeSkillForced,
             modalVisible,openModal,modalValue,closeModal,setModalVisible,changePrimarySecondary,getSkillByPrimary,setCurrentModalType,currentModalType,currentPrimary,currentSecondary}}>
             { props.children }
         </BuildContext.Provider>

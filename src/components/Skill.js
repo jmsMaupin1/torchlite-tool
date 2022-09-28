@@ -1,7 +1,7 @@
 import React,{useContext,useState} from "react";
 import { AppContext } from "../context/AppContext";
 
-function Skill({skill,index}) {
+function Skill({skill,index,showDetail}) {
     const {translate} = useContext(AppContext)
     const [showDetailLevel,setShowDetailLevel] = useState(false);
     const displayAffixParam = (param,text) => {
@@ -52,6 +52,9 @@ function Skill({skill,index}) {
     const changeDetailLevel = (e) => {
         setShowDetailLevel(!showDetailLevel);
     }
+    if(skill === undefined) {
+        return null;
+    }
     return (
     <div key={skill.id+"-"+index} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2'>
         <div className='flex flex-row gap-2 items-start'>
@@ -70,6 +73,7 @@ function Skill({skill,index}) {
         <div className='flex flex-col gap'>
             <div className="flex flex-row justify-between">
                 <div>{translate(skill.description1)}</div>
+                {showDetail !== false ? 
                 <button className='p-1 text-[#f67370] border items-center flex rounded-md  px-2 font-bold bg-gradient-to-b from-[#222222] to-[#282828] border-[#111827]'>
                     <label className="inline-flex relative items-center cursor-pointer">
                         <input type="checkbox" onChange={changeDetailLevel} className="sr-only peer" />
@@ -77,6 +81,7 @@ function Skill({skill,index}) {
                         <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show Stat by level</span>
                     </label>
                 </button>
+                :null}
             </div>
             <div className="mb-2" dangerouslySetInnerHTML={{__html: translate(skill.detail)}}></div>
             {skill.affix.map((affix,i) => (

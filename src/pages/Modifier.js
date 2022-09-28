@@ -18,7 +18,7 @@ function Modifier()
         <div>
             {Object.keys(modTab).map((e,i) => (
                 <div className=''>
-                    
+                    {e}
                 </div>                
             ))}
         </div>

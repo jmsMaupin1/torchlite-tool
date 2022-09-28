@@ -278,7 +278,7 @@ function Build() {
                         _mainProfPoint.nb++
                         setMainProfPoint(_mainProfPoint);
                     } else {
-                        toast.error("Not enought point !")
+                        toast.error("Not enought points !")
                     }                    
                 }
                 break;
@@ -295,7 +295,7 @@ function Build() {
                     _spec1Point[position] += 1 
                     setSpec1Point(_spec1Point);
                     } else {
-                        toast.error("Not enought point !")
+                        toast.error("Not enought points !")
                     }
                 }
                 break;
@@ -312,7 +312,7 @@ function Build() {
                     _spec2Point[position] += 1 
                     setSpec2Point(_spec2Point);
                     } else {
-                        toast.error("Not enought point !")
+                        toast.error("Not enought points !")
                     }
                 }
                 break;
@@ -422,7 +422,7 @@ function Build() {
         return tabTalent
     }
     const filterNode = (e) => {
-        console.log("filter",e.target.value);
+        //console.log("filter",e.target.value);
         setCurrentNodeFilter(e.target.value);
     }
     // eslint-disable-next-line
@@ -509,7 +509,14 @@ function Build() {
         
         const currentURL = window.location.href
         const pathname = window.location.pathname
-        let _buildUrl = currentURL.replace(pathname,"")+"/build?"+string;
+        
+        //tricks for github pages
+        let prefix = "";
+        if(currentURL.includes("th3conc3pt3ur.github.io")) {
+            prefix = "/torchlight-helper/"
+        }
+
+        let _buildUrl = currentURL.replace(pathname,"")+prefix+"/build?"+string;
         setBuildUrl(_buildUrl);
     }
 
@@ -634,11 +641,11 @@ function Build() {
                         <div className='flex flex-row gap-2 px-2'>
                             <div className='flex flex-row items-center gap-2'>
                                 <div>Skills</div>
-                                {skill1.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill1.skill.img}.png`} alt="Icon"/></div>:null}
-                                {skill2.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill2.skill.img}.png`} alt="Icon"/></div>:null}
-                                {skill3.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill3.skill.img}.png`} alt="Icon"/></div>:null}
-                                {skill4.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill4.skill.img}.png`} alt="Icon"/></div>:null}
-                                {skill5.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill5.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill1.skill !== null && skill1.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill1.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill2.skill !== null && skill2.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill2.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill3.skill !== null && skill3.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill3.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill4.skill !== null && skill4.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill4.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill5.skill !== null && skill5.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill5.skill.img}.png`} alt="Icon"/></div>:null}
                             </div>
                         </div>
                     </div>
@@ -688,7 +695,7 @@ function Build() {
                                 captureMenuScroll={false}
                                 filterOption={createFilter({ ignoreAccents: false })}
                                 onChange={(e) => onChangeSkill(e)}
-                                options={skills.filter((x) => x.tag.includes(currentModalType) && x.name !== translate(x.name)).sort(sortAlpha).map((s) => {return {"value":s.id,"label":translate(s.name),"img":s.icon}})}
+                                options={skills.filter((x) => (x.tag.includes(currentModalType) || currentModalType == "") && x.name !== translate(x.name)).sort(sortAlpha).map((s) => {return {"value":s.id,"label":translate(s.name),"img":s.icon}})}
                                 formatOptionLabel={skill => (
                                     <div className="skill-option flex flex-row gap-2">
                                         <div><img loading="lazy" src={`img/icons/skills/${skill.img}.png`} className="w-[24px] aspect-square" alt="Icon"/></div>

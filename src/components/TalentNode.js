@@ -21,10 +21,8 @@ function TalentNode(props)
     useEffect(() => {
         if(column !== undefined && column.affix !== undefined && search !== null)
         {
-            console.log("a",column.affix);
             column.affix.forEach((a) => {
                 if(a.toLowerCase().indexOf(search.toLowerCase()) > -1) {
-                    console.log("here true");
                     // eslint-disable-next-line
                     shouldHl = true;
                 }
