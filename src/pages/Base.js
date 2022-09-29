@@ -1,16 +1,14 @@
-import React, { useState,useContext } from "react"
+import React, { useState,useContext,useEffect } from "react"
 import HyperLinkTooltip from "../components/HyperLinkTooltip";
 import { AppContext } from "../context/AppContext";
+import Loader from "../components/Loader";
 
 function Base()
 {
-    const {translate,itemBase} = useContext(AppContext);
+    const {translate,itemBase,en} = useContext(AppContext);
 
-    let test = [...new Set(itemBase.map((x) => {return x.description2_display}))].sort();
-    let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
-    
     // eslint-disable-next-line
-    const [listType,setListType] = useState(tempType);
+    const [listType,setListType] = useState(null);
     const [currentType,setCurrentType] = useState(null);
 
     const onChangeType = (e) => {
@@ -19,6 +17,17 @@ function Base()
         } else {
             setCurrentType(e.target.value);
         }
+    }
+    useEffect(() => {
+        if(itemBase !== null) {
+            let test = [...new Set(itemBase.map((x) => {return x.description2_display}))].sort();
+            let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
+            setListType(tempType);
+        }
+    },[itemBase])
+
+    if(itemBase === null || listType === null || en === null) {
+        return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
         <>
@@ -43,7 +52,7 @@ function Base()
                             <div className='border border-[#333] rounded-md px-2 text-[#bfbfbf] text-sm'>{translate(b.description1)}</div>
                         </div>
                     </div>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col items-center'>
                     {b.suffix !== undefined && b.suffix !== [] ? 
                         b.suffix.map((s,i) => (
                             <HyperLinkTooltip key={"suffix-"+i} className='text-center' str={s}/>

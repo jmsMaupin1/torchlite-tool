@@ -12,7 +12,6 @@ function CoreTooltip(props) {
     let mainProfPoint = props.mainProfPoint;
     let onSpecCoreChange = props.onSpecCoreChange;
     let coreNumber = props.coreNumber;
-    let spec = props.spec;
 
     const returnSlice = () => {
         if(coreNumber === 1) {

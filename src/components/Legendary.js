@@ -5,7 +5,7 @@ import HyperLinkTooltip from './HyperLinkTooltip';
 function Legendary(props) {
     const b = props.legendary;
     const currentAffix = props.currentAffix
-    const {translate,replaceTag,itemBase} = useContext(AppContext);
+    const {translate,itemBase} = useContext(AppContext);
     const [currentDisplay,setCurrentDisplay] = useState(1);
     const [isVisible,setIsVisible] = useState(true);
 
@@ -18,6 +18,7 @@ function Legendary(props) {
     }
     useEffect(() => {
         filterByAffix()
+        // eslint-disable-next-line
     },[currentAffix])
 
     const filterByAffix = () => {

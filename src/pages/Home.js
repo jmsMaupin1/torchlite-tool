@@ -12,25 +12,25 @@ function Home() {
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="border rounded-lg relative">
             <Link onClick={() => setCurrentPage('skills')} to="skills">
-                <img className='rounded-lg' src={"img/skills.png"} />
+                <img className='rounded-lg' src={"img/skills.png"} alt="Skills"/>
                 <h2 className='bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4'>Skills</h2>
             </Link>
         </div>
         <div className="border rounded-lg relative">
             <Link onClick={() => setCurrentPage('base')} to="base">
-                <img className='rounded-lg' src={"img/base.png"} />
+                <img className='rounded-lg' src={"img/base.png"} alt="Base" />
                 <h2 className='bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4'>Bases</h2>
             </Link>
         </div>
         <div className="border rounded-lg relative">
             <Link onClick={() => setCurrentPage('legendary')} to="legendary">
-                <img className='rounded-lg' src={"img/legendary.png"} />
+                <img className='rounded-lg' src={"img/legendary.png"} alt="Legendary" />
                 <h2 className='bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4'>Legendary</h2>
             </Link>
         </div>
         <div className="border rounded-lg relative">
             <Link onClick={() => setCurrentPage('talent')} to="talent" className='flex'>
-                <div><img className='rounded-lg' src={"img/talent_big.png"} /></div>
+                <div><img className='rounded-lg' src={"img/talent_big.png"} alt="Talent" /></div>
                 <h2 className='bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4'>Talent</h2>
             </Link>
         </div>

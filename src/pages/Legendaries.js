@@ -82,7 +82,7 @@ function Legendaries () {
     }
     
     if(listType == null || en == null || itemGold == null) {
-        return <Loader/>
+        return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
         <>

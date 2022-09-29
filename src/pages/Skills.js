@@ -3,21 +3,15 @@ import { AppContext } from "../context/AppContext";
 import Skill from "../components/Skill";
 import { debounce } from "lodash";
 import Loader from "../components/Loader";
+import { DebounceInput } from 'react-debounce-input'
 
 function Skills()
 {
-    const {translate,skills,skillTag} = useContext(AppContext)
-    let listTypeInit = [];
-    skillTag.forEach((s) => {
-        let myTranslate = translate(s.des);
-        if(s.visible === "1" && myTranslate.indexOf("Abandoned") === -1) {
-            listTypeInit.push(translate(s.des));
-        }
-    })
-    listTypeInit.sort();
+    const {translate,skills,skillTag,en} = useContext(AppContext)
     
-    const [skillList,setSkillList] = useState(skills.map((x) => {x.enabled = true;return x}));
-    const [listType,setListType] = useState([...listTypeInit]);
+    
+    const [skillList,setSkillList] = useState(null);
+    const [listType,setListType] = useState(null);
     const [currentType,setCurrentType] = useState(null);
     const [currentName,setCurrentName] = useState(null);
     const [isLoading,setIsLoading] = useState(false);
@@ -38,11 +32,36 @@ function Skills()
     },1000)
 
     useEffect(() => {
-        computedSkillList();
+        if(skillList !== null) {
+            computedSkillList();
+        }
+        
         if(isLoading === true) {
             setIsLoading(false);
         }
+        // eslint-disable-next-line
     },[currentName,currentType])
+
+    useEffect(() => {
+        if(skillTag !== null && en !== null) {
+            let listTypeInit = [];
+            skillTag.forEach((s) => {
+                let myTranslate = translate(s.des);
+                if(s.visible === "1" && myTranslate.indexOf("Abandoned") === -1) {
+                    listTypeInit.push(translate(s.des));
+                }
+            })
+            listTypeInit.sort();
+            setListType([...listTypeInit]);
+        }   
+        // eslint-disable-next-line     
+    },[skillTag,en])
+
+    useEffect(() => {
+        if(skills !== null) {
+            setSkillList(skills.map((x) => {x.enabled = true;return x}));
+        }
+    },[skills])
 
     const computedSkillList = () => {
         let temp = [...skillList];
@@ -54,6 +73,10 @@ function Skills()
             temp = temp.filter((el) => translate(el.name).toLowerCase().includes(currentName.toLowerCase()))
         }
         return temp;
+    }
+    
+    if(skills == null || skillTag == null || listType == null || en == null) {
+        return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
         <>
@@ -71,7 +94,7 @@ function Skills()
                 </div>
                 <div className="flex flex-col md:flex-row gap-2">
                     <label className="text-white">Skill </label>
-                    <input onChange={(e) => {setIsLoading(true);onChangeName(e);}} placeholder={"Name of the skill..."} className="bg-[#282828] border rounded border-slate-500 pl-1" />
+                    <DebounceInput placeholder={"Name of the skill..."} className="bg-[#282828] border rounded border-slate-500 pl-1" debounceTimeout={500} onChange={event => (onChangeName(event))} />
                 </div>
                 {isLoading ? <Loader text=""/>: null}
             </div>

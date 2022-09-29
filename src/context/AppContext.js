@@ -1,7 +1,4 @@
 import {createContext,useState,useEffect,useRef} from 'react';
-import {Tooltip} from 'flowbite-react'
-import ReactDOM from 'react-dom/client';
-
 const AppContext = createContext();
 
 const AppContextProvider = (props) => {
@@ -19,13 +16,14 @@ const AppContextProvider = (props) => {
     const topMenu = useRef(null);
     
     useEffect(() => {
-        import('./../data/skills.json').then(data => {
-            console.log("skills loaded");
-            setSkills(data.default);
-        })
+
         import('./../data/en.json').then(data => {
             setEn(data.default);
             console.log("translation loaded");
+        })
+        import('./../data/skills.json').then(data => {
+            console.log("skills loaded");
+            setSkills(data.default);
         })
         import('./../data/item_base.json').then(data => {
             setItemBase(data.default);

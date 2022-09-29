@@ -45,7 +45,7 @@ function Talent() {
         }
     }
     if(profession == null || en == null || talent == null) {
-        return (<Loader/>)
+        return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
         <div className='flex flex-col container p-2'>

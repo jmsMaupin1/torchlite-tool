@@ -453,19 +453,20 @@ function Build() {
         return () => {
           window.removeEventListener("scroll", () => handleScroll)
         }
-      }, [debounce, handleScroll])
+    }, [debounce, handleScroll])
 
     useEffect(() => {
-        if(searchParams.get("skills") !== null) {
+        if(searchParams.get("skills") !== null && skills !== null && en !== null) {
             loadBuild();
         }
         // eslint-disable-next-line
-    },[searchParams.get("skills")])
+    },[searchParams.get("skills"),skills,en])
 
     useEffect(() => {
         saveBuild();
     // eslint-disable-next-line
     },[skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,currentMainProf,spec1,spec2,mainProfPoint,spec1Point,spec2Point])
+
     const saveBuild = () => {
         // skills
             let string = "skills="+skill1.skill.value+":"+skill1.support.map((e) => {return e.value !== undefined ? e.value : 0}).join("-")+","
@@ -629,8 +630,8 @@ function Build() {
         setSpec2Point(_spec2Point)
     }
 
-    if(profession == null || en == null) {
-        return (<Loader/>)
+    if(profession === null || en === null) {
+        return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
         <div className='flex md:flex-row flex-col gap-2 p-2'>
@@ -698,7 +699,7 @@ function Build() {
                                 captureMenuScroll={false}
                                 filterOption={createFilter({ ignoreAccents: false })}
                                 onChange={(e) => onChangeSkill(e)}
-                                options={skills.filter((x) => (x.tag.includes(currentModalType) || currentModalType == "") && x.name !== translate(x.name)).sort(sortAlpha).map((s) => {return {"value":s.id,"label":translate(s.name),"img":s.icon}})}
+                                options={skills.filter((x) => (x.tag.includes(currentModalType) || currentModalType === "") && x.name !== translate(x.name)).sort(sortAlpha).map((s) => {return {"value":s.id,"label":translate(s.name),"img":s.icon}})}
                                 formatOptionLabel={skill => (
                                     <div className="skill-option flex flex-row gap-2">
                                         <div><img loading="lazy" src={`img/icons/skills/${skill.img}.png`} className="w-[24px] aspect-square" alt="Icon"/></div>
