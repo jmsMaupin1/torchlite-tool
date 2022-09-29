@@ -1,12 +1,12 @@
 import React, { useState,useContext } from "react"
-import base from './../data/item_base.json';
+import HyperLinkTooltip from "../components/HyperLinkTooltip";
 import { AppContext } from "../context/AppContext";
 
 function Base()
 {
-    const {translate,replaceTag} = useContext(AppContext);
+    const {translate,itemBase} = useContext(AppContext);
 
-    let test = [...new Set(base.map((x) => {return x.description2_display}))].sort();
+    let test = [...new Set(itemBase.map((x) => {return x.description2_display}))].sort();
     let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
     
     // eslint-disable-next-line
@@ -33,7 +33,7 @@ function Base()
             </select>
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-10 mx-auto px-2'>
-            {base.filter((el) => el.type1 === "1" && el.icon !== "" && el.name !== translate(el.name) && (el.description2_display === currentType || currentType == null)).sort((a,b) => a.require_level - b.require_level).map((b) => (
+            {itemBase.filter((el) => el.type1 === "1" && el.icon !== "" && el.name !== translate(el.name) && (el.description2_display === currentType || currentType == null)).sort((a,b) => a.require_level - b.require_level).map((b) => (
                 <div key={b.id} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-between'>
                     <div className='flex flex-row gap-2 items-center'>
                         <div><img loading="lazy" src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>
@@ -46,7 +46,7 @@ function Base()
                     <div className='flex flex-col'>
                     {b.suffix !== undefined && b.suffix !== [] ? 
                         b.suffix.map((s,i) => (
-                            <div key={"suffix-"+i} className='text-center' dangerouslySetInnerHTML={{__html: replaceTag(s)}}></div>
+                            <HyperLinkTooltip key={"suffix-"+i} className='text-center' str={s}/>
                         ))
                      : null}
                     </div>

@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react"
-import skills from './../data/skills.json';
-import skillTag from './../data/skill_tag.json';
 import { AppContext } from "../context/AppContext";
 import Skill from "../components/Skill";
 import { debounce } from "lodash";
@@ -8,7 +6,7 @@ import Loader from "../components/Loader";
 
 function Skills()
 {
-    const {translate} = useContext(AppContext)
+    const {translate,skills,skillTag} = useContext(AppContext)
     let listTypeInit = [];
     skillTag.forEach((s) => {
         let myTranslate = translate(s.des);

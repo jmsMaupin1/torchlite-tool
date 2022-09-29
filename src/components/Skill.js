@@ -1,5 +1,6 @@
 import React,{useContext,useState} from "react";
 import { AppContext } from "../context/AppContext";
+import HyperLinkTooltip from "./HyperLinkTooltip";
 
 function Skill({skill,index,showDetail}) {
     const {translate} = useContext(AppContext)
@@ -45,9 +46,9 @@ function Skill({skill,index,showDetail}) {
         myReturn = myReturn.replace("$P1$",p1Replace).replace("$+P1$%",p1Replace+"%").replace("$+P1$",p1Replace)
         myReturn = myReturn.replace("$P2$",p2Replace).replace("$+P2$%",p2Replace+"%").replace("$+P2$",p2Replace)
         myReturn = myReturn.replace("$P3$",p3Replace).replace("$+P3$%",p3Replace+"%").replace("$+P3$",p3Replace)
-        let myReg = /<e[^>]*>(.*?)<\/e>/img;
+        //let myReg = /<e[^>]*>(.*?)<\/e>/img;
 
-        return myReturn.replace(myReg,"<a style='color:white;font-weight:bold' href=''>$1</a>");
+        return myReturn//.replace(myReg,"<a style='color:white;font-weight:bold' href=''>$1</a>");
     }
     const changeDetailLevel = (e) => {
         setShowDetailLevel(!showDetailLevel);
@@ -83,10 +84,12 @@ function Skill({skill,index,showDetail}) {
                 </button>
                 :null}
             </div>
-            <div className="mb-2" dangerouslySetInnerHTML={{__html: translate(skill.detail)}}></div>
+            {/* <div className="mb-2" dangerouslySetInnerHTML={{__html: translate(skill.detail)}}></div> */}
+            <HyperLinkTooltip className="mb-2" str={translate(skill.detail)}/>
             {skill.affix.map((affix,i) => (
                 <div key={skill.id+"-"+i}>
-                    <div dangerouslySetInnerHTML={{__html: displayAffixParam(affix.param,affix.text)}}></div>
+                    {/* <div dangerouslySetInnerHTML={{__html: displayAffixParam(affix.param,affix.text)}}></div> */}
+                    <HyperLinkTooltip str={displayAffixParam(affix.param,affix.text)}/>
                     {showDetailLevel ? 
                     <div className='text-gray-400 grid grid-cols-3 md:grid-cols-8 gap-2 flex-wrap'>
                         {Array.isArray(affix.param) ? 
@@ -102,7 +105,6 @@ function Skill({skill,index,showDetail}) {
                     :null}
                 </div>
             ))}
-            
         </div>
     </div>
     )

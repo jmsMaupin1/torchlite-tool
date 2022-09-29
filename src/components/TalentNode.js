@@ -2,10 +2,10 @@
 import React,{useContext,useState,useEffect} from 'react';
 import {Tooltip} from 'flowbite-react'
 import { AppContext } from '../context/AppContext';
+import HyperLinkTooltip from './HyperLinkTooltip';
 
 function TalentNode(props)
 {
-    const {replaceTag} = useContext(AppContext);
     const column = props.column;
     const y = props.y
     const x = props.x
@@ -39,7 +39,7 @@ function TalentNode(props)
                 {column !== undefined ? 
                 <Tooltip key={column.id} className='' content={<>
                         <div>{column.affix.map((affix) => (
-                            <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
+                            <HyperLinkTooltip key={affix} str={affix}/>
                     ))}</div>
                     </>} trigger="hover">
                     <div className='hover:cursor-pointer flex flex-col items-center text-sm' onContextMenu={(e) => removePoint(e,column,type)} onClick={() => addPoint(column,type)}>

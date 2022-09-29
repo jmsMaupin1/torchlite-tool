@@ -2,9 +2,6 @@ import React, {useContext,useEffect,useState} from 'react';
 import { AppContext } from '../context/AppContext';
 import CoreTooltip from '../components/CoreTooltip';
 import BuildSkill2 from '../components/BuildSkill2';
-import profession from './../data/profession.json';
-import skills from './../data/skills.json';
-import talent from './../data/talent.json';
 import TalentNode from '../components/TalentNode';
 import {Modal} from 'flowbite-react'
 import Select, {createFilter} from 'react-select'
@@ -15,9 +12,11 @@ import { FaShareAlt } from "react-icons/fa";
 import {MdTouchApp} from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import HyperLinkTooltip from '../components/HyperLinkTooltip';
+import Loader from '../components/Loader';
 
 function Build() {
-    const {translate,replaceTag,topMenu,sortAlpha} = useContext(AppContext);
+    const {translate,topMenu,sortAlpha,profession,skills,talent,en} = useContext(AppContext);
      // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -629,6 +628,10 @@ function Build() {
         setSpec1Point(_spec1Point)
         setSpec2Point(_spec2Point)
     }
+
+    if(profession == null || en == null) {
+        return (<Loader/>)
+    }
     return (
         <div className='flex md:flex-row flex-col gap-2 p-2'>
             <ToastContainer theme={"dark"} autoClose={2000} />
@@ -747,7 +750,7 @@ function Build() {
                                 <div>
                                     <div><img loading="lazy" src={`img/icons/TalentIcon/${p.icon}.png`} alt="Icon"/></div>
                                     <div>{translate(p.name)}</div>
-                                    <div dangerouslySetInnerHTML={{__html: replaceTag(translate(p.des).replaceAll("#4","").replace("|","<br>"))}}></div>
+                                    <HyperLinkTooltip str={translate(p.des).replaceAll("#4","").replace("|","<br>")}/>
                                 </div>
                                 <div className='text-center'><input type="radio" value={p.id} checked={currentMainProf !== null && currentMainProf.id === p.id} name="profession" onChange={onProfValueChange}/></div>
                             </div>
@@ -765,7 +768,7 @@ function Build() {
                                     <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className='h-20' alt="Icon"/>
                                     <div className='text-center font-bold text-xl'>{translate(subp.name)}</div>
                                 </div>
-                                <div dangerouslySetInnerHTML={{__html: replaceTag(translate(subp.des).replaceAll("#4","").replace("|","<br>"))}}></div> 
+                                <HyperLinkTooltip str={translate(subp.des).replaceAll("#4","").replace("|","<br>")}/>
                             </div>
                             <div className='text-center'><input type="radio" value={subp.id} checked={spec1 !== null && spec1.id === subp.id} name="profession1" onChange={onProf1ValueChange}/></div>
                         </div>
@@ -784,7 +787,7 @@ function Build() {
                                         <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className={`h-20 ${spec1 !== null && spec1.id === subp.id ? "contrast-0":""}`} alt="Icon"/>
                                         <div className='text-center font-bold text-xl'>{translate(subp.name)}</div>
                                     </div>
-                                    <div dangerouslySetInnerHTML={{__html: replaceTag(translate(subp.des).replaceAll("#4","").replace("|","<br>"))}}></div> 
+                                    <HyperLinkTooltip str={translate(subp.des).replaceAll("#4","").replace("|","<br>")}/>
                                 </div>
                                 <div className='text-center'>{spec1 !== null && spec1.id === subp.id ? "":<input type="radio" value={subp.id} checked={spec2 !== null && spec2.id === subp.id} name="profession2" onChange={onProf2ValueChange}/>}</div>
                             </div>
@@ -823,7 +826,8 @@ function Build() {
                         {mainProfStat != null ? 
                             <div className='flex flex-col'>
                             {Object.entries(mainProfStat).map(([affix,stat]) => (
-                                <div key={affix} dangerouslySetInnerHTML={{__html: translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}}></div>
+                                //<div key={affix} dangerouslySetInnerHTML={{__html: translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}}></div>
+                                <HyperLinkTooltip key={affix} str={translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}/>
                             ))}
                             </div>
                         :null}

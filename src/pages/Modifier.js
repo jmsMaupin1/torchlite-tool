@@ -1,11 +1,12 @@
 import React, { useState,useContext } from "react"
-import mod from './../data/modifiers.json';
+import { AppContext } from "../context/AppContext";
 
 function Modifier()
 {
+    const {modifiers} = useContext(AppContext);
     let lastGroup = null;
     let modTab = {};
-    mod.sort((a,b) => a.group - a.group).forEach((mod) => {
+    modifiers.sort((a,b) => a.group - a.group).forEach((mod) => {
         if(lastGroup === null || lastGroup != mod.group) {
             if(modTab[mod.group] == undefined) {
                 modTab[mod.group] = [];    

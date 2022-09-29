@@ -1,12 +1,12 @@
 
 import React, {useContext,useState} from 'react';
 import { AppContext } from '../context/AppContext';
-import profession from './../data/profession.json';
-import talent from './../data/talent.json';
 import { DebounceInput } from 'react-debounce-input'
+import Loader from '../components/Loader';
+import HyperLinkTooltip from '../components/HyperLinkTooltip';
 
 function Talent() {
-    const {translate,replaceTag} = useContext(AppContext);
+    const {translate,profession,talent,en,replaceTag} = useContext(AppContext);
     const [currentClass,setCurrentClass] = useState(null);
     const [currentSearch,setCurrentSearch] = useState(null);
 
@@ -44,7 +44,9 @@ function Talent() {
             return isFind;
         }
     }
-
+    if(profession == null || en == null || talent == null) {
+        return (<Loader/>)
+    }
     return (
         <div className='flex flex-col container p-2'>
             <div className='md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500'>Talent</div>
@@ -65,7 +67,9 @@ function Talent() {
                         <div className='flex flex-col items-center w-full md:w-1/5'>
                             <div className='text-center font-bold text-xl title'>{translate(subp.name)}</div>
                             <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className={`h-20`} alt="Icon"/>
-                            <div className='w-full' dangerouslySetInnerHTML={{__html: replaceTag(translate(subp.des).replaceAll("#4","").replace("|","<br>"))}}></div> 
+                            <div className='w-full'>
+                                <HyperLinkTooltip str={translate(subp.des).replaceAll("#4","").replace("|","<br>")}/>
+                            </div> 
                         </div>
                         
                         <div className='grid grid-cols-1 md:grid-cols-3 gap-1 md:gap-2 md:w-4/5'>
@@ -77,7 +81,9 @@ function Talent() {
                                     </div>
                                     <div>
                                         {tree.affix.map((affix) => (
-                                            <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
+                                            <div key={affix}>
+                                                <HyperLinkTooltip str={affix}/>
+                                            </div>
                                         ))}
                                     </div>
                                 </div>

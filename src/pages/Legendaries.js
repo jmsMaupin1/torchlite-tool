@@ -1,22 +1,26 @@
-import React, { useState,useContext,useCallback} from "react"
-import gold from './../data/item_gold.json';
-import base from './../data/item_base.json';
+import React, { useState,useContext,useEffect} from "react"
 import Legendary from "../components/Legendary";
 import { AppContext } from "../context/AppContext";
 import { DebounceInput } from 'react-debounce-input'
+import Loader from "../components/Loader";
 
 function Legendaries () {
-    const {translate} = useContext(AppContext);
-    
-    let test = [...new Set(base.map((x) => {return x.description2_display}))].sort();
-    let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
+    const {translate,itemGold,itemBase,en} = useContext(AppContext);
     
     // eslint-disable-next-line
-    const [listType,setListType] = useState(tempType);
+    const [listType,setListType] = useState(null);
     const [currentType,setCurrentType] = useState(null);
     const [currentName,setCurrentName] = useState(null);
     const [currentAffix,setCurrentAffix] = useState(null);
     
+    useEffect(() => {
+        if(itemBase !== null) {
+            let test = [...new Set(itemBase.map((x) => {return x.description2_display}))].sort();
+            let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
+            setListType(tempType);
+        }
+        
+    },[itemBase])
 
     const onChangeType = (e) => {
         if(e.target.value === "") {
@@ -50,7 +54,7 @@ function Legendaries () {
         
     }
     const findBase = (e) => {
-        let baseTemp = base.find((b) => b.id === e.base_id);
+        let baseTemp = itemBase.find((b) => b.id === e.base_id);
         if(e.icon !== "" && (baseTemp.description2_display === currentType || currentType == null)){
             // filter for test item
             if(
@@ -77,6 +81,9 @@ function Legendaries () {
         }
     }
     
+    if(listType == null || en == null || itemGold == null) {
+        return <Loader/>
+    }
     return (
         <>
         <div className='md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2'>Legendaries</div>
@@ -94,7 +101,7 @@ function Legendaries () {
             <DebounceInput className='w-auto bg-[#282828] border rounded border-slate-500' placeholder="Search item by affix" debounceTimeout={500} onChange={event => (onChangeAffix(event.target.value))}/>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mx-auto p-2'>
-            {gold.filter(findBase).filter(filterByName).sort((a,b) => a.require_level - b.require_level).map((b) => (
+            {itemGold.filter(findBase).filter(filterByName).sort((a,b) => a.require_level - b.require_level).map((b) => (
                 <Legendary key={b.id} legendary={b} currentAffix={currentAffix} />
             ))}
         </div>

@@ -1,5 +1,6 @@
 import {createContext,useState,useEffect,useRef} from 'react';
-import en from './../data/en.json';
+import {Tooltip} from 'flowbite-react'
+import ReactDOM from 'react-dom/client';
 
 const AppContext = createContext();
 
@@ -8,19 +9,58 @@ const AppContextProvider = (props) => {
     const [currentPage,setCurrentPage] = useState('home');
 
     const [skills,setSkills] = useState(null);
+    const [en,setEn] = useState(null);
+    const [itemBase,setItemBase] = useState(null);
+    const [itemGold,setItemGold] = useState(null);
+    const [modifiers,setModifiers] = useState(null);
+    const [profession,setProfession] = useState(null);
+    const [skillTag,setSkillTag] = useState(null);
+    const [talent,setTalent] = useState(null);
     const topMenu = useRef(null);
     
     useEffect(() => {
         import('./../data/skills.json').then(data => {
+            console.log("skills loaded");
             setSkills(data.default);
         })
+        import('./../data/en.json').then(data => {
+            setEn(data.default);
+            console.log("translation loaded");
+        })
+        import('./../data/item_base.json').then(data => {
+            setItemBase(data.default);
+            console.log("bases loaded");
+        })
+        import('./../data/item_gold.json').then(data => {
+            setItemGold(data.default);
+            console.log("legendary loaded");
+        })
+        import('./../data/modifiers.json').then(data => {
+            setModifiers(data.default);
+            console.log("modifiers loaded");
+        })
+        import('./../data/profession.json').then(data => {
+            setProfession(data.default);
+            console.log("profession loaded");
+        })
+        import('./../data/skill_tag.json').then(data => {
+            setSkillTag(data.default);
+            console.log("skill tag loaded");
+        })
+        import('./../data/talent.json').then(data => {
+            setTalent(data.default);
+            console.log("talent loaded");
+        })
+        
     },[]) 
 
     const translate = (key) => {
         let data = en.find((e) => e.index === key);
         if(data !== undefined) {
-            let myReg = /<e[^>]*>(.*?)<\/e>/img;
-            return data.value.replace(myReg,"<a style='color:white;font-weight:bold' href=''>$1</a>").replace("\\n","<br>");
+            //let myReg = /<e[^>]*>(.*?)<\/e>/img;
+            //en.find((h) => h.index === "hyperlink|des|")
+            //return data.value.replace(myReg,"<a style='color:white;font-weight:bold' href=''>$1</a>").replace("\\n","<br>")
+            return data.value;
         } else {
             return key;
         }
@@ -33,8 +73,9 @@ const AppContextProvider = (props) => {
         if(str === null){
             return "";
         }
-        let myReg = /<e[^>]*>(.*?)<\/e>/img;
-        return str.replace(myReg,"<a style='color:#00ffff;font-weight:bold' href=''>$1</a>").replace("\\n","<br>");
+        //let myReg = /<e[^>]*>(.*?)<\/e>/img;
+        let myReg = /<e([^>]*)[^>]*>(.*?)<\/e>/img
+        return str.replace(myReg,"<a style='color:#00ffff;font-weight:bold' class='tooltip hover:cursor-pointer' $1 href=''>$2</a>").replace("\\n","<br>");
     }
 
     const sortAlpha = (a,b) => {
@@ -45,7 +86,14 @@ const AppContextProvider = (props) => {
     }
 
     return (
-        <AppContext.Provider value={{translate,replaceTag,setCurrentPage,currentPage,sortAlpha,skills,topMenu}}>
+        <AppContext.Provider value={{itemBase,
+            itemGold,
+            modifiers,
+            profession,
+            skillTag,
+            en,
+            replaceTag,
+            talent,translate,setCurrentPage,currentPage,sortAlpha,skills,topMenu}}>
             { props.children }
         </AppContext.Provider>
     )

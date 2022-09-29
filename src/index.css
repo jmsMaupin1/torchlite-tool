@@ -14,6 +14,10 @@
   font-style: normal;
   font-display: swap;
 }
+[role="tooltip"]
+{
+  max-width: 200px;
+}
 
 .title {
   color: #ffc130;
