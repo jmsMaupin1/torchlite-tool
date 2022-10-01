@@ -636,12 +636,12 @@ function Build() {
     return (
         <div className='flex md:flex-row flex-col gap-2 p-2'>
             <ToastContainer theme={"dark"} autoClose={2000} />
-            <div className={`md:w-[20%] gap-2 flex flex-col relative`}>
+            <div className={`md:w-[20%] gap-2 flex flex-col relative `}>
                 <div className={`gap-2  flex flex-col ${sticky ? 'sticky top-2':''}`}>
                     <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
-                        <button className='hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
+                        <button className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
                     </CopyToClipboard>
-                    <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
+                    <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
                         <div className='flex flex-row gap-2 px-2'>
                             <div className='flex flex-row items-center gap-2'>
                                 <div>Skills</div>
@@ -655,33 +655,33 @@ function Build() {
                     </div>
                     
                     {currentMainProf !== null ? 
-                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
                                 <div>{translate(currentMainProf.name)}</div>
                             </div>
                             <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
                         </div>
-                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
+                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
                     {spec1 !== null ? 
-                        <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
+                        <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon"/></div>
                                 <div>{translate(spec1.name)}</div>
                             </div>
                             <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setSpec1(null)}>x</button></div>
                         </div>
-                    :<div onClick={() => fieldRefSelectSpec1.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>2. Select Sub profession 1</div>}
+                    :<div onClick={() => fieldRefSelectSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>2. Select Sub profession 1</div>}
 
                     {spec2 !== null ? 
-                        <div onClick={() => fieldRefSpec2.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
+                        <div onClick={() => fieldRefSpec2.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon"/></div>
                                 <div>{translate(spec2.name)}</div>
                             </div>
                             <div className='mr-2'><button className='text-gray-300 hover:bg-gray-900 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
                         </div>
-                    :<div onClick={() => fieldRefSelectSpec2.current.scrollIntoView()} className='hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>3. Select Sub profession 2</div>}
+                    :<div onClick={() => fieldRefSelectSpec2.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>3. Select Sub profession 2</div>}
                     
                 </div>
             </div>
@@ -746,7 +746,7 @@ function Build() {
                 <div><input type="text" onChange={(e) => filterNode(e)} className={`w-auto bg-[#282828] border rounded border-slate-500 ${currentMainProf === null ? "hidden": "hidden"}`} placeholder={"Filter node..."} /></div>
                 <div className={`${currentMainProf === null ? "": "hidden"} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
                     {profession.filter((p) => p.before_id === "0").map((p) => (
-                        <div key={p.id} className='border p-2 rounded-lg shadow-lg '>
+                        <div key={p.id} className='bg-[#282828] border p-2 rounded-lg shadow-lg '>
                             <div className='bg-contain flex flex-col justify-between bg-no-repeat bg-right-top' style={{backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`}}>
                                 <div>
                                     <div><img loading="lazy" src={`img/icons/TalentIcon/${p.icon}.png`} alt="Icon"/></div>
@@ -762,7 +762,7 @@ function Build() {
                 <div ref={fieldRefSelectSpec1} className={`${currentMainProf === null || spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
                 <div className={`${currentMainProf !== null && spec1 === null  ? "":"hidden"} subProf-${currentMainProf != null ? currentMainProf.id: ""} flex flex-col md:flex-row gap-2 mb-2`}>
                     {profession.filter((p) => currentMainProf !== null && p.before_id === currentMainProf.id).map((subp) => (
-                        <div key={subp.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`}}  className='bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg '>
+                        <div key={subp.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`}}  className='bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg '>
                             <div className='text-center font-bold'>{translate(subp.name)}</div>
                             <div className='flex flex-row justify-between items-center gap-4'>
                                 <div className='flex flex-col items-center'>
@@ -781,7 +781,7 @@ function Build() {
                 {profession.filter((p) => p.before_id === "0").map((p) => (
                     <div key={p.id} className={`${currentMainProf !== null && spec2 === null && spec1 !== null  ? "":"hidden"} subProf-${p.id} flex flex-col md:flex-row gap-2 mb-2`}>
                         {profession.filter((p2) => p2.before_id === p.id).map((subp) => (
-                            <div key={p.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`}}  className={`${spec1 !== null && spec1.id === subp.id ? "grayscale text-gray-500":""} bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg `}>
+                            <div key={p.id+"-"+subp.id} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`}}  className={`${spec1 !== null && spec1.id === subp.id ? "grayscale text-gray-500":""} bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg `}>
                                 <div className='text-center font-bold'>{translate(p.name)}</div>
                                 <div className='flex flex-row justify-between items-center gap-4'>
                                     <div className='flex flex-col items-center'>
@@ -797,7 +797,7 @@ function Build() {
                 ))}
                 
                 {currentTree !== null ? 
-                <div ref={fieldRefMainProf} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 flex flex-col'>
+                <div ref={fieldRefMainProf} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 flex flex-col'>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(currentMainProf.name)}</div>
                     <div>Core Talent</div>
@@ -846,7 +846,7 @@ function Build() {
                 </div>
                 :null}
                 {currentTreeSpec1 !== null ? 
-                <div ref={fieldRefSpec1} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2'>
+                <div ref={fieldRefSpec1} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2'>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(spec1.name)}</div>
                     <div>Core Talent</div>
@@ -916,7 +916,7 @@ function Build() {
                 </div>
                 :null}
                 {currentTreeSpec2 !== null ? 
-                <div ref={fieldRefSpec2} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] :null}.png`}} className='bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2'>
+                <div ref={fieldRefSpec2} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2'>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(spec2.name)}</div>
                     <div>Core Talent</div>

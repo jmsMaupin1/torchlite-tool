@@ -51,7 +51,7 @@ function BuildSkill2(props) {
     return (
         <>
         <div className='flex flex-col h-full'>
-        <div className='grid grid-cols-5 grid-rows-4 relative shadow-md shadow-slate-900 pt-2 pb-5 px-3 gap-x-4 h-full'>
+        <div className='grid grid-cols-5 grid-rows-4 relative shadow-md shadow-slate-900 pt-2 pb-5 px-3 gap-x-4 h-full bg-[#282828]'>
             {/* 1st line */}
             <div></div>
             <div></div>

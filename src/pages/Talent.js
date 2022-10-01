@@ -63,7 +63,7 @@ function Talent() {
             {profession.filter((e) => (e.id === currentClass || e.before_id === currentClass) || currentClass== null).map((subp) => (
                 displayCore(subp).filter(filterAffix).length !== 0 ?
                 <div key={subp.id} className={`subProf-${subp.id} flex flex-col md:flex-row mb-2 w-full`}>
-                    <div className={`w-full relative flex flex-col md:flex-row justify-between border p-2 rounded-lg md:shadow-lg md:shadow-black bg-no-repeat bg-contain bg-right-top`} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png")`}}>
+                    <div className={`bg-[#282828] w-full relative flex flex-col md:flex-row justify-between border p-2 rounded-lg md:shadow-lg md:shadow-black bg-no-repeat bg-contain bg-right-top`} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png")`}}>
                         <div className='flex flex-col items-center w-full md:w-1/5'>
                             <div className='text-center font-bold text-xl title'>{translate(subp.name)}</div>
                             <img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className={`h-20`} alt="Icon"/>
