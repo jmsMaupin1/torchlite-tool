@@ -25,10 +25,6 @@ function Base()
     }
     useEffect(() => {
         if(itemBase !== null) {
-            // let typeTemp = [...new Set(itemBase.map((x) => {return translate(x.description1)}))].sort();
-            // typeTemp = typeTemp.filter((e) => e.indexOf("DEX") > -1 || e.indexOf("STR") > -1 || e.indexOf("INT") > -1)
-            // console.log(typeTemp);
-
             let test = [...new Set(itemBase.map((x) => {return x.description2_display}))].sort();
             let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
             setListType(tempType);
