@@ -13,7 +13,10 @@ const AppContextProvider = (props) => {
     const [profession,setProfession] = useState(null);
     const [skillTag,setSkillTag] = useState(null);
     const [talent,setTalent] = useState(null);
+    const [perk,setPerk] = useState(null);
+    const [hero,setHero] = useState(null);
     const topMenu = useRef(null);
+
     
     useEffect(() => {
 
@@ -48,6 +51,14 @@ const AppContextProvider = (props) => {
         import('./../data/talent.json').then(data => {
             setTalent(data.default);
             console.log("talent loaded");
+        })
+        import('./../data/perk.json').then(data => {
+            setPerk(data.default);
+            console.log("perk loaded");
+        })
+        import('./../data/hero.json').then(data => {
+            setPerk(data.default);
+            console.log("hero loaded");
         })
         
     },[]) 
@@ -91,6 +102,8 @@ const AppContextProvider = (props) => {
             skillTag,
             en,
             replaceTag,
+            perk,
+            hero,
             talent,translate,setCurrentPage,currentPage,sortAlpha,skills,topMenu}}>
             { props.children }
         </AppContext.Provider>

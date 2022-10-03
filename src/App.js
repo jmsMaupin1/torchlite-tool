@@ -3,6 +3,7 @@ import {Outlet,Link } from "react-router-dom";
 import { useContext,useEffect,useState } from 'react';
 import { AppContext } from './context/AppContext';
 import { useLocation } from "react-router-dom"
+import {MdArrowCircleUp} from "react-icons/md";
 
 function App() {
     const {currentPage,setCurrentPage,topMenu} = useContext(AppContext);
@@ -47,6 +48,9 @@ function App() {
                             <Link onClick={() => setMenuOpen(false)} className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`} to="talent"><div className={`flex flex-row gap-2 items-center  ${currentPage === "talent" ? "text-white":""}`}><img className='w-[30px]' src="img/icons/ui/UI_Fight_MenuIconTAL.png" alt="Talent" />Talent</div></Link>
                         </li>
                         <li>
+                            <Link onClick={() => setMenuOpen(false)} className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`} to="trait"><div className={`flex flex-row gap-2 items-center  ${currentPage === "trait" ? "text-white":""}`}><img className='w-[30px]' src="img/icons/ui/UI_Fight_MenuIconCHA.png" alt="trait" />Hero trait</div></Link>
+                        </li>
+                        <li>
                             {/* <Link onClick={() => setCurrentPage('mod')} className={`block py-2 pr-4 pl-3 ${currentPage === "mod" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`} to="mod">Mod</Link> */}
                         </li>
                         
@@ -66,6 +70,9 @@ function App() {
     </header>
     <div className="container mx-auto flex-auto">
         <Outlet />
+    </div>
+    <div className='bottom-0 right-2 fixed'>
+        <button title="Scroll to top" onClick={() => window.scrollTo({top: 0,behavior: "smooth"})}><MdArrowCircleUp className='w-10 h-10' /></button>
     </div>
     <footer className='border-t mt-2 border-gray-500'>
         <div className='text-sm flex justify-between p-2 gap-2 container mx-auto'>

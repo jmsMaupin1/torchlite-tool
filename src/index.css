@@ -26,6 +26,7 @@
 }
 html,#root {
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 #root {
   display:flex;
@@ -44,6 +45,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #282828;
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 code {

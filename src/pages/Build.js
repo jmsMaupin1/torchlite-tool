@@ -14,6 +14,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import Loader from '../components/Loader';
+import hero from './../data/hero.json'
+import perk from './../data/perk.json'
+import {Tooltip} from 'flowbite-react'
 
 function Build() {
     const {translate,topMenu,sortAlpha,profession,skills,talent,en} = useContext(AppContext);
@@ -28,6 +31,7 @@ function Build() {
         skill4,
         skill5,skill6,skill7,skill8,modalValue} = useContext(BuildContext)
     const [currentMainProf,setCurrentMainProf] = useState(null);
+    const [currentTrait,setCurrentTrait] = useState({"15": null,"32":null,"50":null,"62":null,"80":null});
     const [spec1,setSpec1] = useState(null);
     const [spec2,setSpec2] = useState(null);
     
@@ -48,6 +52,7 @@ function Build() {
     // navigation
     const fieldRefSkills = React.useRef(null);
     const fieldRefMainProf = React.useRef(null);
+    const fieldRefTrait = React.useRef(null);
     const fieldRefSelectMainProf = React.useRef(null);
     const fieldRefSpec1 = React.useRef(null);
     const fieldRefSelectSpec1 = React.useRef(null);
@@ -104,8 +109,18 @@ function Build() {
         }
         setSpec2(data);
     }
+    const onTraitValueChange = (e) => {
+        console.log("etarget Value",e.target.value);
+        console.log("eTarget name",e.target.name); //talentLevel_62
+        let currentLevel = e.target.name.split('_')[1];
+        //{"15": null,"32":null,"50":null,"62":null,"80":null}
+        let temp = {...currentTrait};
+        temp[currentLevel] = e.target.value;
+        setCurrentTrait(temp);
+    }
     const onProfValueChange = (e) => {
         setCurrentMainProf(profession.find((p) => p.id === e.target.value))
+        console.log(profession.find((p) => p.id === e.target.value));
     }
     const onProf1ValueChange = (e) => {
         setSpec1(profession.find((p) => p.id === e.target.value));
@@ -630,6 +645,15 @@ function Build() {
         setSpec2Point(_spec2Point)
     }
 
+    const getTalentIdByProfession = (h) => {
+
+        if(currentMainProf.id === "1") {
+            return h.id === "310";
+        }
+        return true;
+        //(h) => currentMainProf.id == "1" ? ["310","600","610","910","920",/*"1100",*/"1300","1310","1400"].includes(h.id)
+        //["310","600","610","910","920",/*"1100",*/"1300","1310","1400"]
+    }
     if(profession === null || en === null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
@@ -663,6 +687,19 @@ function Build() {
                             <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
                         </div>
                     :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
+                    
+                    {currentMainProf !== null ? 
+                        <div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
+                                <div>
+                                    {currentTrait["15"]}
+                                </div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => setCurrentTrait(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select trait</div>}
+
                     {spec1 !== null ? 
                         <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
@@ -775,7 +812,43 @@ function Build() {
                         </div>
                     ))}
                 </div>
-                
+
+                {/* TRAIT */}
+                {currentMainProf !== null ?
+                <>
+                <div ref={fieldRefTrait} className={`${currentMainProf === null ? "hidden": ""} text-center text-xl font-bold`}>Select trait</div>
+                <div className={`trait flex flex-row gap-2 mb-2`}>
+                    {hero.filter((h) => getTalentIdByProfession(h)).map((h) => (
+                        <div key={h.id} className='bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-row justify-between w-full border p-2 rounded-lg shadow-lg '>
+                            {[15,32,50,62,80].map((index) => (
+                                <div key={"box"+index} className='flex flex-col gap-2'>
+                                    {perk.filter((p) => p.hero_id === h.id && p.level === index.toString()).map((p) => (
+                                        <div key={p.character_id} className='flex shadow-md shadow-black p-1 border-t border-black items-center justify-center'>
+                                            <div className='flex flex-col gap-2 p-2 items-center justify-center'>
+                                                <Tooltip className='' content={<div dangerouslySetInnerHTML={{__html:translate(p.desc_max).replaceAll("\\n","<br>")}}></div>}>
+                                                <div className='flex flex-col gap-2 items-center justify-center'>
+                                                    <div><img src={`img/icons/Perks/${p.Icon}.png`} className='h-20' alt="Perk"/></div>
+                                                    <div>
+                                                        <div className='text-center font-bold text-xl title'>{translate(p.name)}</div>
+                                                        <div className='text-base text-center font-normal text-white'>Level {p.level}</div>
+                                                        { index === 32 || index === 62 || index === 80 ? 
+                                                        <div className='text-center '><input type="radio" onChange={onTraitValueChange} value={p.character_id} name={`talentLevel_${index}`}/></div>
+                                                        :null
+                                                        }
+                                                    </div>
+                                                </div>
+                                                </Tooltip>
+                                            </div>                                                                           
+                                        </div>
+                                    ))}
+                                </div> 
+                            ))}
+                            
+                        </div>
+                    ))}
+                </div>
+                </>
+                :null}
                 {/* SPEC 2 */}
                 <div ref={fieldRefSelectSpec2} className={`${spec1 === null || spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
                 {profession.filter((p) => p.before_id === "0").map((p) => (
