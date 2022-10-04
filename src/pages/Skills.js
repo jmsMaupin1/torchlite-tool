@@ -83,7 +83,7 @@ function Skills()
         <div>
             <div className='md:hidden title text-xl p-2 text-center border-b border-slate-500'>Skills</div>
             <div className='flex flex-col md:flex-row mb-2 gap-2 md:items-center p-2'>
-                <div className="flex flex-col md:flex-row gap-2">
+                <div className="flex flex-col md:flex-row gap-2 items-center">
                     <label className="text-white">Skill tag</label>
                     <select onChange={onChangeType} className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto">
                         <option value={""}>Select tag</option>
@@ -92,7 +92,7 @@ function Skills()
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col md:flex-row gap-2">
+                <div className="flex flex-col md:flex-row gap-2 items-center">
                     <label className="text-white">Skill </label>
                     <DebounceInput placeholder={"Name of the skill..."} className="bg-[#282828] border rounded border-slate-500 pl-1" debounceTimeout={500} onChange={event => (onChangeName(event))} />
                 </div>

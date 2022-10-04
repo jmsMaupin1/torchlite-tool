@@ -24,6 +24,9 @@
   font-weight: bold;
   font-family: 'Exo 2';
 }
+.w-fit {
+  width: 100% !important;
+}
 html,#root {
   min-height: 100vh;
   scroll-behavior: smooth;

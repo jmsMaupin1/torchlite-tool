@@ -9,7 +9,8 @@ import { BuildContext } from '../context/BuildContext';
 import {useSearchParams } from "react-router-dom";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { FaShareAlt } from "react-icons/fa";
-import {MdTouchApp} from "react-icons/md";
+import {MdTouchApp,MdArrowRight,MdArrowLeft, MdAdd} from "react-icons/md";
+import {FaTrash} from "react-icons/fa";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import HyperLinkTooltip from '../components/HyperLinkTooltip';
@@ -17,9 +18,10 @@ import Loader from '../components/Loader';
 import hero from './../data/hero.json'
 import perk from './../data/perk.json'
 import {Tooltip} from 'flowbite-react'
-
+import HeroTrait from '../components/HeroTrait';
+import Legendary from '../components/Legendary';
 function Build() {
-    const {translate,topMenu,sortAlpha,profession,skills,talent,en} = useContext(AppContext);
+    const {translate,topMenu,sortAlpha,profession,skills,talent,en,itemGold,itemBase} = useContext(AppContext);
      // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -31,7 +33,8 @@ function Build() {
         skill4,
         skill5,skill6,skill7,skill8,modalValue} = useContext(BuildContext)
     const [currentMainProf,setCurrentMainProf] = useState(null);
-    const [currentTrait,setCurrentTrait] = useState({"15": null,"32":null,"50":null,"62":null,"80":null});
+    const [sideMenuVisible,setSideMenuVisible] = useState(false);
+    const [currentTrait,setCurrentTrait] = useState({"specId":null,"specName": null,"15": null,"32":null,"50":null,"62":null,"80":null});
     const [spec1,setSpec1] = useState(null);
     const [spec2,setSpec2] = useState(null);
     
@@ -58,11 +61,15 @@ function Build() {
     const fieldRefSelectSpec1 = React.useRef(null);
     const fieldRefSpec2 = React.useRef(null);
     const fieldRefSelectSpec2 = React.useRef(null);
+    const fieldRefItems = React.useRef(null);
     
 
     // modal for selected gems
     const [sticky,setSticky] = useState(false);
     
+    // items mandatory
+    const [currentItems,setCurrentItems] = useState([]);
+    const [currentItem,setCurrentItem] = useState(null);
     
     // keep track of point
     
@@ -70,11 +77,11 @@ function Build() {
     const [spec1Point,setSpec1Point] = useState({"nb": 0,"core1":null,"core2":null});
     const [spec2Point,setSpec2Point] = useState({"nb": 0,"core1":null,"core2":null});
     
-    
     // keep track of stat
     const [mainProfStat,setMainProfStat] = useState(null);
     const [spec1Stat,setSpec1Stat] = useState(null);
     const [spec2Stat,setSpec2Stat] = useState(null);
+    const [totalStat,setTotalStat] = useState(null);
 
     // spec1 tree
     const [currentTreeSpec1,setCurrentTreeSpec1] = useState(null);
@@ -89,7 +96,8 @@ function Build() {
         if(data == null) {
             setMainProfPoint({"nb": 0,"core1":null,"core2":null})
             setMainProfStat(null);
-            setCurrentTree(null)
+            setCurrentTree(null);
+            setCurrentTrait({"specId":null,"specName": null,"15": null,"32":null,"50":null,"62":null,"80":null});
         }
         setCurrentMainProf(data);
     }
@@ -110,17 +118,20 @@ function Build() {
         setSpec2(data);
     }
     const onTraitValueChange = (e) => {
-        console.log("etarget Value",e.target.value);
-        console.log("eTarget name",e.target.name); //talentLevel_62
         let currentLevel = e.target.name.split('_')[1];
         //{"15": null,"32":null,"50":null,"62":null,"80":null}
         let temp = {...currentTrait};
         temp[currentLevel] = e.target.value;
         setCurrentTrait(temp);
     }
+    const onSpecChange = (id,name) => {
+        let temp = {...currentTrait};
+        temp["specId"] = id;
+        temp["specName"] = name;
+        setCurrentTrait(temp);
+    }
     const onProfValueChange = (e) => {
         setCurrentMainProf(profession.find((p) => p.id === e.target.value))
-        console.log(profession.find((p) => p.id === e.target.value));
     }
     const onProf1ValueChange = (e) => {
         setSpec1(profession.find((p) => p.id === e.target.value));
@@ -195,7 +206,6 @@ function Build() {
             displayTalentSpec2()
         // eslint-disable-next-line
     },[spec2])
-
     const displayTalent = () => {
         let talentId = currentMainProf.talent_id.split('|');
         let startId = talentId[0];
@@ -354,7 +364,6 @@ function Build() {
             }
         }
         setMainProfStat(_mainProfStat);
-
     }
     const computedStatFromSpec1Tree = () => {
         let _spec1Stat = {}
@@ -394,6 +403,26 @@ function Build() {
         }
         setSpec2Stat(_spec2Stat);
     }
+    const computedTotalStat = () => {
+        // we need to merge the 3 object mainProfStat,spec1Stat,spec2Stat
+        const merged = Object.entries(spec1Stat).reduce((acc, [key, value]) => 
+        // if key is already in map1, add the values, otherwise, create new pair
+        ({ ...acc, [key]: (acc[key] || 0) + value })
+        , { ...mainProfStat });
+
+        const merged2 = Object.entries(spec2Stat).reduce((acc, [key, value]) => 
+        // if key is already in map1, add the values, otherwise, create new pair
+        ({ ...acc, [key]: (acc[key] || 0) + value })
+        , { ...merged });
+        setTotalStat(merged2);
+    }
+    useEffect(() => {
+        if(mainProfStat !== null || spec1Stat !== null || spec2Stat != null)
+            computedTotalStat();
+
+        // eslint-disable-next-line
+    },[mainProfStat,spec1Stat,spec2Stat])
+
     const test = (currentTree) => {
         //"position": "3|1", line 3 , column 1
         let tabTalent = [];
@@ -471,16 +500,16 @@ function Build() {
     }, [debounce, handleScroll])
 
     useEffect(() => {
-        if(searchParams.get("skills") !== null && skills !== null && en !== null) {
+        if(searchParams.get("skills") !== null && skills !== null && en !== null && profession !== null) {
             loadBuild();
         }
         // eslint-disable-next-line
-    },[searchParams.get("skills"),skills,en])
+    },[searchParams.get("skills"),skills,en,profession])
 
     useEffect(() => {
         saveBuild();
     // eslint-disable-next-line
-    },[skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,currentMainProf,spec1,spec2,mainProfPoint,spec1Point,spec2Point])
+    },[skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,currentMainProf,spec1,spec2,mainProfPoint,spec1Point,spec2Point,currentTrait])
 
     const saveBuild = () => {
         // skills
@@ -521,7 +550,11 @@ function Build() {
             }
         }
         string += "core1:"+spec2Point.core1+"-core2:"+spec2Point.core2+"-"+tabSpec2Tree.join("-")
-        
+
+        //add spec data
+        //{"specId":null,"specName": null,"15": null,"32":null,"50":null,"62":null,"80":null}
+
+        string +="&trait="+currentTrait.specId+":"+currentTrait["15"]+","+currentTrait["32"]+","+currentTrait["50"]+","+currentTrait["62"]+","+currentTrait["80"]
         const currentURL = window.location.href
         const pathname = window.location.pathname
         
@@ -643,25 +676,103 @@ function Build() {
         setMainProfPoint(_mainProfPoint)
         setSpec1Point(_spec1Point)
         setSpec2Point(_spec2Point)
+
+        // add trait data
+        //&trait=600:null,600031,null,600051,600061
+        let trait = searchParams.get("trait").split(":");
+        let traitId = trait[0];
+        let traitData = trait[1].split(',');
+        setCurrentTrait({"specId":traitId,"specName": null,"15": traitData[0],"32":traitData[1],"50":traitData[2],"62":traitData[3],"80":traitData[4]});
     }
 
     const getTalentIdByProfession = (h) => {
-
         if(currentMainProf.id === "1") {
             return h.id === "310";
         }
+        if(currentMainProf.id === "2") {
+            // goodess of hunting
+            return (h.id === "600" | h.id === "610")
+        }
+        if(currentMainProf.id === "3") {
+            // wizard
+            return (h.id === "910" | h.id === "920" || h.id === "1300" || h.id === "1310")
+        }
+        if(currentMainProf.id === "4") {
+            return false
+        }
+        if(currentMainProf.id === "5") {
+            return false
+        }
+        if(currentMainProf.id === "6") {
+            // commander
+            return h.id === "1400"
+        }
+        
         return true;
         //(h) => currentMainProf.id == "1" ? ["310","600","610","910","920",/*"1100",*/"1300","1310","1400"].includes(h.id)
         //["310","600","610","910","920",/*"1100",*/"1300","1310","1400"]
     }
-    if(profession === null || en === null) {
+    const toggleSideMneu = () => {
+        
+        if(!sideMenuVisible) {
+            document.getElementById('sideMenu').style.width = "100%";
+            document.getElementById('buttonSideMenu').style.width = "0"
+        } else {
+            document.getElementById('sideMenu').style.width = "0";
+            document.getElementById('buttonSideMenu').style.width = "0.75rem"
+        }
+            
+
+        setSideMenuVisible(!sideMenuVisible);
+        
+        
+    }
+    const addItem = () => {
+        let myItems = itemGold.find((i) => i.id === currentItem);
+        if(currentItems.includes(myItems)) {
+            toast.error("Item already added")
+            return;
+        }
+        console.log("myItems",myItems)
+        let temp = [...currentItems]
+        temp.push(myItems);
+        setCurrentItems(temp);
+    }
+    useEffect(() => {
+        console.log(currentItems);
+    },[currentItems])
+    const removeItem = (id) => {
+        let temp = [...currentItems]
+        temp.splice(currentItems.findIndex((i) => i.id === id), 1);
+        setCurrentItems([...temp]);
+    }
+    const changeItem = (e) => {
+        console.log(e.value);
+        setCurrentItem(e.value);
+    }
+    const findBase = (e) => {
+        let baseTemp = itemBase.find((b) => b.id === e.base_id);
+        if(e.icon !== ""){
+            // filter for test item
+            if(
+                ((e.prefix[0] != null && e.prefix[0].tier1[0] === "(40-60) strength") && (e.prefix[1] != null && e.prefix[1].tier1[0] === "(40-60) strength"))
+            || ((e.suffix[0] != null && e.suffix[0].tier1[0] === "(40-60) strength") && (e.suffix[1] != null && e.suffix[1].tier1[0] === "(40-60) strength"))
+            ) {
+                return false
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+    if(profession === null || en === null || itemGold === null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
         <div className='flex md:flex-row flex-col gap-2 p-2'>
-            <ToastContainer theme={"dark"} autoClose={2000} />
-            <div className={`md:w-[20%] gap-2 flex flex-col relative `}>
-                <div className={`gap-2  flex flex-col ${sticky ? 'sticky top-2':''}`}>
+            <div id="sideMenu" className='sideMenu md:hidden flex flex-row fixed top-1/3 left-0 z-10 overflow-hidden'  style={{transition: '0.3s',width: '0px'}}>
+                <div className='flex flex-col w-full'>
                     <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
                         <button className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
                     </CopyToClipboard>
@@ -693,7 +804,7 @@ function Build() {
                             <div className='flex flex-row gap-2'>
                                 <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
                                 <div>
-                                    {currentTrait["15"]}
+                                    {currentTrait["specName"]}
                                 </div>
                             </div>
                             <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => setCurrentTrait(null)}>x</button></div>
@@ -719,7 +830,89 @@ function Build() {
                             <div className='mr-2'><button className='text-gray-300 hover:bg-gray-900 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
                         </div>
                     :<div onClick={() => fieldRefSelectSpec2.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>3. Select Sub profession 2</div>}
+                    {totalStat != null ? 
+                        <div className='flex flex-col bg-[#282828] hover:bg-gray-900 hover:cursor-pointer border rounded-md justify-between p-1'>
+                            <div className='text-center border-b border-slate-700'>Total Stats</div>
+                            
+                            {Object.entries(totalStat).map(([affix,stat]) => (
+                                <HyperLinkTooltip className='text-left text-sm break-words' key={affix} str={translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}/>
+                            ))}
+                        </div>
+                    :null}
+                </div>
+                <div onClick={() => toggleSideMneu()} className='bg-black w-3 flex flex-row items-center' style={{transition: '0.3s'}}><MdArrowLeft/></div>
+            </div>
+            <div id="buttonSideMenu" onClick={() => toggleSideMneu()} style={{transition: '0.5s'}} className={`md:hidden bg-black w-3 flex fixed top-1/2 z-10 left-0 flex-row`}><MdArrowRight/></div>
+
+            <ToastContainer theme={"dark"} autoClose={2000} />
+            <div className={`md:w-[20%] gap-2 flex flex-col relative `}>
+                <div className={`gap-1 flex flex-col ${sticky ? 'sticky top-2':''}`}>
+                    <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
+                        <button className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
+                    </CopyToClipboard>
+                    <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
+                        <div className='flex flex-row gap-2 px-2'>
+                            <div className='flex flex-row items-center gap-2'>
+                                <div>Skills</div>
+                                {skill1.skill !== null && skill1.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill1.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill2.skill !== null && skill2.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill2.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill3.skill !== null && skill3.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill3.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill4.skill !== null && skill4.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill4.skill.img}.png`} alt="Icon"/></div>:null}
+                                {skill5.skill !== null && skill5.skill.img !== undefined ? <div><img loading="lazy" className='h-6' src={`img/icons/skills/${skill5.skill.img}.png`} alt="Icon"/></div>:null}
+                            </div>
+                        </div>
+                    </div>
                     
+                    {currentMainProf !== null ? 
+                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(currentMainProf.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
+                    
+                    {currentMainProf !== null ? 
+                        <div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
+                                <div>
+                                    {currentTrait["specName"]}
+                                </div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => setCurrentTrait(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select trait</div>}
+
+                    {spec1 !== null ? 
+                        <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(spec1.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setSpec1(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefSelectSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>2. Select Sub profession 1</div>}
+
+                    {spec2 !== null ? 
+                        <div onClick={() => fieldRefSpec2.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(spec2.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:bg-gray-900 hover:cursor-pointer' onClick={() => _setSpec2(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefSelectSpec2.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>3. Select Sub profession 2</div>}
+                    {totalStat != null ? 
+                        <div className='flex flex-col bg-[#282828] hover:bg-gray-900 hover:cursor-pointer border rounded-md justify-between p-1'>
+                            <div className='text-center border-b border-slate-700'>Total Stats</div>
+                            
+                            {Object.entries(totalStat).map(([affix,stat]) => (
+                                <HyperLinkTooltip className='text-left text-sm break-words' key={affix} str={translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}/>
+                            ))}
+                        </div>
+                    :null}
                 </div>
             </div>
             <div className='w-full'>
@@ -768,15 +961,35 @@ function Build() {
                         </div>
                     </div>
                 </div>
-                <div className='border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between'>
-                    <div className='flex flex-row gap-2 items-center'>
-                        <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{transform: 'rotateY(180deg)'}}/></div>
-                        <div>add point</div>
-                        <div>
-                            <img loading="lazy" className='hidden md:block' src="img/rightBtn.png" alt="Right click" />
-                            <div><MdTouchApp className='md:hidden' alt="Long Press" /></div>
-                        </div>
-                        <div>remove point</div>
+                <div ref={fieldRefItems} className={`text-center text-xl font-bold`}>Mandatory Items</div>
+                <div className='bg-[#282828] border p-2 rounded-lg shadow-lg '>
+                    <div className='flex flex-row items-center'>
+                        <Select id="selectItems" className="w-1/2" classNamePrefix="select"
+                            isClearable={true}
+                            isSearchable={true}
+                            captureMenuScroll={false}
+                            filterOption={createFilter({ ignoreAccents: false })}
+                            onChange={(e) => changeItem(e)}
+                            options={itemGold.filter(findBase).sort((a,b) => a.require_level - b.require_level).map(((i) => {return {"value":i.id,"label":translate(i.name),"img":i.icon}}))}
+                            formatOptionLabel={item => (
+                                <div className="item-option flex flex-row gap-2">
+                                    <div><img loading="lazy" src={`img/icons/${item.img}.png`} className="w-[24px] aspect-square" alt="Icon"/></div>
+                                    <div><span>{item.label}</span></div>
+                                </div>
+                            )}
+                        />
+                        <div title="Add item" className='hover:cursor-pointer text-3xl' onClick={() => addItem()}><MdAdd/></div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2'>
+                        {currentItems.map((b) => (
+                            <div className='flex flex-col items-center gap-2  justify-between'>
+                                <Legendary key={b.id} legendary={b} currentAffix={null} className='h-full w-full'/>
+                                <div onClick={() => removeItem(b.id)} className='hover:cursor-pointer w-full bg-[#282828] border rounded border-slate-500 flex flex-row items-center gap-2 justify-center'>
+                                    <div><FaTrash /></div>
+                                    <div>Remove </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
@@ -817,35 +1030,8 @@ function Build() {
                 {currentMainProf !== null ?
                 <>
                 <div ref={fieldRefTrait} className={`${currentMainProf === null ? "hidden": ""} text-center text-xl font-bold`}>Select trait</div>
-                <div className={`trait flex flex-row gap-2 mb-2`}>
-                    {hero.filter((h) => getTalentIdByProfession(h)).map((h) => (
-                        <div key={h.id} className='bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-row justify-between w-full border p-2 rounded-lg shadow-lg '>
-                            {[15,32,50,62,80].map((index) => (
-                                <div key={"box"+index} className='flex flex-col gap-2'>
-                                    {perk.filter((p) => p.hero_id === h.id && p.level === index.toString()).map((p) => (
-                                        <div key={p.character_id} className='flex shadow-md shadow-black p-1 border-t border-black items-center justify-center'>
-                                            <div className='flex flex-col gap-2 p-2 items-center justify-center'>
-                                                <Tooltip className='' content={<div dangerouslySetInnerHTML={{__html:translate(p.desc_max).replaceAll("\\n","<br>")}}></div>}>
-                                                <div className='flex flex-col gap-2 items-center justify-center'>
-                                                    <div><img src={`img/icons/Perks/${p.Icon}.png`} className='h-20' alt="Perk"/></div>
-                                                    <div>
-                                                        <div className='text-center font-bold text-xl title'>{translate(p.name)}</div>
-                                                        <div className='text-base text-center font-normal text-white'>Level {p.level}</div>
-                                                        { index === 32 || index === 62 || index === 80 ? 
-                                                        <div className='text-center '><input type="radio" onChange={onTraitValueChange} value={p.character_id} name={`talentLevel_${index}`}/></div>
-                                                        :null
-                                                        }
-                                                    </div>
-                                                </div>
-                                                </Tooltip>
-                                            </div>                                                                           
-                                        </div>
-                                    ))}
-                                </div> 
-                            ))}
-                            
-                        </div>
-                    ))}
+                <div className={`trait flex flex-col gap-2 mb-2 w-full`}>
+                    <HeroTrait currentTrait={currentTrait} perk={perk} hero={hero.filter((h) => getTalentIdByProfession(h))} onSpecChange={onSpecChange} onTraitValueChange={onTraitValueChange} />
                 </div>
                 </>
                 :null}
@@ -868,7 +1054,17 @@ function Build() {
                         ))}
                     </div>
                 ))}
-                
+                <div className='border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between'>
+                    <div className='flex flex-row gap-2 items-center'>
+                        <div><img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{transform: 'rotateY(180deg)'}}/></div>
+                        <div>add point</div>
+                        <div>
+                            <img loading="lazy" className='hidden md:block' src="img/rightBtn.png" alt="Right click" />
+                            <div><MdTouchApp className='md:hidden' alt="Long Press" /></div>
+                        </div>
+                        <div>remove point</div>
+                    </div>
+                </div>
                 {currentTree !== null ? 
                 <div ref={fieldRefMainProf} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 flex flex-col'>
                 <div className='text-center flex flex-col justify-center'>
@@ -900,13 +1096,12 @@ function Build() {
                         {mainProfStat != null ? 
                             <div className='flex flex-col'>
                             {Object.entries(mainProfStat).map(([affix,stat]) => (
-                                //<div key={affix} dangerouslySetInnerHTML={{__html: translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}}></div>
                                 <HyperLinkTooltip key={affix} str={translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}/>
                             ))}
                             </div>
                         :null}
                     </div>
-                    <div>
+                    <div className='overflow-x-auto pl-48 md:pl-0'>
                     {currentTreeOrder.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
@@ -954,33 +1149,11 @@ function Build() {
                             </div>
                         :null}
                     </div>
-                    <div>
+                    <div className='overflow-x-auto pl-48 md:pl-0'>
                     {currentTreeOrderSpec1.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
                             <TalentNode search={currentNodeFilter} key={"talentNode"+y} type={"spec1"} column={column} y={y} profPoint={spec1Point} x={x} removePoint={removePoint} addPoint={addPoint} />
-                            // <React.Fragment key={"column"+y}>
-                            // <div className={`separator w-[54px] h-[1px] ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" }`}></div>
-                            // <div className={`flex flex-col justify-between min-w-[54px] ${(x-1) === 0 ? "place-self-start items-center" : ""}`}>
-                            //     {(x-1) === 0 ? <div className='mb-2 font-bold bg-white text-black rounded-md px-1'>{(y-1)*3}</div>:null}
-                            //     {column !== undefined ? 
-                            //     <Tooltip key={column.id} className='' content={<>
-                            //             {/* <div>ID: {column.id}</div><div>level up time {column.level_up_time}</div>
-                            //             <div>need points {column.need_points}</div>
-                            //             <div>before {column.before_id}</div>
-                            //             <div>position {column.position}</div> */}
-                            //             <div>{column.affix.map((affix) => (
-                            //                 <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
-                            //         ))}</div>                                
-                            //         </>} trigger="hover">
-                            //     <div className='hover:cursor-pointer flex flex-col items-center text-sm' onContextMenu={(e) => removePoint(e,column,"spec1")} onClick={() => addPoint(column,"spec1")}>
-                            //         <div><img loading="lazy" className={`${spec1Point[column.position] === undefined || spec1Point[column.position] === 0 ? "contrast-0":""} rounded-full  border-4 w-[54px]`} src={`img/icons/${column.position === "0|0" ? "CoreTalentIcon": "TalentIcon"}/${column.icon}.png`} alt="Icon"/></div>
-                            //         <div>{spec1Point[column.position] !== undefined ? spec1Point[column.position] : 0}/{column.level_up_time}</div>
-                            //     </div>
-                            //     </Tooltip>
-                            //     :null}
-                            // </div>
-                            // </React.Fragment>
                         ))}
                         </div>
                     ))}
@@ -1024,33 +1197,11 @@ function Build() {
                             </div>
                         :null}
                     </div>
-                    <div>
+                    <div className='overflow-x-auto pl-48 md:pl-0'>
                         {currentTreeOrderSpec2.map((line,x) => (
                             <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                             {line.map((column,y) => (
                                 <TalentNode search={currentNodeFilter} key={"talentNode"+y} type={"spec2"} column={column} y={y} profPoint={spec2Point} x={x} removePoint={removePoint} addPoint={addPoint} />
-                                // <React.Fragment key={"column"+y}>
-                                // <div className={`separator w-[54px] h-[1px] ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" }`}></div>
-                                // <div className={`flex flex-col justify-between min-w-[54px] ${(x-1) === 0 ? "place-self-start items-center" : ""}`}>
-                                //     {(x-1) === 0 ? <div className='mb-2 font-bold bg-white text-black rounded-md px-1'>{(y-1)*3}</div>:null}
-                                //     {column !== undefined ? 
-                                //     <Tooltip key={column.id} className='' content={<>
-                                //             {/* <div>ID: {column.id}</div><div>level up time {column.level_up_time}</div>
-                                //             <div>need points {column.need_points}</div>
-                                //             <div>before {column.before_id}</div>
-                                //             <div>position {column.position}</div> */}
-                                //             <div>{column.affix.map((affix) => (
-                                //                 <div key={affix} dangerouslySetInnerHTML={{__html: replaceTag(affix)}}></div>
-                                //         ))}</div>                                
-                                //         </>} trigger="hover">
-                                //     <div className='hover:cursor-pointer flex flex-col items-center text-sm' onContextMenu={(e) => removePoint(e,column,"spec2")} onClick={() => addPoint(column,"spec2")}>
-                                //         <div><img loading="lazy" className={`${spec2Point[column.position] === undefined || spec2Point[column.position] === 0 ? "contrast-0":""} rounded-full  border-4 w-[54px]`} src={`img/icons/${column.position === "0|0" ? "CoreTalentIcon": "TalentIcon"}/${column.icon}.png`} alt="Icon"/></div>
-                                //         <div>{spec2Point[column.position] !== undefined ? spec2Point[column.position] : 0}/{column.level_up_time}</div>
-                                //     </div>
-                                //     </Tooltip>
-                                //     :null}
-                                // </div>
-                                // </React.Fragment>
                             ))}
                             </div>
                         ))}

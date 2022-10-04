@@ -29,7 +29,7 @@ function HyperLinkTooltip({str,className,style})
         )
     } else {
         return (
-            <Tooltip className='max-w-[70px]' content={<div dangerouslySetInnerHTML={{__html: content}}></div>} trigger="hover">
+            <Tooltip content={<div dangerouslySetInnerHTML={{__html: content}}></div>} trigger="hover">
                 <div style={style} className={className} dangerouslySetInnerHTML={{__html: myStringReturn}}></div>
             </Tooltip>
         )

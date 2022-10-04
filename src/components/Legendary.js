@@ -45,7 +45,7 @@ function Legendary(props) {
 
     const currentBase = itemBase.find((e) => e.id === b.base_id);
     return (
-        <div className={`${isVisible === false ? "hidden":""} flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-between shadow-lg shadow-black`}>
+        <div className={`${isVisible === false ? "hidden":""} flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-between shadow-lg shadow-black ${props.className}`}>
             <div className='flex flex-row gap-2 items-center justify-between'>
                 <div className='flex flex-row gap-2 items-center'>
                     <div><img loading="lazy" src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>
@@ -66,7 +66,7 @@ function Legendary(props) {
                 </div>
             </div>
             {currentBase !== undefined && currentBase.suffix !== undefined ?
-                <HyperLinkTooltip className='mx-auto text-center w-[50%] border-b border-slate-500 ' str={currentBase.suffix}/>
+                <HyperLinkTooltip style={{width: '100%'}} className='w-full text-center border-b border-slate-500' str={currentBase.suffix}/>
             :null}
             <div className='flex flex-col'>
                 

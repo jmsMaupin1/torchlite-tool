@@ -80,7 +80,7 @@ function Talent() {
                                         <div className='title'>{translate(tree.name)}</div>
                                     </div>
                                     <div>
-                                        {tree.affix.map((affix) => (
+                                        {tree.affix?.map((affix) => (
                                             <div key={affix}>
                                                 <HyperLinkTooltip str={affix}/>
                                             </div>

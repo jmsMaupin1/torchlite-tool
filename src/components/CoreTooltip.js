@@ -34,7 +34,7 @@ function CoreTooltip(props) {
     <>
         <div className={`absolute z-10 w-50 flex flex-row ${!visible ? "hidden":""}`}>
         {returnSlice().map((tree,index) => (
-            <Tooltip key={tree.id+"-"+index} content={<div>{tree.affix.map((affix) => (
+            <Tooltip key={tree.id+"-"+index} content={<div>{tree.affix?.map((affix) => (
                     <HyperLinkTooltip key={affix} str={affix}/>
                 ))}</div>}>
             <div onClick={() => {onSpecCoreChange(tree.id,coreNumber);setVisible(false)}} className={`bg-slate-900 border rounded-md p-2 hover:cursor-pointer items-center flex flex-col ${index === 2 ? 'mr-10':''} `}>
