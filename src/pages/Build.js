@@ -428,15 +428,22 @@ function Build() {
     }
     const computedTotalStat = () => {
         // we need to merge the 3 object mainProfStat,spec1Stat,spec2Stat
-        const merged = Object.entries(spec1Stat).reduce((acc, [key, value]) => 
-        // if key is already in map1, add the values, otherwise, create new pair
-        ({ ...acc, [key]: (acc[key] || 0) + value })
-        , { ...mainProfStat });
+        let merged = []
+        let merged2 = []
+        if(mainProfStat !== null && spec1Stat !== null) {
+            merged = Object.entries(spec1Stat).reduce((acc, [key, value]) => 
+            // if key is already in map1, add the values, otherwise, create new pair
+            ({ ...acc, [key]: (acc[key] || 0) + value })
+            , { ...mainProfStat });
+        }
 
-        const merged2 = Object.entries(spec2Stat).reduce((acc, [key, value]) => 
-        // if key is already in map1, add the values, otherwise, create new pair
-        ({ ...acc, [key]: (acc[key] || 0) + value })
-        , { ...merged });
+        if(spec2Stat !== null) {
+            merged2 = Object.entries(spec2Stat).reduce((acc, [key, value]) => 
+            // if key is already in map1, add the values, otherwise, create new pair
+            ({ ...acc, [key]: (acc[key] || 0) + value })
+            , { ...merged });
+        }
+        
         setTotalStat(merged2);
     }
     useEffect(() => {
@@ -750,8 +757,6 @@ function Build() {
         }
         
         return true;
-        //(h) => currentMainProf.id == "1" ? ["310","600","610","910","920",/*"1100",*/"1300","1310","1400"].includes(h.id)
-        //["310","600","610","910","920",/*"1100",*/"1300","1310","1400"]
     }
     const toggleSideMneu = () => {
         
