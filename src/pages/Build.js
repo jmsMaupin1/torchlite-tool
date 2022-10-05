@@ -705,19 +705,25 @@ function Build() {
 
         // add trait data
         //&trait=600:null,600031,null,600051,600061
-        let trait = searchParams.get("trait").split(":");
-        let traitId = trait[0];
-        let traitData = trait[1].split(',');
-        setCurrentTrait({"specId":traitId,"specName": null,"15": traitData[0],"32":traitData[1],"50":traitData[2],"62":traitData[3],"80":traitData[4]});
+        if(searchParams.get("trait") !== null) {
+            let trait = searchParams.get("trait").split(":");
+            let traitId = trait[0];
+            let traitData = trait[1].split(',');
+            setCurrentTrait({"specId":traitId,"specName": null,"15": traitData[0],"32":traitData[1],"50":traitData[2],"62":traitData[3],"80":traitData[4]});
+        }
+        
 
         // add item data
         //&items=112307,112201
-        let items = searchParams.get("items").split(",");
-        let tabItems = [];
-        items.forEach((i) => {
-            tabItems.push(itemGold.find((g) => g.id === i));
-        })
-        setCurrentItems(tabItems);
+        if(searchParams.get('items') !== null) {
+            let items = searchParams.get("items").split(",");
+            let tabItems = [];
+            items.forEach((i) => {
+                tabItems.push(itemGold.find((g) => g.id === i));
+            })
+            setCurrentItems(tabItems);
+        }
+        
     }
 
     const getTalentIdByProfession = (h) => {
