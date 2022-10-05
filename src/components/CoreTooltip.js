@@ -37,7 +37,7 @@ function CoreTooltip(props) {
             <Tooltip key={tree.id+"-"+index} content={<div>{tree.affix?.map((affix) => (
                     <HyperLinkTooltip key={affix} str={affix}/>
                 ))}</div>}>
-            <div onClick={() => {onSpecCoreChange(tree.id,coreNumber);setVisible(false)}} className={`bg-slate-900 border rounded-md p-2 hover:cursor-pointer items-center flex flex-col ${index === 2 ? 'mr-10':''} `}>
+            <div onClick={() => {onSpecCoreChange(tree.id,coreNumber,tree.attr);setVisible(false)}} className={`bg-slate-900 border rounded-md p-2 hover:cursor-pointer items-center flex flex-col ${index === 2 ? 'mr-10':''} `}>
                 <div><img loading="lazy" className='w-[54px]' src={`img/icons/CoreTalentIcon/${tree.icon}.png`} alt="Icon"/></div>
                 <div>{translate(tree.name)}</div>
             </div>

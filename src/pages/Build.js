@@ -139,7 +139,7 @@ function Build() {
     const onProf2ValueChange = (e) => {
         setSpec2(profession.find((p) => p.id === e.target.value));
     }
-    const onSpecCoreChange = (e,index) => {
+    const onSpecCoreChange = (e,index,attr) => {
         let temp = {...mainProfPoint}
         if(index === 1) {
             temp.core1 = e;
@@ -147,8 +147,9 @@ function Build() {
         if(index === 2) {
             temp.core2 = e;
         }
-        //this.refs.Tooltip.hide();
+        
         setMainProfPoint(temp);
+
     }
     const onSpec1CoreChange = (e,index) => {
         let temp = {...spec1Point}
@@ -347,6 +348,7 @@ function Build() {
     const computedStatFromTree = () => {
         //mainProfPoint
         //currentTree
+        //console.log(mainProfPoint);
         let _mainProfStat = {}
         for (const [position, value] of Object.entries(mainProfPoint)) {
             if(position !== "nb" && position !== "core1" && position !== "core2") {
@@ -362,7 +364,28 @@ function Build() {
                     })                    
                 }
             }
+            // if(position === "core1" || position === "core2") {
+            //     if(talent !== null) {
+            //         let attr = talent.find((t) => t.id === value)
+            //         if(attr !== undefined) {
+            //             attr = attr.attr.split(';');
+            //             attr.forEach((a) => {
+            //                 if(_mainProfStat[a.split(':')[0]] === undefined) {
+            //                     _mainProfStat[a.split(':')[0]] = []
+            //                 }
+            //                 _mainProfStat[a.split(':')[0]] += a.split(':')[1]
+            //             })  
+            //         } else {
+            //             console.log("Talent "+value+" not found");
+            //         }
+            //         //attr.split(';');
+            //         //101010236:[25];101010373:[25]
+            //         //101010059:[45];491348:[5,1]
+                    
+            //     }
+            // }
         }
+        // console.log("_mainProfStat",_mainProfStat)
         setMainProfStat(_mainProfStat);
     }
     const computedStatFromSpec1Tree = () => {
@@ -509,7 +532,7 @@ function Build() {
     useEffect(() => {
         saveBuild();
     // eslint-disable-next-line
-    },[skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,currentMainProf,spec1,spec2,mainProfPoint,spec1Point,spec2Point,currentTrait])
+    },[skill1,skill2,skill3,skill4,skill5,skill6,skill7,skill8,currentMainProf,spec1,spec2,mainProfPoint,spec1Point,spec2Point,currentTrait,currentItems])
 
     const saveBuild = () => {
         // skills
@@ -555,6 +578,9 @@ function Build() {
         //{"specId":null,"specName": null,"15": null,"32":null,"50":null,"62":null,"80":null}
 
         string +="&trait="+currentTrait.specId+":"+currentTrait["15"]+","+currentTrait["32"]+","+currentTrait["50"]+","+currentTrait["62"]+","+currentTrait["80"]
+
+        //add items data
+        string +="&items="+currentItems.map((i) => {return i.id}).join(',')
         const currentURL = window.location.href
         const pathname = window.location.pathname
         
@@ -683,6 +709,15 @@ function Build() {
         let traitId = trait[0];
         let traitData = trait[1].split(',');
         setCurrentTrait({"specId":traitId,"specName": null,"15": traitData[0],"32":traitData[1],"50":traitData[2],"62":traitData[3],"80":traitData[4]});
+
+        // add item data
+        //&items=112307,112201
+        let items = searchParams.get("items").split(",");
+        let tabItems = [];
+        items.forEach((i) => {
+            tabItems.push(itemGold.find((g) => g.id === i));
+        })
+        setCurrentItems(tabItems);
     }
 
     const getTalentIdByProfession = (h) => {
@@ -733,21 +768,18 @@ function Build() {
             toast.error("Item already added")
             return;
         }
-        console.log("myItems",myItems)
+        //console.log("myItems",myItems)
         let temp = [...currentItems]
         temp.push(myItems);
         setCurrentItems(temp);
     }
-    useEffect(() => {
-        console.log(currentItems);
-    },[currentItems])
     const removeItem = (id) => {
         let temp = [...currentItems]
         temp.splice(currentItems.findIndex((i) => i.id === id), 1);
         setCurrentItems([...temp]);
     }
     const changeItem = (e) => {
-        console.log(e.value);
+        //console.log(e.value);
         setCurrentItem(e.value);
     }
     const findBase = (e) => {
@@ -766,7 +798,7 @@ function Build() {
             return false;
         }
     }
-    if(profession === null || en === null || itemGold === null) {
+    if(profession === null || en === null || itemGold === null || talent === null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
     return (
@@ -982,7 +1014,7 @@ function Build() {
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2'>
                         {currentItems.map((b) => (
-                            <div className='flex flex-col items-center gap-2  justify-between'>
+                            <div key={b.id} className='flex flex-col items-center gap-2  justify-between'>
                                 <Legendary key={b.id} legendary={b} currentAffix={null} className='h-full w-full'/>
                                 <div onClick={() => removeItem(b.id)} className='hover:cursor-pointer w-full bg-[#282828] border rounded border-slate-500 flex flex-row items-center gap-2 justify-center'>
                                     <div><FaTrash /></div>

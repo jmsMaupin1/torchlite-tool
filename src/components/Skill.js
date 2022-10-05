@@ -33,7 +33,6 @@ function Skill({skill,index,showDetail}) {
                 p2Replace = param[1];
             }
         }
-
         if(p1Replace !== undefined && p1Replace.indexOf("-") === -1) {
             p1Replace = "+"+p1Replace;
         }
@@ -42,6 +41,15 @@ function Skill({skill,index,showDetail}) {
         }
         if(p3Replace !== undefined && p3Replace.indexOf("-") === -1) {
             p3Replace = "+"+p3Replace;
+        }
+        if(p1Replace !== undefined && p1Replace.indexOf("/") > -1) {
+            p1Replace = p1Replace.replace("1/2","0.5").replace("1/3","0.3","1/4","0.25","1/5","0.2");
+        }
+        if(p2Replace !== undefined && p2Replace.indexOf("/") > -1) {
+            p2Replace = p2Replace.replace("1/2","0.5").replace("1/3","0.3","1/4","0.25","1/5","0.2");
+        }
+        if(p3Replace !== undefined && p3Replace.indexOf("/") > -1) {
+            p3Replace = p3Replace.replace("1/2","0.5").replace("1/3","0.3","1/4","0.25","1/5","0.2");
         }
         myReturn = myReturn.replace("$P1$",p1Replace).replace("$+P1$%",p1Replace+"%").replace("$+P1$",p1Replace)
         myReturn = myReturn.replace("$P2$",p2Replace).replace("$+P2$%",p2Replace+"%").replace("$+P2$",p2Replace)
