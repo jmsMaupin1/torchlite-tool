@@ -14,6 +14,7 @@ const AppContextProvider = (props) => {
     const [skillTag,setSkillTag] = useState(null);
     const [talent,setTalent] = useState(null);
     const [perk,setPerk] = useState(null);
+    // eslint-disable-next-line
     const [hero,setHero] = useState(null);
     const topMenu = useRef(null);
 

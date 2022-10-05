@@ -36,6 +36,7 @@ function Talent() {
             return true;
         } else {
             let isFind = false
+            // eslint-disable-next-line
             tree.affix.map((affix) => {
                 if(replaceTag(affix).toLowerCase().includes(currentSearch.toLowerCase())) {
                     isFind = true;

@@ -32,7 +32,7 @@ function Base()
     },[itemBase])
 
     const onChangeCurrentLevel = (value) => {
-        if(value == "") {
+        if(value === "") {
             setCurrentMinimumLevel(null)
         } else {
             setCurrentMinimumLevel(value)

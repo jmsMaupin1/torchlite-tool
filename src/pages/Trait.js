@@ -1,44 +1,14 @@
 
-import React, {useContext,useState} from 'react';
+import React, {useContext} from 'react';
 import { AppContext } from '../context/AppContext';
-import { DebounceInput } from 'react-debounce-input'
 import Loader from '../components/Loader';
 import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import hero from './../data/hero.json'
 import perk from './../data/perk.json'
 
 function Trait() {
-    const {translate,en,replaceTag} = useContext(AppContext);
-    const [currentClass,setCurrentClass] = useState(null);
-    const [currentSearch,setCurrentSearch] = useState(null);
-
-    const onChangeClass = (e) => {
-        if(e.target.value === "") {
-            setCurrentClass(null);    
-        } else {
-            setCurrentClass(e.target.value);
-        }
-    }
-    const onChangeSearch = (value) => {
-        if(value !== "") {
-            setCurrentSearch(value)
-        } else {
-            setCurrentSearch(null);
-        }
-    }
-    const filterAffix = (tree) => {
-        if(currentSearch == null) {
-            return true;
-        } else {
-            let isFind = false
-            tree.affix.map((affix) => {
-                if(replaceTag(affix).toLowerCase().includes(currentSearch.toLowerCase())) {
-                    isFind = true;
-                }
-            })
-            return isFind;
-        }
-    }
+    const {translate,en} = useContext(AppContext);
+    
     if(en == null || hero == null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }

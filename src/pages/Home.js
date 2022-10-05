@@ -1,8 +1,9 @@
 import {Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+
 function Home() {
-    const {currentPage,setCurrentPage} = useContext(AppContext);
+    const {setCurrentPage} = useContext(AppContext);
 
     return (
     <>

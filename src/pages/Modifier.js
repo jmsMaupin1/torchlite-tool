@@ -7,6 +7,7 @@ function Modifier()
 {
     const {modifiers} = useContext(AppContext);
 
+    // eslint-disable-next-line
     const [mod,setMod] = useState(null);
     const [modTab,setModTab] = useState(null);
     const [name,setName] = useState("aaaaaaaaaa");
@@ -27,6 +28,7 @@ function Modifier()
             })
             setModTab(modTab);
         }
+    // eslint-disable-next-line
     },[modifiers])
     const displayAffix = (modTab) => {
         if(modTab.affix[0] !== undefined) {

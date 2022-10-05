@@ -22,7 +22,7 @@ function HeroTrait(props) {
             let spec = perk.find((p) => p.hero_id === heroTraits[0].id && p.level === "1");
             onSpecChange(heroTraits[0].id,translate(spec.name));
         }
-
+    // eslint-disable-next-line
     },[currentTrait])
     
     return (

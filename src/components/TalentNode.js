@@ -29,10 +29,10 @@ function TalentNode(props)
         }
         setIsHightlight(shouldHl);
     },[search])
-
+    
     return (
         <React.Fragment key={"column"+y}>
-            <div className={`separator w-[54px] h-[1px] ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" }`}></div>
+            <div className={`separator min-w-[20px] min-h-[1px] w-[54px] h-[1px] column${y} ${column !== undefined && column.before_id !== "" ? "border -mt-1":"" } ${y === 1 ? "hidden":""}`}></div>
             <div className={`flex flex-col justify-between min-w-[54px] ${(x-1) === 0 ? "place-self-start items-center" : ""}`}>
                 {(x-1) === 0 ? <div className='mb-2 font-bold bg-white text-black rounded-md px-1'>{(y-1)*3}</div>:null}
                 {column !== undefined ? 

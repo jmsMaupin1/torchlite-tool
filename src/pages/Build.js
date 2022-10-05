@@ -17,11 +17,11 @@ import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import Loader from '../components/Loader';
 import hero from './../data/hero.json'
 import perk from './../data/perk.json'
-import {Tooltip} from 'flowbite-react'
 import HeroTrait from '../components/HeroTrait';
 import Legendary from '../components/Legendary';
+
 function Build() {
-    const {translate,topMenu,sortAlpha,profession,skills,talent,en,itemGold,itemBase} = useContext(AppContext);
+    const {translate,topMenu,sortAlpha,profession,skills,talent,en,itemGold} = useContext(AppContext);
      // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -783,7 +783,6 @@ function Build() {
         setCurrentItem(e.value);
     }
     const findBase = (e) => {
-        let baseTemp = itemBase.find((b) => b.id === e.base_id);
         if(e.icon !== ""){
             // filter for test item
             if(
@@ -1122,7 +1121,7 @@ function Build() {
                 </div>
                 <div className='text-center'>Tree</div>
                 <div className='text-center'>{mainProfPoint.nb}</div>
-                <div className="flex flex-row gap-2 justify-between">
+                <div className="flex flex-row gap-2 justify-between overflow-clip w-fit">
                     <div>
                         <div>STATS</div>
                         {mainProfStat != null ? 
@@ -1133,7 +1132,7 @@ function Build() {
                             </div>
                         :null}
                     </div>
-                    <div className='overflow-x-auto pl-48 md:pl-0'>
+                    <div className='overflow-x-auto flex flex-col items-start md:pl-0'>
                     {currentTreeOrder.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
@@ -1170,7 +1169,7 @@ function Build() {
                 </div>
                 <div className='text-center'>Tree</div>
                 <div className='text-center'>{spec1Point.nb}</div>
-                <div className='flex flex-row justify-between'>
+                <div className='flex flex-row justify-between overflow-clip'>
                     <div>
                         <div>STATS</div>
                         {spec1Stat != null ? 
@@ -1181,7 +1180,7 @@ function Build() {
                             </div>
                         :null}
                     </div>
-                    <div className='overflow-x-auto pl-48 md:pl-0'>
+                    <div className='overflow-x-auto flex flex-col items-start md:pl-0'>
                     {currentTreeOrderSpec1.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
@@ -1218,7 +1217,7 @@ function Build() {
                 </div>
                 <div className='text-center'>Tree</div>
                 <div className='text-center'>{spec2Point.nb}</div>
-                <div className='flex flex-row justify-between'>
+                <div className='flex flex-row justify-between overflow-clip'>
                     <div>
                         <div>STATS</div>
                         {spec2Stat != null ? 
@@ -1229,7 +1228,7 @@ function Build() {
                             </div>
                         :null}
                     </div>
-                    <div className='overflow-x-auto pl-48 md:pl-0'>
+                    <div className='overflow-x-auto flex flex-col items-start md:pl-0'>
                         {currentTreeOrderSpec2.map((line,x) => (
                             <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                             {line.map((column,y) => (
