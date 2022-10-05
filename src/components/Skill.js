@@ -87,7 +87,7 @@ function Skill({skill,index,showDetail}) {
                     <label className="inline-flex relative items-center cursor-pointer">
                         <input type="checkbox" onChange={changeDetailLevel} className="sr-only peer" />
                         <div className="w-11 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-5 after:transition-all dark:border-gray-600"></div>
-                        <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show Stat by level</span>
+                        <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show advanced stats</span>
                     </label>
                 </button>
                 :null}
@@ -113,6 +113,16 @@ function Skill({skill,index,showDetail}) {
                     :null}
                 </div>
             ))}
+            {/* {showDetailLevel ? <div>
+                <div className='title'>Damage multiplier</div>
+                {skill.damage_effective.split(';').map((d) => (
+                    <div className='flex flex-row gap-2 border-b border-slate-600 px-2'>
+                        <div>Level {d.split(':')[0]}</div>
+                        <div>{d.split(':')[d.split(':').length-1]}%</div>
+                    </div>
+                ))}
+            </div>
+            :null} */}
         </div>
     </div>
     )
