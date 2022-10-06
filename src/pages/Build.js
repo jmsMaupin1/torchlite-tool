@@ -594,16 +594,16 @@ function Build() {
 
         //add items data
         string +="&items="+currentItems.filter((i) => i !== undefined).map((i) => {return i.id}).join(',')
+        
         const currentURL = window.location.href
         const pathname = window.location.pathname
-        
         //tricks for github pages
         let prefix = "";
         if(currentURL.includes("th3conc3pt3ur.github.io")) {
             prefix = "/torchlight-helper"
         }
 
-        let _buildUrl = currentURL.replace(pathname,"")+prefix+"/build?"+string;
+        let _buildUrl = window.location.origin+pathname+"?"+string;
         setBuildUrl(_buildUrl);
     }
 
@@ -616,7 +616,6 @@ function Build() {
         let tabSkills = mySkills.split(',');
         tabSkills.forEach((skill,index) => {
             let tempSkill = skill.split(":");
-            console.log(tempSkill);
             let mainSkill = tempSkill[0];
             let supportSkill = tempSkill[1].split('-')
             let dataSkill = skills.find((e) => e.id === mainSkill);
