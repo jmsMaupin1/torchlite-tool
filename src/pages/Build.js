@@ -587,7 +587,7 @@ function Build() {
         string +="&trait="+currentTrait.specId+":"+currentTrait["15"]+","+currentTrait["32"]+","+currentTrait["50"]+","+currentTrait["62"]+","+currentTrait["80"]
 
         //add items data
-        string +="&items="+currentItems.map((i) => {return i.id}).join(',')
+        string +="&items="+currentItems.filter((i) => i !== undefined).map((i) => {return i.id}).join(',')
         const currentURL = window.location.href
         const pathname = window.location.pathname
         
@@ -1023,7 +1023,7 @@ function Build() {
                         <div title="Add item" className='hover:cursor-pointer text-3xl' onClick={() => addItem()}><MdAdd/></div>
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2'>
-                        {currentItems.map((b) => (
+                        {currentItems.filter((b) => b !== undefined ).map((b) => (
                             <div key={b.id} className='flex flex-col items-center gap-2  justify-between'>
                                 <Legendary key={b.id} legendary={b} currentAffix={null} className='h-full w-full'/>
                                 <div onClick={() => removeItem(b.id)} className='hover:cursor-pointer w-full bg-[#282828] border rounded border-slate-500 flex flex-row items-center gap-2 justify-center'>
