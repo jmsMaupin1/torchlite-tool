@@ -19,6 +19,7 @@ import hero from './../data/hero.json'
 import perk from './../data/perk.json'
 import HeroTrait from '../components/HeroTrait';
 import Legendary from '../components/Legendary';
+import { DebounceInput } from 'react-debounce-input'
 
 function Build() {
     const {translate,topMenu,sortAlpha,profession,skills,talent,en,itemGold} = useContext(AppContext);
@@ -496,7 +497,12 @@ function Build() {
     }
     const filterNode = (e) => {
         //console.log("filter",e.target.value);
-        setCurrentNodeFilter(e.target.value);
+        if(e.target.value === "") {
+            setCurrentNodeFilter(null);    
+        } else {
+            setCurrentNodeFilter(e.target.value);
+        }
+        
     }
     // eslint-disable-next-line
     const handleScroll = () => {
@@ -610,6 +616,7 @@ function Build() {
         let tabSkills = mySkills.split(',');
         tabSkills.forEach((skill,index) => {
             let tempSkill = skill.split(":");
+            console.log(tempSkill);
             let mainSkill = tempSkill[0];
             let supportSkill = tempSkill[1].split('-')
             let dataSkill = skills.find((e) => e.id === mainSkill);
@@ -1034,8 +1041,7 @@ function Build() {
                         ))}
                     </div>
                 </div>
-                <div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>
-                <div><input type="text" onChange={(e) => filterNode(e)} className={`w-auto bg-[#282828] border rounded border-slate-500 ${currentMainProf === null ? "hidden": "hidden"}`} placeholder={"Filter node..."} /></div>
+                <div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? "": "hidden"} text-center text-xl font-bold`}>Select initial Profession</div>                
                 <div className={`${currentMainProf === null ? "": "hidden"} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
                     {profession.filter((p) => p.before_id === "0").map((p) => (
                         <div key={p.id} className='bg-[#282828] border p-2 rounded-lg shadow-lg '>
@@ -1109,6 +1115,7 @@ function Build() {
                 </div>
                 {currentTree !== null ? 
                 <div ref={fieldRefMainProf} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf !== null ? currentMainProf.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 flex flex-col'>
+                <div><DebounceInput value={currentNodeFilter} className='w-auto bg-[#282828] border rounded border-slate-500' placeholder="Filter node..." debounceTimeout={500} onChange={event => (filterNode(event))}/></div>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(currentMainProf.name)}</div>
                     <div>Core Talent</div>
@@ -1136,14 +1143,14 @@ function Build() {
                     <div>
                         <div>STATS</div>
                         {mainProfStat != null ? 
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col overflow-y-auto text-sm'>
                             {Object.entries(mainProfStat).map(([affix,stat]) => (
                                 <HyperLinkTooltip key={affix} str={translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}/>
                             ))}
                             </div>
                         :null}
                     </div>
-                    <div className='overflow-x-auto flex flex-col items-start md:pl-0'>
+                    <div className='overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0'>
                     {currentTreeOrder.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
@@ -1157,6 +1164,7 @@ function Build() {
                 :null}
                 {currentTreeSpec1 !== null ? 
                 <div ref={fieldRefSpec1} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2'>
+                    <div><DebounceInput value={currentNodeFilter} className='w-auto bg-[#282828] border rounded border-slate-500' placeholder="Filter node..." debounceTimeout={500} onChange={event => (filterNode(event))}/></div>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(spec1.name)}</div>
                     <div>Core Talent</div>
@@ -1180,18 +1188,18 @@ function Build() {
                 </div>
                 <div className='text-center'>Tree</div>
                 <div className='text-center'>{spec1Point.nb}</div>
-                <div className='flex flex-row justify-between overflow-clip'>
+                <div className='flex flex-row justify-between '>
                     <div>
                         <div>STATS</div>
                         {spec1Stat != null ? 
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col text-sm'>
                             {Object.entries(spec1Stat).map(([affix,stat]) => (
                                 <div key={affix} dangerouslySetInnerHTML={{__html: translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}}></div>
                             ))}
                             </div>
                         :null}
                     </div>
-                    <div className='overflow-x-auto flex flex-col items-start md:pl-0'>
+                    <div className='overflow-auto md:overflow-visible flex flex-col items-start md:pl-0'>
                     {currentTreeOrderSpec1.map((line,x) => (
                         <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                         {line.map((column,y) => (
@@ -1205,6 +1213,7 @@ function Build() {
                 :null}
                 {currentTreeSpec2 !== null ? 
                 <div ref={fieldRefSpec2} style={{backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] :null}.png`}} className='bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2'>
+                    <div><DebounceInput value={currentNodeFilter} className='w-auto bg-[#282828] border rounded border-slate-500' placeholder="Filter node..." debounceTimeout={500} onChange={event => (filterNode(event))}/></div>
                 <div className='text-center flex flex-col justify-center'>
                     <div className='font-bold text-xl'>{translate(spec2.name)}</div>
                     <div>Core Talent</div>
@@ -1232,14 +1241,14 @@ function Build() {
                     <div>
                         <div>STATS</div>
                         {spec2Stat != null ? 
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col text-sm'>
                             {Object.entries(spec2Stat).map(([affix,stat]) => (
                                 <div key={affix} dangerouslySetInnerHTML={{__html: translate("affix_class|description|"+affix).replace("$P1$",stat).replace("$+P1$","+"+stat)}}></div>
                             ))}
                             </div>
                         :null}
                     </div>
-                    <div className='overflow-x-auto flex flex-col items-start md:pl-0'>
+                    <div className='overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0'>
                         {currentTreeOrderSpec2.map((line,x) => (
                             <div key={"line"+x} className='flex flex-row  justify-center items-center'>
                             {line.map((column,y) => (
