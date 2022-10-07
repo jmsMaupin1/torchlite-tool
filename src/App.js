@@ -31,7 +31,7 @@ function App() {
                     </button>
                 </div>
                 <div className={`${menuOpen ? "":"hidden"} justify-between items-center w-full md:flex md:w-auto md:order-1`}>
-                    <ul className="flex flex-col p-4 pb-2 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
+                    <ul className="flex flex-col p-2 pb-2 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
                         <li>
                             <Link onClick={() => setMenuOpen(false)} className={`title hover:text-white block py-2 pr-4 pl-3 rounded md:bg-transparent  md:p-0 `} to="/"><div className={`flex flex-row gap-2 items-center ${currentPage === "" || currentPage === null ? "text-white":""}`}><img className='w-[30px]' src="img/icons/ui/UI_Fight_MenuIconTP.png" alt="Home" />Home</div></Link>
                         </li>
@@ -62,6 +62,14 @@ function App() {
                                     <div className='absolute text-sm text-red-600 -top-2 -right-2 rotate-12'>BETA</div>
                                 </div>
                             </Link>
+                        </li>
+                        <li>
+                            <a rel="noreferrer" className="title" href="http://paypal.me/TheConcepteur" target="_blank">
+                                <div className={`hover:bg-red-900 hover:text-white pt-1 md:pt-0 flex flex-row gap-2 items-center px-2 rounded bg-red-600 bg-opacity-20`}>
+                                    <div className='w-[30px] text-2xl'>💗</div>
+                                    <div>Donate</div>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </div>

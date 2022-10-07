@@ -44,6 +44,7 @@ function Build() {
     const [currentNodeFilter,setCurrentNodeFilter] = useState(null);
     
     const [buildUrl,setBuildUrl] = useState(null);
+    const [buildUrlMinified,setBuildUrlMinified] = useState(null);
     /* {
         "spec" : currentMainProf.id,
         "spec1": spec1.id,
@@ -597,14 +598,9 @@ function Build() {
         
         const currentURL = window.location.href
         const pathname = window.location.pathname
-        //tricks for github pages
-        let prefix = "";
-        if(currentURL.includes("th3conc3pt3ur.github.io")) {
-            prefix = "/torchlight-helper"
-        }
-
         let _buildUrl = window.location.origin+pathname+"?"+string;
         setBuildUrl(_buildUrl);
+            
     }
 
     const loadBuild = () => {
@@ -814,6 +810,39 @@ function Build() {
             return false;
         }
     }
+    const getMinifier = () => {
+        var fd = new FormData();
+        fd.append('link', buildUrl);
+
+        const requestOptions = {
+            method: 'POST',
+            body: fd
+        };
+        let url = "";
+        const currentURL = window.location.href
+        if(currentURL.includes("th3conc3pt3ur.github.io")) {
+            url = "https://tli.fr.nf/minifier"
+        } else {
+            url = "https://127.0.0.1:8000/minifier"
+        }
+        fetch(url, requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
+                if (!response.ok) {
+                    // get error message from body or default to response status
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
+                console.log(data.url);
+                setBuildUrlMinified(data.url);
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            //.then(data => {console.log(data.url);
+    }
     if(profession === null || en === null || itemGold === null || talent === null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
@@ -821,9 +850,16 @@ function Build() {
         <div className='flex md:flex-row flex-col gap-2 p-2'>
             <div id="sideMenu" className='sideMenu md:hidden flex flex-row fixed top-1/3 left-0 z-10 overflow-hidden'  style={{transition: '0.3s',width: '0px'}}>
                 <div className='flex flex-col w-full'>
-                    <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
+                    {buildUrlMinified === null ?
+                    <button onClick={() => getMinifier()} className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'>
+                        <FaShareAlt /> Generate build url
+                    </button>
+                    :null}
+                    {buildUrlMinified !== null ?
+                    <CopyToClipboard onClick={() => getMinifier()} text={buildUrl} onCopy={() => {toast.success("Build url copied !");setBuildUrlMinified(null)}}>
                         <button className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
                     </CopyToClipboard>
+                    :null}
                     <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
                         <div className='flex flex-row gap-2 px-2'>
                             <div className='flex flex-row items-center gap-2'>
@@ -895,9 +931,17 @@ function Build() {
             <ToastContainer theme={"dark"} autoClose={2000} />
             <div className={`md:w-[20%] gap-2 flex flex-col relative `}>
                 <div className={`gap-1 flex flex-col ${sticky ? 'sticky top-2':''}`}>
-                    <CopyToClipboard text={buildUrl} onCopy={() => toast.success("Build url copied !")}>
+                    {buildUrlMinified === null ?
+                    <button onClick={() => getMinifier()} className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'>
+                        <FaShareAlt /> Generate build url
+                    </button>
+                    :null}
+                    {buildUrlMinified !== null ?
+                    <CopyToClipboard text={buildUrlMinified} onCopy={() => {toast.success("Build url copied !");setBuildUrlMinified(null)}}>
                         <button className='bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2'><FaShareAlt /> Copy build url</button>
                     </CopyToClipboard>
+                    :null}
+                    
                     <div onClick={() => fieldRefSkills.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between'>
                         <div className='flex flex-row gap-2 px-2'>
                             <div className='flex flex-row items-center gap-2'>
