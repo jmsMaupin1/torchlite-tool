@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import {formatArray} from "../utils/utils";
 import { DebounceInput } from 'react-debounce-input'
 import { ViewportList } from 'react-viewport-list';
+import { useMediaQuery } from 'react-responsive';
 
 function Base() {
     const {translate, itemBase,en} = useContext(AppContext);
@@ -13,6 +14,7 @@ function Base() {
     const [currentType,setCurrentType] = useState(null);
     const [currentMinimumLevel,setCurrentMinimumLevel] = useState(null);
     const [currrentAttr,setCurrentAttr] = useState("");
+    const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
 
     const typeForAttr = ["Chest","Feet","Hands","Head","Off hand"]
     const onChangeType = (e) => {
@@ -53,7 +55,7 @@ function Base() {
     const filteredBase = itemBase.filter((el) => el.type1 === "1" && el.icon !== "" && el.name !== translate(el.name) && (el.description2_display === currentType || currentType == null)).filter((e) => currentMinimumLevel === null || parseInt(e.require_level) >= parseInt(currentMinimumLevel)).filter((e) => currrentAttr === null || translate(e.description1).indexOf(currrentAttr) > -1).sort((a,b) => a.require_level - b.require_level);
 
     //format Array for matching 2/4 items per chunks
-    const formatedArray = formatArray(filteredBase, 4);
+    const formatedArray = formatArray(filteredBase, isMedium ? 4 : 2);
 
     return (
         <>

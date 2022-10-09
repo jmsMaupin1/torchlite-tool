@@ -18,11 +18,11 @@ function BaseCard({cardData}) {
                 </div>
             </div>
             <div className='flex flex-col items-center'>
-                {cardData?.suffix !== undefined && cardData?.suffix !== [] ?
+                {cardData?.suffix !== undefined && cardData?.suffix !== [] &&
                     cardData?.suffix.map((s,i) => (
                         <HyperLinkTooltip key={"suffix-"+i} className='text-center' str={s}/>
                     ))
-                    : null}
+                }
             </div>
             {/* position = "2/3" weapon, we don't display base_attr for  */}
             {cardData?.base_attr_display !== undefined && cardData?.position?.indexOf("2") === -1 && cardData?.position?.indexOf("2|3") === -1 &&

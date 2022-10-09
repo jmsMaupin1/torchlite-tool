@@ -3,28 +3,33 @@ import Legendary from "../components/Legendary";
 import { AppContext } from "../context/AppContext";
 import { DebounceInput } from 'react-debounce-input'
 import Loader from "../components/Loader";
+import { ViewportList } from 'react-viewport-list';
+import { useMediaQuery } from 'react-responsive';
+import {formatArray} from "../utils/utils";
 
 function Legendaries () {
     const {translate,itemGold,itemBase,en} = useContext(AppContext);
-    
+    const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
+    const isLarge = useMediaQuery({ query: '(min-width: 1024px)' });
+
     // eslint-disable-next-line
     const [listType,setListType] = useState(null);
     const [currentType,setCurrentType] = useState(null);
     const [currentName,setCurrentName] = useState(null);
     const [currentAffix,setCurrentAffix] = useState(null);
-    
+
     useEffect(() => {
         if(itemBase !== null) {
             let test = [...new Set(itemBase.map((x) => {return x.description2_display}))].sort();
             let tempType = test.filter((e) => e !== undefined && e.indexOf("|") === -1)
             setListType(tempType);
         }
-        
+
     },[itemBase])
 
     const onChangeType = (e) => {
         if(e.target.value === "") {
-            setCurrentType(null);    
+            setCurrentType(null);
         } else {
             setCurrentType(e.target.value);
         }
@@ -33,16 +38,16 @@ function Legendaries () {
     //     const debouncedFilter = useCallback(debounce(() => {
     //         setCurrentName(e.target.value);
     //       }, 500),[])
-        
+
     //     debouncedFilter()
     // }
     const onChangeName = (value) => {
         if(value === "") {
-            setCurrentName(null);    
+            setCurrentName(null);
         } else {
             setCurrentName(value);
         }
-        
+
     }
 
     const onChangeAffix = (value) => {
@@ -51,7 +56,7 @@ function Legendaries () {
         } else {
             setCurrentAffix(value)
         }
-        
+
     }
     const findBase = (e) => {
         let baseTemp = itemBase.find((b) => b.id === e.base_id);
@@ -80,10 +85,19 @@ function Legendaries () {
             return true;
         }
     }
-    
+
     if(listType == null || en == null || itemGold == null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
+
+    let formatedArray = itemGold.filter(findBase).filter(filterByName).sort((a,b) => a.require_level - b.require_level);
+
+    //format Array for matching 2/4 items per chunks
+    if(isLarge)
+        formatedArray = formatArray(formatedArray, 3);
+    else if(isMedium)
+        formatedArray = formatArray(formatedArray, 2);
+
     return (
         <>
         <div className='md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2'>Legendaries</div>
@@ -100,11 +114,38 @@ function Legendaries () {
             <label>Affix</label>
             <DebounceInput className='w-auto bg-[#282828] border rounded border-slate-500' placeholder="Search item by affix" debounceTimeout={500} onChange={event => (onChangeAffix(event.target.value))}/>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mx-auto p-2'>
-            {itemGold.filter(findBase).filter(filterByName).sort((a,b) => a.require_level - b.require_level).map((b) => (
-                <Legendary key={b.id} legendary={b} currentAffix={currentAffix} />
-            ))}
-        </div>
+            {
+                (isMedium || isLarge) ?
+                    <div className='grid grid-cols-1 gap-10 mx-auto'>
+                        <ViewportList
+                            items={formatedArray}
+                        >
+                            {(items, index) => {
+                                return(
+                                    <div className='grid grid-cols-2 lg:grid-cols-3 gap-10 px-2' key={index}>
+                                        {
+                                            items.map((item, key) => {
+                                                return <Legendary key={key} legendary={item} currentAffix={currentAffix} />
+                                            })
+                                        }
+                                    </div>
+                                )
+                            }}
+                        </ViewportList>
+                    </div>
+                    :
+                    <div className='grid grid-cols-1 gap-10 mx-auto p-2'>
+                        <ViewportList
+                            items={formatedArray}
+                        >
+                            {(item, key) => {
+                                return(
+                                    <Legendary key={key} legendary={item} currentAffix={currentAffix} />
+                                )
+                            }}
+                        </ViewportList>
+                    </div>
+            }
         </>
     )
 }
