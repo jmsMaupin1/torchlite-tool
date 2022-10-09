@@ -4,12 +4,11 @@ import Skill from "../components/Skill";
 import { debounce } from "lodash";
 import Loader from "../components/Loader";
 import { DebounceInput } from 'react-debounce-input'
+import { ViewportList } from 'react-viewport-list';
 
 function Skills()
 {
     const {translate,skills,skillTag,en} = useContext(AppContext)
-    
-    
     const [skillList,setSkillList] = useState(null);
     const [listType,setListType] = useState(null);
     const [currentType,setCurrentType] = useState(null);
@@ -18,7 +17,7 @@ function Skills()
 
 
     const onChangeType = (e) => {
-        if(e.target.value === "") 
+        if(e.target.value === "")
             setCurrentType(null);
         else
             setCurrentType(e.target.value);
@@ -35,7 +34,6 @@ function Skills()
         if(skillList !== null) {
             computedSkillList();
         }
-        
         if(isLoading === true) {
             setIsLoading(false);
         }
@@ -53,8 +51,8 @@ function Skills()
             })
             listTypeInit.sort();
             setListType([...listTypeInit]);
-        }   
-        // eslint-disable-next-line     
+        }
+        // eslint-disable-next-line
     },[skillTag,en])
 
     useEffect(() => {
@@ -65,7 +63,7 @@ function Skills()
 
     const computedSkillList = () => {
         let temp = [...skillList];
-        temp = skillList.filter((el) => 
+        temp = skillList.filter((el) =>
             el.detail !== "" && el.detail !== translate(el.detail) && (el.tag.includes(currentType) || currentType == null)
         );
 
@@ -74,10 +72,10 @@ function Skills()
         }
         return temp;
     }
-    
     if(skills == null || skillTag == null || listType == null || en == null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
+
     return (
         <>
         <div>
@@ -96,14 +94,18 @@ function Skills()
                     <label className="text-white">Skill </label>
                     <DebounceInput placeholder={"Name of the skill..."} className="bg-[#282828] border rounded border-slate-500 pl-1" debounceTimeout={500} onChange={event => (onChangeName(event))} />
                 </div>
-                {isLoading ? <Loader text=""/>: null}
+                {isLoading && <Loader text=""/>}
             </div>
         </div>
-        
+
         <div className='grid grid-cols-1 gap-10 mx-auto p-2'>
-            {computedSkillList().map((b,index) => (
-                <Skill key={"skill"+index} skill={b} index={index}/>
-            ))}
+            <ViewportList
+                items={computedSkillList()}
+            >
+                {(item, index) => (
+                    <Skill key={"skill"+index} skill={item} index={index}/>
+                )}
+            </ViewportList>
         </div>
         </>
     )
