@@ -1,13 +1,13 @@
 import React, { useState,useContext,useEffect } from "react"
-import HyperLinkTooltip from "../components/HyperLinkTooltip";
 import { AppContext } from "../context/AppContext";
+import BaseCard  from "../components/BaseCard";
 import Loader from "../components/Loader";
+import {formatArray} from "../utils/utils";
 import { DebounceInput } from 'react-debounce-input'
+import { ViewportList } from 'react-viewport-list';
 
-function Base()
-{
-    const {translate,itemBase,en} = useContext(AppContext);
-
+function Base() {
+    const {translate, itemBase,en} = useContext(AppContext);
     // eslint-disable-next-line
     const [listType,setListType] = useState(null);
     const [currentType,setCurrentType] = useState(null);
@@ -17,7 +17,7 @@ function Base()
     const typeForAttr = ["Chest","Feet","Hands","Head","Off hand"]
     const onChangeType = (e) => {
         if(e.target.value === "") {
-            setCurrentType(null);    
+            setCurrentType(null);
         } else {
             setCurrentType(e.target.value);
         }
@@ -49,6 +49,12 @@ function Base()
     if(itemBase === null || listType === null || en === null) {
         return (<Loader className='w-full container mx-auto max-h-40 flex'/>)
     }
+
+    const filteredBase = itemBase.filter((el) => el.type1 === "1" && el.icon !== "" && el.name !== translate(el.name) && (el.description2_display === currentType || currentType == null)).filter((e) => currentMinimumLevel === null || parseInt(e.require_level) >= parseInt(currentMinimumLevel)).filter((e) => currrentAttr === null || translate(e.description1).indexOf(currrentAttr) > -1).sort((a,b) => a.require_level - b.require_level);
+
+    //format Array for matching 2/4 items per chunks
+    const formatedArray = formatArray(filteredBase, 4);
+
     return (
         <>
         <div className='md:hidden title text-xl p-2 text-center border-b border-slate-500'>Base</div>
@@ -73,43 +79,30 @@ function Base()
                     <option value=""> -- Select attr --</option>
                     <option value={"INT"}>INT</option>
                     <option value={"DEX"}>DEX</option>
-                    <option value={"STR"}>STR</option>                    
+                    <option value={"STR"}>STR</option>
                 </select>
             </div>
             :null}
         </div>
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-10 mx-auto px-2'>
-            {itemBase.filter((el) => el.type1 === "1" && el.icon !== "" && el.name !== translate(el.name) && (el.description2_display === currentType || currentType == null)).filter((e) => currentMinimumLevel === null || parseInt(e.require_level) >= parseInt(currentMinimumLevel)).filter((e) => currrentAttr === null || translate(e.description1).indexOf(currrentAttr) > -1).sort((a,b) => a.require_level - b.require_level).map((b) => (
-                <div key={b.id} className='flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-between'>
-                    <div className='flex flex-row gap-2 items-center'>
-                        <div><img loading="lazy" src={`img/icons/${b.icon}.png`} className="w-[64px]" alt="Icon"/></div>
-                        <div className='flex flex-col'>
-                            <div className='title'>{translate(b.name)}</div>
-                            <div className='border border-[#333] rounded-md  px-2 text-[#bfbfbf] text-sm'>Require level {b.require_level}</div>
-                            <div className='border border-[#333] rounded-md px-2 text-[#bfbfbf] text-sm'>{translate(b.description1)}</div>
+        <div className='grid grid-cols-1 gap-10 mx-auto'>
+            <ViewportList
+                items={formatedArray}
+            >
+                {(items, index) => {
+                    return(
+                        <div className='grid grid-cols-2 md:grid-cols-4 gap-10 px-2' key={index}>
+                            {
+                                items.map((item, key) => {
+                                    return <BaseCard cardData={item} key={key}/>
+                                })
+                            }
                         </div>
-                    </div>
-                    <div className='flex flex-col items-center'>
-                    {b.suffix !== undefined && b.suffix !== [] ? 
-                        b.suffix.map((s,i) => (
-                            <HyperLinkTooltip key={"suffix-"+i} className='text-center' str={s}/>
-                        ))
-                     : null}
-                    </div>
-                    {/* position = "2/3" weapon, we don't display base_attr for  */}
-                    {b.base_attr_display !== undefined && b.position.indexOf("2") === -1 && b.position.indexOf("2|3") === -1 ?
-                    <div className=''>
-                        <div className='base_list flex flex-col text-center'>
-                            {b.base_attr_display.map((attr,i) => (
-                                <div key={i}>{attr}</div>
-                            ))}
-                        </div>
-                    </div>
-                    :null}
-                </div>
-            ))}
+                    )
+                }}
+            </ViewportList>
         </div>
         </>
     )
 }
+
 export default Base;
