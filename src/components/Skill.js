@@ -24,7 +24,6 @@ function Skill({skill,index,showDetail}) {
                     p3Replace = p1Replace;
                 }
             }
-            
         }
         if(param[1] !== undefined) {
             if(Array.isArray(param[1])) {
@@ -78,11 +77,10 @@ function Skill({skill,index,showDetail}) {
                 <div className='text-red-400 text-sm'>{translate(skill.weapon_restrict_description)}</div>
             </div>
         </div>
-        
         <div className='flex flex-col gap'>
             <div className="flex flex-row justify-between">
                 <div>{translate(skill.description1)}</div>
-                {showDetail !== false ? 
+                {showDetail !== false &&
                 <button className='p-1 text-[#f67370] border items-center flex rounded-md  px-2 font-bold bg-gradient-to-b from-[#222222] to-[#282828] border-[#111827]'>
                     <label className="inline-flex relative items-center cursor-pointer">
                         <input type="checkbox" onChange={changeDetailLevel} className="sr-only peer" />
@@ -90,7 +88,7 @@ function Skill({skill,index,showDetail}) {
                         <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show advanced stats</span>
                     </label>
                 </button>
-                :null}
+                }
             </div>
             {/* <div className="mb-2" dangerouslySetInnerHTML={{__html: translate(skill.detail)}}></div> */}
             <HyperLinkTooltip className="mb-2" str={translate(skill.detail)}/>
@@ -98,19 +96,18 @@ function Skill({skill,index,showDetail}) {
                 <div key={skill.id+"-"+i}>
                     {/* <div dangerouslySetInnerHTML={{__html: displayAffixParam(affix.param,affix.text)}}></div> */}
                     <HyperLinkTooltip str={displayAffixParam(affix.param,affix.text)}/>
-                    {showDetailLevel ? 
+                    {showDetailLevel &&
                     <div className='text-gray-400 grid grid-cols-3 md:grid-cols-8 gap-2 flex-wrap'>
-                        {Array.isArray(affix.param) ? 
+                        {Array.isArray(affix.param) &&
                             affix.param.map((p) => (
-                                Array.isArray(p) ? 
+                                Array.isArray(p) &&
                                 p.sort((a,b) => parseInt(a.level) - parseInt(skill.level)).map((pdata) => (
                                     <div key={pdata.level+"-"+pdata.value}>(Level {pdata.level} : {pdata.value})</div>
                                 ))
-                                :null
                             ))
-                        :null}
-                    </div>    
-                    :null}
+                        }
+                    </div>
+                    }
                 </div>
             ))}
             {/* {showDetailLevel ? <div>
