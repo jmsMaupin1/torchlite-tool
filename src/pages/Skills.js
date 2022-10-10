@@ -5,8 +5,10 @@ import { debounce } from 'lodash';
 import Loader from '../components/Loader';
 import { DebounceInput } from 'react-debounce-input';
 import { ViewportList } from 'react-viewport-list';
+import { useTranslation } from 'react-i18next';
 
 function Skills() {
+	const { t } = useTranslation();
 	const { translate, skills, skillTag, en } = useContext(AppContext);
 	const [skillList, setSkillList] = useState(null);
 	const [listType, setListType] = useState(null);
@@ -83,15 +85,17 @@ function Skills() {
 	return (
 		<>
 			<div>
-				<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500">Skills</div>
+				<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500">
+					{t('commons:skills')}
+				</div>
 				<div className="flex flex-col md:flex-row mb-2 gap-2 md:items-center p-2">
 					<div className="flex flex-col md:flex-row gap-2 items-center">
-						<label className="text-white">Skill tag</label>
+						<label className="text-white">{t('commons:skill_tag')}</label>
 						<select
 							onChange={onChangeType}
 							className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto"
 						>
-							<option value={''}>Select tag</option>
+							<option value={''}>{t('commons:select_tag')}</option>
 							{listType.map((type, i) => (
 								<option key={type + i} value={type}>
 									{type}
@@ -100,9 +104,9 @@ function Skills() {
 						</select>
 					</div>
 					<div className="flex flex-col md:flex-row gap-2 items-center">
-						<label className="text-white">Skill </label>
+						<label className="text-white">{t('commons:skill')} </label>
 						<DebounceInput
-							placeholder={'Name of the skill...'}
+							placeholder={t('commons:name_of_the_skill')}
 							className="bg-[#282828] border rounded border-slate-500 pl-1"
 							debounceTimeout={500}
 							onChange={(event) => onChangeName(event)}

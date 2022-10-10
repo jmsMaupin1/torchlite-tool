@@ -17,7 +17,18 @@ const Header = () => {
 		setCurrentPage(location.pathname.replace('/', ''));
 		// eslint-disable-next-line
 	}, [location]);
-
+	const options = [
+		{
+			value: 'en',
+			label: t('commons:lang_en'),
+			img: <US title="United States" className="h-5" />,
+		},
+		{
+			value: 'fr',
+			label: t('commons:lang_fr'),
+			img: <FR title="France" className="h-5" />,
+		},
+	];
 	return (
 		<header>
 			<nav ref={topMenu} className="px-2 sm:px-4 py-2.5 bg-gray-900  mb-2 w-full z-20 border-b border-gray-600">
@@ -227,29 +238,14 @@ const Header = () => {
 								<Select
 									className="w-full"
 									classNamePrefix="select"
+									isClearable={false}
+									isSearchable={false}
+									isMulti={false}
 									name="langueSelect"
-									defaultValue={i18n.language || 'en'}
+									defaultValue={options.find((o) => o.value === i18n.language)}
 									onChange={(e) => switchLang(e.value)}
-									options={[
-										{
-											value: 'en',
-											label: t('commons:lang_en'),
-											img: <US title="United States" className="h-5" />,
-										},
-										{
-											value: 'fr',
-											label: t('commons:lang_fr'),
-											img: <FR title="France" className="h-5" />,
-										},
-									]}
-									formatOptionLabel={(lang) => (
-										<div className="flex flex-row gap-2">
-											<div>{lang.img}</div>
-											<div>
-												<span>{lang.label}</span>
-											</div>
-										</div>
-									)}
+									options={options}
+									formatOptionLabel={(lang) => <div>{lang.img}</div>}
 								/>
 							</li>
 						</ul>

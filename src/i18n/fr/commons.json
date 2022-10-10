@@ -9,6 +9,15 @@
 	"beta": "Beta",
 	"donate": "Donner",
 	"openMainMenu": "Ouvrir le menu",
-	"lang_en": "Anglais",
-	"lang_fr": "Français"
+	"lang_en": "EN",
+	"lang_fr": "FR",
+	"footer_copy": "Ce site est un site de fan et n'est pas affilité avec XD en aucune façon.",
+	"footer_author": "Fait avec 💗 par TheConcepteur",
+	"databases": "Base de données",
+	"bases": "Bases",
+	"show_advanced_stats": "Montrer les stats avancés",
+	"skill": "Compétence",
+	"skill_tag": "Tag de compétence",
+	"select_tag": "Sélectionner un tag",
+	"name_of_the_skill": "Nom de la compétence..."
 }
