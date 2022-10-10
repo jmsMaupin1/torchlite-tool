@@ -1,11 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
 	const { currentPage, setCurrentPage, topMenu } = useContext(AppContext);
 	const location = useLocation();
 	const [menuOpen, setMenuOpen] = useState(false);
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		setCurrentPage(location.pathname.replace('/', ''));
@@ -31,7 +33,7 @@ const Header = () => {
 							aria-controls="navbar-sticky"
 							aria-expanded="false"
 						>
-							<span className="sr-only">Open main menu</span>
+							<span className="sr-only">{t('commons:openMainMenu')}</span>
 							<svg
 								className="w-6 h-6"
 								aria-hidden="true"
@@ -69,7 +71,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconTP.png"
 											alt="Home"
 										/>
-										Home
+										{t('commons:home')}
 									</div>
 								</Link>
 							</li>
@@ -89,7 +91,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconSKL.png"
 											alt="Skills"
 										/>
-										Skills
+										{t('commons:skills')}
 									</div>
 								</Link>
 							</li>
@@ -109,7 +111,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconDZ.png"
 											alt="Base"
 										/>
-										Base
+										{t('commons:base')}
 									</div>
 								</Link>
 							</li>
@@ -129,7 +131,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconST.png"
 											alt="Legendary"
 										/>
-										Legendary
+										{t('commons:legendary')}
 									</div>
 								</Link>
 							</li>
@@ -149,7 +151,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconTAL.png"
 											alt="Talent"
 										/>
-										Talent
+										{t('commons:talent')}
 									</div>
 								</Link>
 							</li>
@@ -169,7 +171,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconCHA.png"
 											alt="trait"
 										/>
-										Hero trait
+										{t('commons:heroTrait')}
 									</div>
 								</Link>
 							</li>
@@ -195,9 +197,9 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconCHA.png"
 											alt="Build"
 										/>
-										Build
+										{t('commons:build')}
 										<div className="absolute text-sm text-red-600 -top-2 -right-2 rotate-12">
-											BETA
+											{t('commons:beta')}
 										</div>
 									</div>
 								</Link>
@@ -213,7 +215,7 @@ const Header = () => {
 										className={`hover:bg-red-900 hover:text-white pt-1 md:pt-0 flex flex-row gap-2 items-center px-2 rounded bg-red-600 bg-opacity-20`}
 									>
 										<div className="w-[30px] text-2xl">💗</div>
-										<div>Donate</div>
+										<div>{t('commons:donate')}</div>
 									</div>
 								</a>
 							</li>
