@@ -5,8 +5,9 @@ import Router from './router/Router';
 import { BrowserRouter } from 'react-router-dom';
 
 function App() {
+	const currentBasename = process.env.REACT_APP_BASENAME;
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename={currentBasename}>
 			<AppContextProvider>
 				<Router />
 			</AppContextProvider>
