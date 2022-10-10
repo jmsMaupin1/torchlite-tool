@@ -736,6 +736,10 @@ function Build() {
     }
 
     const getTalentIdByProfession = (h) => {
+
+        return (h.id === "310" || h.id === "600" || h.id === "610" || h.id === "910" | h.id === "920" || h.id=== "1100" || h.id === "1300" || h.id === "1310" || h.id==="1400")
+
+
         if(currentMainProf.id === "1") {
             return h.id === "310";
         }
@@ -823,7 +827,7 @@ function Build() {
         if(currentURL.includes("th3conc3pt3ur.github.io")) {
             url = "https://tli.fr.nf/minifier"
         } else {
-            url = "https://127.0.0.1:8000/minifier"
+            url = "http://127.0.0.1:8000/minifier"
         }
         fetch(url, requestOptions)
             .then(async response => {
@@ -834,7 +838,7 @@ function Build() {
                     const error = (data && data.message) || response.status;
                     return Promise.reject(error);
                 }
-                console.log(data.url);
+                //console.log(data.url);
                 setBuildUrlMinified(data.url);
 
             })
@@ -872,17 +876,6 @@ function Build() {
                             </div>
                         </div>
                     </div>
-                    
-                    {currentMainProf !== null ? 
-                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
-                            <div className='flex flex-row gap-2'>
-                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
-                                <div>{translate(currentMainProf.name)}</div>
-                            </div>
-                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
-                        </div>
-                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
-                    
                     {currentMainProf !== null ? 
                         <div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
@@ -894,6 +887,17 @@ function Build() {
                             <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => setCurrentTrait(null)}>x</button></div>
                         </div>
                     :<div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select trait</div>}
+                    {currentMainProf !== null ? 
+                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(currentMainProf.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
+                    
+                    
 
                     {spec1 !== null ? 
                         <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
@@ -954,17 +958,6 @@ function Build() {
                             </div>
                         </div>
                     </div>
-                    
-                    {currentMainProf !== null ? 
-                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
-                            <div className='flex flex-row gap-2'>
-                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
-                                <div>{translate(currentMainProf.name)}</div>
-                            </div>
-                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
-                        </div>
-                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
-                    
                     {currentMainProf !== null ? 
                         <div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
                             <div className='flex flex-row gap-2'>
@@ -975,7 +968,19 @@ function Build() {
                             </div>
                             <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => setCurrentTrait(null)}>x</button></div>
                         </div>
-                    :<div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select trait</div>}
+                    :<div onClick={() => fieldRefTrait.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>0. Select trait</div>}
+
+                    {currentMainProf !== null ? 
+                        <div onClick={() => fieldRefMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`}}>
+                            <div className='flex flex-row gap-2'>
+                                <div><img loading="lazy" className='h-6' src={`img/icons/TalentIcon/${currentMainProf.icon}.png`} alt="Icon"/></div>
+                                <div>{translate(currentMainProf.name)}</div>
+                            </div>
+                            <div className='mr-2'><button className='text-gray-300 hover:cursor-pointer hover:bg-gray-900' onClick={() => _setCurrentMainProf(null)}>x</button></div>
+                        </div>
+                    :<div onClick={() => fieldRefSelectMainProf.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2'>1. Select initial Profession</div>}
+                    
+                    
 
                     {spec1 !== null ? 
                         <div onClick={() => fieldRefSpec1.current.scrollIntoView()} className='bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between' style={{backgroundSize: '50%',backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`}}>
@@ -1053,6 +1058,14 @@ function Build() {
                         </div>
                     </div>
                 </div>
+                {/* TRAIT */}
+                <>
+                <div ref={fieldRefTrait} className={`text-center text-xl font-bold`}>Select trait</div>
+                <div className={`trait flex flex-col gap-2 mb-2 w-full`}>
+                    <HeroTrait currentTrait={currentTrait} perk={perk} hero={hero.filter((h) => getTalentIdByProfession(h))} onSpecChange={onSpecChange} onTraitValueChange={onTraitValueChange} />
+                </div>
+                </>
+
                 <div ref={fieldRefItems} className={`text-center text-xl font-bold`}>Mandatory Items</div>
                 <div className='bg-[#282828] border p-2 rounded-lg shadow-lg '>
                     <div className='flex flex-row items-center'>
@@ -1099,6 +1112,8 @@ function Build() {
                         </div>
                     ))}
                 </div>
+                
+                
                 {/* SPEC 1 */}
                 <div ref={fieldRefSelectSpec1} className={`${currentMainProf === null || spec1 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 2nd Profession</div>
                 <div className={`${currentMainProf !== null && spec1 === null  ? "":"hidden"} subProf-${currentMainProf != null ? currentMainProf.id: ""} flex flex-col md:flex-row gap-2 mb-2`}>
@@ -1117,15 +1132,6 @@ function Build() {
                     ))}
                 </div>
 
-                {/* TRAIT */}
-                {currentMainProf !== null ?
-                <>
-                <div ref={fieldRefTrait} className={`${currentMainProf === null ? "hidden": ""} text-center text-xl font-bold`}>Select trait</div>
-                <div className={`trait flex flex-col gap-2 mb-2 w-full`}>
-                    <HeroTrait currentTrait={currentTrait} perk={perk} hero={hero.filter((h) => getTalentIdByProfession(h))} onSpecChange={onSpecChange} onTraitValueChange={onTraitValueChange} />
-                </div>
-                </>
-                :null}
                 {/* SPEC 2 */}
                 <div ref={fieldRefSelectSpec2} className={`${spec1 === null || spec2 !== null ? "hidden": ""} text-center text-xl font-bold`}>Select 3th Profession</div>
                 {profession.filter((p) => p.before_id === "0").map((p) => (

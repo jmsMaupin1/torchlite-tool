@@ -15,14 +15,14 @@ function Trait() {
     return (
         <div className='flex flex-col container p-2'>
             <div className='md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500'>Hero Perk</div>
-            {hero.filter((h) => ["310","600","610","910","920",/*"1100",*/"1300","1310","1400"].includes(h.id)).map((h) => (
+            {hero.filter((h) => ["310","600","610","910","920","1100","1300","1310","1400"].includes(h.id)).map((h) => (
                 <div key={h.id} className={`flex flex-col md:flex-row mb-2 w-full`}>
                     <div className={`bg-[#282828] w-full relative flex flex-col md:flex-row justify-between border p-2 rounded-lg md:shadow-lg md:shadow-black bg-no-repeat bg-contain bg-right-top`}>
                         <div className='flex flex-col items-center w-full'>
                             <div className='flex flex-row gap-2'>
                                 <img loading="lazy" src={`img/hero/${h.portrait2}.png`} className={`h-20`} alt="Icon"/>
                                 <div>
-                                    <div className='text-center font-bold text-xl title'>{translate(h.name).split('|')[1]} {h.id}</div>
+                                    <div className='text-center font-bold text-xl title'>{translate(h.name).split('|')[1]}</div>
                                     <div className='text-center font-bold text-xl title'>{translate(h.short_name)}</div>
                                 </div>
                             </div>
