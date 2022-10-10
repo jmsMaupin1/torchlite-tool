@@ -596,7 +596,6 @@ function Build() {
         //add items data
         string +="&items="+currentItems.filter((i) => i !== undefined).map((i) => {return i.id}).join(',')
         
-        const currentURL = window.location.href
         const pathname = window.location.pathname
         let _buildUrl = window.location.origin+pathname+"?"+string;
         setBuildUrl(_buildUrl);
@@ -736,33 +735,7 @@ function Build() {
     }
 
     const getTalentIdByProfession = (h) => {
-
         return (h.id === "310" || h.id === "600" || h.id === "610" || h.id === "910" | h.id === "920" || h.id=== "1100" || h.id === "1300" || h.id === "1310" || h.id==="1400")
-
-
-        if(currentMainProf.id === "1") {
-            return h.id === "310";
-        }
-        if(currentMainProf.id === "2") {
-            // goodess of hunting
-            return (h.id === "600" | h.id === "610")
-        }
-        if(currentMainProf.id === "3") {
-            // wizard
-            return (h.id === "910" | h.id === "920" || h.id === "1300" || h.id === "1310")
-        }
-        if(currentMainProf.id === "4") {
-            return false
-        }
-        if(currentMainProf.id === "5") {
-            return false
-        }
-        if(currentMainProf.id === "6") {
-            // commander
-            return h.id === "1400"
-        }
-        
-        return true;
     }
     const toggleSideMneu = () => {
         
