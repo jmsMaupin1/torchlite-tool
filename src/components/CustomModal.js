@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, HiOutlineExclamationCircle } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 function CustomModal(props) {
 	const onClose = props.onClose;
 	const show = props.show;
