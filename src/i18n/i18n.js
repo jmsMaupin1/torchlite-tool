@@ -16,7 +16,7 @@ export const initI18n = () => {
 	const i18nConfig = {
 		debug: false,
 		resources: dict,
-		lng: 'en', // lng: 'en', force en lang, lng: 'fr'
+		lng, // lng: 'en', force en lang, lng: 'fr'
 		fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false,
