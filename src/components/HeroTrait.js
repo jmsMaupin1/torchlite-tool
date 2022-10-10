@@ -30,7 +30,7 @@ function HeroTrait(props) {
         {/* // multiple specialization, we need to select one */}
         {heroTraits.length > 1 ?
         <div className='bg-[#282828] flex flex-col justify-center items-center w-full border p-2 rounded-lg shadow-lg gap-2 '>
-        <div className='grid grid-cols-3 md:flex-row gap-2 w-full'>
+        <div className='grid md:grid-cols-3 flex-row gap-2 w-full'>
         {heroTraits.map((h,i) => (
             <div key={h.id+"-"+i} className='flex flex-row w-full'>
             {[1].map((index) => (
