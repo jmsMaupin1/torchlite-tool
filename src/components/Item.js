@@ -1,6 +1,4 @@
 function Item() {
-    return (
-
-    );
+	return null;
 }
 export default Item;
