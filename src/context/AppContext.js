@@ -135,6 +135,7 @@ const AppContextProvider = (props) => {
 				sortAlpha,
 				skills,
 				topMenu,
+				i18n,
 			}}
 		>
 			{props.children}

@@ -2,11 +2,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useTranslation } from 'react-i18next';
+import Select from 'react-select';
+import { switchLang } from './../i18n/i18n';
+import { US, FR } from 'country-flag-icons/react/3x2';
 
 const Header = () => {
-	const { currentPage, setCurrentPage, topMenu } = useContext(AppContext);
+	const { currentPage, setCurrentPage, topMenu, i18n } = useContext(AppContext);
 	const location = useLocation();
 	const [menuOpen, setMenuOpen] = useState(false);
+
 	const { t } = useTranslation();
 
 	useEffect(() => {
@@ -218,6 +222,35 @@ const Header = () => {
 										<div>{t('commons:donate')}</div>
 									</div>
 								</a>
+							</li>
+							<li>
+								<Select
+									className="w-full"
+									classNamePrefix="select"
+									name="langueSelect"
+									defaultValue={i18n.language || 'en'}
+									onChange={(e) => switchLang(e.value)}
+									options={[
+										{
+											value: 'en',
+											label: t('commons:lang_en'),
+											img: <US title="United States" className="h-5" />,
+										},
+										{
+											value: 'fr',
+											label: t('commons:lang_fr'),
+											img: <FR title="France" className="h-5" />,
+										},
+									]}
+									formatOptionLabel={(lang) => (
+										<div className="flex flex-row gap-2">
+											<div>{lang.img}</div>
+											<div>
+												<span>{lang.label}</span>
+											</div>
+										</div>
+									)}
+								/>
 							</li>
 						</ul>
 					</div>

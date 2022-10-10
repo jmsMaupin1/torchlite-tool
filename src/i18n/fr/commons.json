@@ -1,12 +1,14 @@
 {
-    "home": "Accueil",
-    "skills": "Compétances",
-    "base": "Base",
-    "legendary": "Legendaire",
-    "talent": "Talent",
-    "heroTrait": "Hero trait",
-    "build": "Build",
-    "beta": "Beta",
-    "donate": "Donner",
-    "openMainMenu": "Ouvrir le menu"
+	"home": "Accueil",
+	"skills": "Compétences",
+	"base": "Base",
+	"legendary": "Légendaire",
+	"talent": "Talent",
+	"heroTrait": "Trait de héros",
+	"build": "Build",
+	"beta": "Beta",
+	"donate": "Donner",
+	"openMainMenu": "Ouvrir le menu",
+	"lang_en": "Anglais",
+	"lang_fr": "Français"
 }
