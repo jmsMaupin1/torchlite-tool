@@ -557,11 +557,17 @@ function Build() {
 	}, [debounce, handleScroll]);
 
 	useEffect(() => {
-		if (searchParams.get('skills') !== null && skills !== null && dataI18n !== null && profession !== null) {
+		if (
+			searchParams.get('skills') !== null &&
+			skills !== null &&
+			dataI18n !== null &&
+			profession !== null &&
+			talent !== null
+		) {
 			loadBuild();
 		}
 		// eslint-disable-next-line
-	}, [searchParams.get('skills'), skills, dataI18n, profession]);
+	}, [searchParams.get('skills'), skills, dataI18n, profession, talent]);
 
 	useEffect(() => {
 		saveBuild();
