@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import { switchLang } from './../i18n/i18n';
-import { US, FR } from 'country-flag-icons/react/3x2';
+import { US, FR, DE, ES } from 'country-flag-icons/react/3x2';
 
 const Header = () => {
 	const { currentPage, setCurrentPage, topMenu, i18n } = useContext(AppContext);
@@ -27,6 +27,16 @@ const Header = () => {
 			value: 'fr',
 			label: t('commons:lang_fr'),
 			img: <FR title="France" className="h-5" />,
+		},
+		{
+			value: 'de',
+			label: t('commons:lang_de'),
+			img: <DE title="Germany" className="h-5" />,
+		},
+		{
+			value: 'es',
+			label: t('commons:lang_es'),
+			img: <ES title="Spain" className="h-5" />,
 		},
 	];
 	return (
