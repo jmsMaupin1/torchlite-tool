@@ -3,11 +3,13 @@ import { AppContext } from '../context/AppContext';
 import { DebounceInput } from 'react-debounce-input';
 import Loader from '../components/Loader';
 import HyperLinkTooltip from '../components/HyperLinkTooltip';
+import { useTranslation } from 'react-i18next';
 
 function Talent() {
 	const { translate, profession, talent, en, replaceTag } = useContext(AppContext);
 	const [currentClass, setCurrentClass] = useState(null);
 	const [currentSearch, setCurrentSearch] = useState(null);
+	const { t } = useTranslation();
 
 	const displayCore = (_currentProf) => {
 		let talentId = _currentProf.talent_id.split('|');
@@ -49,11 +51,13 @@ function Talent() {
 	}
 	return (
 		<div className="flex flex-col container p-2">
-			<div className="md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500">Talent</div>
+			<div className="md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500">
+				{t('commons:talent')}
+			</div>
 			<div className="flex flex-row items-center gap-2 mb-2">
-				<label>Select class</label>
+				<label>{t('commons:select_class')}</label>
 				<select onChange={onChangeClass} className="w-auto bg-[#282828] border rounded border-slate-500">
-					<option value=""> -- Select Class --</option>
+					<option value=""> -- {t('commons:select_class')} --</option>
 					{profession
 						.filter((p) => p.before_id === '0')
 						.map((p) => (
@@ -62,10 +66,10 @@ function Talent() {
 							</option>
 						))}
 				</select>
-				<label>Effect</label>
+				<label>{t('commons:effect')}</label>
 				<DebounceInput
 					className="w-auto bg-[#282828] border rounded border-slate-500"
-					placeholder="Search talent by effect..."
+					placeholder={t('commons:search_talent_by_effect')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeSearch(event.target.value)}
 				/>

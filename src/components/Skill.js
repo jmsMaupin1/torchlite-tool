@@ -97,8 +97,8 @@ function Skill({ skill, index, showDetail }) {
 			</div>
 			<div className="flex flex-col gap">
 				<div className="flex flex-row justify-between">
-					<div>{translate(skill.description1)}</div>
-					{showDetail !== false && (
+					<div className={`${skill.affix.length !== 0 ? '' : 'mb-2'}`}></div>
+					{showDetail !== false && skill.affix.length !== 0 && (
 						<button className="p-1 text-[#f67370] border items-center flex rounded-md  px-2 font-bold bg-gradient-to-b from-[#222222] to-[#282828] border-[#111827]">
 							<label className="inline-flex relative items-center cursor-pointer">
 								<input type="checkbox" onChange={changeDetailLevel} className="sr-only peer" />
