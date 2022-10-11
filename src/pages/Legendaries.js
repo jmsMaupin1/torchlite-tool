@@ -6,11 +6,13 @@ import Loader from '../components/Loader';
 import { ViewportList } from 'react-viewport-list';
 import { useMediaQuery } from 'react-responsive';
 import { formatArray } from '../utils/utils';
+import { useTranslation } from 'react-i18next';
 
 function Legendaries() {
-	const { translate, itemGold, itemBase, en } = useContext(AppContext);
+	const { translate, itemGold, itemBase, dataI18n } = useContext(AppContext);
 	const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
 	const isLarge = useMediaQuery({ query: '(min-width: 1024px)' });
+	const { t } = useTranslation();
 
 	// eslint-disable-next-line
 	const [listType, setListType] = useState(null);
@@ -89,7 +91,7 @@ function Legendaries() {
 		}
 	};
 
-	if (listType == null || en == null || itemGold == null) {
+	if (listType == null || dataI18n == null || itemGold == null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 
@@ -104,28 +106,33 @@ function Legendaries() {
 
 	return (
 		<>
-			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">Legendaries</div>
-			<div className="flex flex-row gap-2 items-center mb-2 p-2">
-				<label>Type</label>
-				<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
-					<option value=""> -- Select type --</option>
+			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">
+				{t('commons:legendaries')}
+			</div>
+			<div className="flex flex-col md:flex-row md:gap-2 md:items-center mb-2 p-2 w-full">
+				<label>{t('commons:type')}</label>
+				<select
+					onChange={onChangeType}
+					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
+				>
+					<option value=""> -- {t('commons:select_type')} --</option>
 					{listType.map((type, index) => (
 						<option key={type} value={type}>
 							{type}
 						</option>
 					))}
 				</select>
-				<label>Name</label>
+				<label>{t('commons:name')}</label>
 				<DebounceInput
-					className="w-auto bg-[#282828] border rounded border-slate-500"
-					placeholder="Search item by name..."
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+					placeholder={t('commons:search_item_by_name')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeName(event.target.value)}
 				/>
 				<label>Affix</label>
 				<DebounceInput
-					className="w-auto bg-[#282828] border rounded border-slate-500"
-					placeholder="Search item by affix"
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+					placeholder={t('commons:search_item_by_affix')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeAffix(event.target.value)}
 				/>

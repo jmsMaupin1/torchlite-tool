@@ -2,7 +2,7 @@ import React from 'react';
 import Select, { createFilter } from 'react-select';
 import { AppContext } from '../context/AppContext';
 import { useContext, useState } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import SelectWithImage from './SelectWithImage';
 
 function BuildSkill(props) {
@@ -14,11 +14,10 @@ function BuildSkill(props) {
 	if (tag === undefined) {
 		tag = 'Active';
 	}
-
+	const { t } = useTranslation();
 	/* // energy 0 , 10 , 15 , 50 , 100 */
 	const tabEnergy = [0, 10, 25, 75, 175];
 
-	const [currentEnergyCost, setCurrentEnergyCost] = useState(0);
 	const [skill, setSkill] = useState(null);
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -154,39 +153,11 @@ function BuildSkill(props) {
 						))}
 					</div>
 				</div>
-				{/* <div className='basis-1/3'>
-            <Select className="w-full" classNamePrefix="select" onChange={(e) => _onChangeSkill(e,ind)}
-                isClearable={true}
-                isSearchable={true}
-                captureMenuScroll={false}
-                filterOption={createFilter({ ignoreAccents: false })}
-                placeholder={"Select Skill "+ ind+"..."}
-                name={"skill"+ind}
-                options={skills.filter((x) => x.tag.includes(tag) && x.name !== translate(x.name)).sort(sortAlpha).map((s) => {return {"value":s.id,"label":translate(s.name),"img":s.icon}})}
-                formatOptionLabel={skill => (
-                    <div className="skill-option flex flex-row gap-2">
-                        <div><img loading="lazy" src={`img/icons/skills/${skill.img}.png`} className="w-[24px]" alt="Icon"/></div>
-                        <div><span>{skill.label}</span></div>
-                    </div>
-                )}
-            />
-            
-            
-            </div>
-            {skill !== null ?
-                <div className='grid grid-cols-2 w-full'>
-                {[1,2,3,4,5].map((index) => (
-                    <div key={index} className='w-full'>
-                        <SelectWithImage index={index} ind={ind} onChange={_onChangeSupport}/>
-                    </div>
-                ))}
-                </div>
-            :<div className='w-full'></div>} */}
 			</div>
 
 			{skill !== null ? (
 				<div className="text-center">
-					Energy required : {tabEnergy[tabSupport.filter((e) => e !== null).length - 1] | 0}
+					{t('commons:energy_required')} : {tabEnergy[tabSupport.filter((e) => e !== null).length - 1] | 0}
 				</div>
 			) : null}
 		</>

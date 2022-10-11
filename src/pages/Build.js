@@ -20,11 +20,13 @@ import perk from './../data/perk.json';
 import HeroTrait from '../components/HeroTrait';
 import Legendary from '../components/Legendary';
 import { DebounceInput } from 'react-debounce-input';
+import { useTranslation } from 'react-i18next';
 
 function Build() {
-	const { translate, topMenu, sortAlpha, profession, skills, talent, en, itemGold } = useContext(AppContext);
+	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
+	const { t } = useTranslation();
 
 	const {
 		closeModal,
@@ -555,7 +557,7 @@ function Build() {
 	}, [debounce, handleScroll]);
 
 	useEffect(() => {
-		if (searchParams.get('skills') !== null && skills !== null && en !== null && profession !== null) {
+		if (searchParams.get('skills') !== null && skills !== null && dataI18n !== null && profession !== null) {
 			loadBuild();
 		}
 		// eslint-disable-next-line
@@ -957,7 +959,7 @@ function Build() {
 			});
 		//.then(data => {console.log(data.url);
 	};
-	if (profession === null || en === null || itemGold === null || talent === null) {
+	if (profession === null || dataI18n === null || itemGold === null || talent === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (
@@ -973,7 +975,7 @@ function Build() {
 							onClick={() => getMinifier()}
 							className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2"
 						>
-							<FaShareAlt /> Generate build url
+							<FaShareAlt /> {t('commons:generate_build_url')}
 						</button>
 					) : null}
 					{buildUrlMinified !== null ? (
@@ -986,7 +988,7 @@ function Build() {
 							}}
 						>
 							<button className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2">
-								<FaShareAlt /> Copy build url
+								<FaShareAlt /> {t('commons:copy_build_url')}
 							</button>
 						</CopyToClipboard>
 					) : null}
@@ -996,7 +998,7 @@ function Build() {
 					>
 						<div className="flex flex-row gap-2 px-2">
 							<div className="flex flex-row items-center gap-2">
-								<div>Skills</div>
+								<div>{t('commons:skills')}</div>
 								{skill1.skill !== null && skill1.skill.img !== undefined ? (
 									<div>
 										<img
@@ -1086,7 +1088,7 @@ function Build() {
 							onClick={() => fieldRefTrait.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							1. Select trait
+							0. {t('commons:select_trait')}
 						</div>
 					)}
 					{currentMainProf !== null ? (
@@ -1125,7 +1127,7 @@ function Build() {
 							onClick={() => fieldRefSelectMainProf.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							1. Select initial Profession
+							1. {t('commons:select_initial_profession')}
 						</div>
 					)}
 
@@ -1163,7 +1165,7 @@ function Build() {
 							onClick={() => fieldRefSelectSpec1.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							2. Select Sub profession 1
+							2. {t('commons:select_sub_profession_1')}
 						</div>
 					)}
 
@@ -1201,7 +1203,7 @@ function Build() {
 							onClick={() => fieldRefSelectSpec2.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							3. Select Sub profession 2
+							3. {t('commons:select_sub_profession_2')}
 						</div>
 					)}
 					{totalStat != null ? (
@@ -1245,7 +1247,7 @@ function Build() {
 							onClick={() => getMinifier()}
 							className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2"
 						>
-							<FaShareAlt /> Generate build url
+							<FaShareAlt /> {t('commons:generate_build_url')}
 						</button>
 					) : null}
 					{buildUrlMinified !== null ? (
@@ -1257,7 +1259,7 @@ function Build() {
 							}}
 						>
 							<button className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2">
-								<FaShareAlt /> Copy build url
+								<FaShareAlt /> {t('commons:copy_build_url')}
 							</button>
 						</CopyToClipboard>
 					) : null}
@@ -1268,7 +1270,7 @@ function Build() {
 					>
 						<div className="flex flex-row gap-2 px-2">
 							<div className="flex flex-row items-center gap-2">
-								<div>Skills</div>
+								<div>{t('commons:skills')}</div>
 								{skill1.skill !== null && skill1.skill.img !== undefined ? (
 									<div>
 										<img
@@ -1358,7 +1360,7 @@ function Build() {
 							onClick={() => fieldRefTrait.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							0. Select trait
+							0. {t('commons:select_trait')}
 						</div>
 					)}
 
@@ -1398,7 +1400,7 @@ function Build() {
 							onClick={() => fieldRefSelectMainProf.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							1. Select initial Profession
+							1. {t('commons:select_initial_profession')}
 						</div>
 					)}
 
@@ -1436,7 +1438,7 @@ function Build() {
 							onClick={() => fieldRefSelectSpec1.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							2. Select Sub profession 1
+							2. {t('commons:select_sub_profession_1')}
 						</div>
 					)}
 
@@ -1474,12 +1476,12 @@ function Build() {
 							onClick={() => fieldRefSelectSpec2.current.scrollIntoView()}
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
 						>
-							3. Select Sub profession 2
+							3. {t('commons:select_sub_profession_2')}
 						</div>
 					)}
 					{totalStat != null ? (
 						<div className="flex flex-col bg-[#282828] hover:bg-gray-900 hover:cursor-pointer border rounded-md justify-between p-1">
-							<div className="text-center border-b border-slate-700">Total Stats</div>
+							<div className="text-center border-b border-slate-700">{t('commons:total_stats')}</div>
 
 							{Object.entries(totalStat).map(([affix, stat]) => (
 								<HyperLinkTooltip
@@ -1497,7 +1499,7 @@ function Build() {
 			<div className="w-full">
 				{skills !== null ? (
 					<Modal className="dark" show={modalVisible} size="md" popup={true} onClose={closeModal}>
-						<Modal.Header>Select skills</Modal.Header>
+						<Modal.Header>{t('commons:select_skills')}</Modal.Header>
 						<Modal.Body>
 							<div className="">
 								<Select
@@ -1547,7 +1549,7 @@ function Build() {
 						<div
 							className={`text-center text-xl font-bold rounded-t-md bg-gradient-to-b from-yellow-400 to-yellow-600 text-black`}
 						>
-							Actives Skills
+							{t('commons:actives_skills')}
 						</div>
 						<div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2 rounded-b-md ">
 							{/* 5 actif skills */}
@@ -1558,7 +1560,7 @@ function Build() {
 						<div
 							className={`mt-2 text-center text-xl font-bold rounded-t-md bg-gradient-to-b from-yellow-400 to-yellow-600 text-black`}
 						>
-							Passives Skills
+							{t('commons:passives_skills')}
 						</div>
 						<div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2">
 							{/* 3 passives skills */}
@@ -1571,7 +1573,7 @@ function Build() {
 				{/* TRAIT */}
 				<>
 					<div ref={fieldRefTrait} className={`text-center text-xl font-bold`}>
-						Select trait
+						{t('commons:select_trait')}
 					</div>
 					<div className={`trait flex flex-col gap-2 mb-2 w-full`}>
 						<HeroTrait
@@ -1585,7 +1587,7 @@ function Build() {
 				</>
 
 				<div ref={fieldRefItems} className={`text-center text-xl font-bold`}>
-					Mandatory Items
+					{t('commons:mandatory_items')}
 				</div>
 				<div className="bg-[#282828] border p-2 rounded-lg shadow-lg ">
 					<div className="flex flex-row items-center">
@@ -1637,7 +1639,7 @@ function Build() {
 										<div>
 											<FaTrash />
 										</div>
-										<div>Remove </div>
+										<div>{t('commons:remove')}</div>
 									</div>
 								</div>
 							))}
@@ -1647,7 +1649,7 @@ function Build() {
 					ref={fieldRefSelectMainProf}
 					className={`${currentMainProf === null ? '' : 'hidden'} text-center text-xl font-bold`}
 				>
-					Select initial Profession
+					{t('commons:select_initial_profession')}
 				</div>
 				<div
 					className={`${currentMainProf === null ? '' : 'hidden'} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}
@@ -1694,7 +1696,7 @@ function Build() {
 						currentMainProf === null || spec1 !== null ? 'hidden' : ''
 					} text-center text-xl font-bold`}
 				>
-					Select 2nd Profession
+					{t('commons:select_sub_profession_1')}
 				</div>
 				<div
 					className={`${currentMainProf !== null && spec1 === null ? '' : 'hidden'} subProf-${
@@ -1746,7 +1748,7 @@ function Build() {
 					ref={fieldRefSelectSpec2}
 					className={`${spec1 === null || spec2 !== null ? 'hidden' : ''} text-center text-xl font-bold`}
 				>
-					Select 3th Profession
+					{t('commons:select_sub_profession_2')}
 				</div>
 				{profession
 					.filter((p) => p.before_id === '0')
@@ -1817,14 +1819,14 @@ function Build() {
 								style={{ transform: 'rotateY(180deg)' }}
 							/>
 						</div>
-						<div>add point</div>
+						<div>{t('commons:add_point')}</div>
 						<div>
 							<img loading="lazy" className="hidden md:block" src="img/rightBtn.png" alt="Right click" />
 							<div>
 								<MdTouchApp className="md:hidden" alt="Long Press" />
 							</div>
 						</div>
-						<div>remove point</div>
+						<div>{t('commons:remove_point')}</div>
 					</div>
 				</div>
 				{currentTree !== null ? (
@@ -1885,7 +1887,7 @@ function Build() {
 								</div>
 							</div>
 						</div>
-						<div className="text-center">Tree</div>
+						<div className="text-center">{t('commons:tree')}</div>
 						<div className="text-center">{mainProfPoint.nb}</div>
 						<div className="flex flex-row gap-2 justify-between overflow-clip w-fit">
 							<div>
@@ -1986,7 +1988,7 @@ function Build() {
 								</div>
 							</div>
 						</div>
-						<div className="text-center">Tree</div>
+						<div className="text-center">{t('commons:tree')}</div>
 						<div className="text-center">{spec1Point.nb}</div>
 						<div className="flex flex-row justify-between ">
 							<div>
@@ -2089,7 +2091,7 @@ function Build() {
 								</div>
 							</div>
 						</div>
-						<div className="text-center">Tree</div>
+						<div className="text-center">{t('commons:tree')}</div>
 						<div className="text-center">{spec2Point.nb}</div>
 						<div className="flex flex-row justify-between overflow-clip">
 							<div>

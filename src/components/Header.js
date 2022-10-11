@@ -1,17 +1,44 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import { useTranslation } from 'react-i18next';
+import Select from 'react-select';
+import { switchLang } from './../i18n/i18n';
+import { US, FR, DE, ES } from 'country-flag-icons/react/3x2';
 
 const Header = () => {
-	const { currentPage, setCurrentPage, topMenu } = useContext(AppContext);
+	const { currentPage, setCurrentPage, topMenu, i18n } = useContext(AppContext);
 	const location = useLocation();
 	const [menuOpen, setMenuOpen] = useState(false);
+
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		setCurrentPage(location.pathname.replace('/', ''));
 		// eslint-disable-next-line
 	}, [location]);
-
+	const options = [
+		{
+			value: 'en',
+			label: t('commons:lang_en'),
+			img: <US title="United States" className="h-5" />,
+		},
+		{
+			value: 'fr',
+			label: t('commons:lang_fr'),
+			img: <FR title="France" className="h-5" />,
+		},
+		// {
+		// 	value: 'de',
+		// 	label: t('commons:lang_de'),
+		// 	img: <DE title="Germany" className="h-5" />,
+		// },
+		// {
+		// 	value: 'es',
+		// 	label: t('commons:lang_es'),
+		// 	img: <ES title="Spain" className="h-5" />,
+		// },
+	];
 	return (
 		<header>
 			<nav ref={topMenu} className="px-2 sm:px-4 py-2.5 bg-gray-900  mb-2 w-full z-20 border-b border-gray-600">
@@ -31,7 +58,7 @@ const Header = () => {
 							aria-controls="navbar-sticky"
 							aria-expanded="false"
 						>
-							<span className="sr-only">Open main menu</span>
+							<span className="sr-only">{t('commons:openMainMenu')}</span>
 							<svg
 								className="w-6 h-6"
 								aria-hidden="true"
@@ -52,7 +79,7 @@ const Header = () => {
 							menuOpen ? '' : 'hidden'
 						} justify-between items-center w-full md:flex md:w-auto md:order-1`}
 					>
-						<ul className="flex flex-col p-2 pb-2 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
+						<ul className="flex flex-col p-2 pb-2 mt-4 rounded-lg border md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
 							<li>
 								<Link
 									onClick={() => setMenuOpen(false)}
@@ -69,7 +96,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconTP.png"
 											alt="Home"
 										/>
-										Home
+										{t('commons:home')}
 									</div>
 								</Link>
 							</li>
@@ -89,7 +116,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconSKL.png"
 											alt="Skills"
 										/>
-										Skills
+										{t('commons:skills')}
 									</div>
 								</Link>
 							</li>
@@ -109,7 +136,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconDZ.png"
 											alt="Base"
 										/>
-										Base
+										{t('commons:base')}
 									</div>
 								</Link>
 							</li>
@@ -129,7 +156,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconST.png"
 											alt="Legendary"
 										/>
-										Legendary
+										{t('commons:legendary')}
 									</div>
 								</Link>
 							</li>
@@ -149,7 +176,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconTAL.png"
 											alt="Talent"
 										/>
-										Talent
+										{t('commons:talent')}
 									</div>
 								</Link>
 							</li>
@@ -169,7 +196,7 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconCHA.png"
 											alt="trait"
 										/>
-										Hero trait
+										{t('commons:heroTrait')}
 									</div>
 								</Link>
 							</li>
@@ -195,9 +222,9 @@ const Header = () => {
 											src="img/icons/ui/UI_Fight_MenuIconCHA.png"
 											alt="Build"
 										/>
-										Build
+										{t('commons:build')}
 										<div className="absolute text-sm text-red-600 -top-2 -right-2 rotate-12">
-											BETA
+											{t('commons:beta')}
 										</div>
 									</div>
 								</Link>
@@ -213,9 +240,23 @@ const Header = () => {
 										className={`hover:bg-red-900 hover:text-white pt-1 md:pt-0 flex flex-row gap-2 items-center px-2 rounded bg-red-600 bg-opacity-20`}
 									>
 										<div className="w-[30px] text-2xl">💗</div>
-										<div>Donate</div>
+										<div>{t('commons:donate')}</div>
 									</div>
 								</a>
+							</li>
+							<li>
+								<Select
+									className="w-full"
+									classNamePrefix="select"
+									isClearable={false}
+									isSearchable={false}
+									isMulti={false}
+									name="langueSelect"
+									defaultValue={options.find((o) => o.value === i18n.language)}
+									onChange={(e) => switchLang(e.value)}
+									options={options}
+									formatOptionLabel={(lang) => <div>{lang.img}</div>}
+								/>
 							</li>
 						</ul>
 					</div>

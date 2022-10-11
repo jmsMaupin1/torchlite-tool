@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import HyperLinkTooltip from './HyperLinkTooltip';
+import { useTranslation } from 'react-i18next';
 
 function Legendary(props) {
 	const b = props.legendary;
@@ -8,6 +9,7 @@ function Legendary(props) {
 	const { translate, itemBase } = useContext(AppContext);
 	const [currentDisplay, setCurrentDisplay] = useState(1);
 	const [isVisible, setIsVisible] = useState(true);
+	const { t } = useTranslation();
 
 	const changeDisplay = () => {
 		if (currentDisplay === 1) {
@@ -65,7 +67,7 @@ function Legendary(props) {
 					<div className="flex flex-col">
 						<div className="title">{translate(b.name)}</div>
 						<div className="border border-[#333] rounded-md  px-2 text-[#bfbfbf] text-sm">
-							Require level {b.require_level}
+							{t('commons:require_level')} {b.require_level}
 						</div>
 						<div className="border border-[#333] rounded-md px-2 text-[#bfbfbf] text-sm">
 							{currentBase.description1_display}
@@ -77,7 +79,9 @@ function Legendary(props) {
 						<label className="inline-flex relative items-center cursor-pointer">
 							<input type="checkbox" onChange={changeDisplay} className="sr-only peer" />
 							<div className="w-11 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-5 after:transition-all dark:border-gray-600"></div>
-							<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Corroded</span>
+							<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+								{t('commons:corroded')}
+							</span>
 						</label>
 					</button>
 				</div>

@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import HyperLinkTooltip from '../components/HyperLinkTooltip';
+import { useTranslation } from 'react-i18next';
 
 function BaseCard({ cardData }) {
 	const { translate } = useContext(AppContext);
-
+	const { t } = useTranslation();
 	if (!cardData) return;
 
 	return (
@@ -19,7 +20,7 @@ function BaseCard({ cardData }) {
 				<div className="flex flex-col">
 					<div className="title">{translate(cardData?.name)}</div>
 					<div className="border border-[#333] rounded-md  px-2 text-[#bfbfbf] text-sm">
-						Require level {cardData?.require_level}
+						{t('commons:require_level')} {cardData?.require_level}
 					</div>
 					<div className="border border-[#333] rounded-md px-2 text-[#bfbfbf] text-sm">
 						{translate(cardData?.description1)}

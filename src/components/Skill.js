@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import HyperLinkTooltip from './HyperLinkTooltip';
+import { useTranslation } from 'react-i18next';
 
 function Skill({ skill, index, showDetail }) {
 	const { translate } = useContext(AppContext);
 	const [showDetailLevel, setShowDetailLevel] = useState(false);
+	const { t } = useTranslation();
 	const displayAffixParam = (param, text) => {
 		let myReturn = text;
 		let p1Replace = '';
@@ -95,14 +97,14 @@ function Skill({ skill, index, showDetail }) {
 			</div>
 			<div className="flex flex-col gap">
 				<div className="flex flex-row justify-between">
-					<div>{translate(skill.description1)}</div>
-					{showDetail !== false && (
+					<div className={`${skill.affix.length !== 0 ? '' : 'mb-2'}`}></div>
+					{showDetail !== false && skill.affix.length !== 0 && (
 						<button className="p-1 text-[#f67370] border items-center flex rounded-md  px-2 font-bold bg-gradient-to-b from-[#222222] to-[#282828] border-[#111827]">
 							<label className="inline-flex relative items-center cursor-pointer">
 								<input type="checkbox" onChange={changeDetailLevel} className="sr-only peer" />
 								<div className="w-11 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-5 after:transition-all dark:border-gray-600"></div>
 								<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-									Show advanced stats
+									{t('commons:show_advanced_stats')}
 								</span>
 							</label>
 						</button>

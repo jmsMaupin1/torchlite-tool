@@ -3,7 +3,7 @@ import { Tooltip } from 'flowbite-react';
 import { AppContext } from '../context/AppContext';
 
 function HyperLinkTooltip({ str, className, style }) {
-	const { en } = useContext(AppContext);
+	const { dataI18n } = useContext(AppContext);
 
 	if (Array.isArray(str)) {
 		str = str[0];
@@ -16,13 +16,13 @@ function HyperLinkTooltip({ str, className, style }) {
 	let content = null;
 	if (myMatch !== null) {
 		let myId = myMatch[1].replace('id=', '').replace(' ', '');
-		content = en.find((h) => h.index === 'hyperlink|des|' + myId);
+		content = dataI18n.find((h) => h.index === 'hyperlink|des|' + myId);
 		if (content !== undefined) {
 			content = content.value.replaceAll('\\n', '<br>');
 		}
 	}
 	let myStringReturn = str
-		.replace(myReg, "<a style='color:#ffc130;font-weight:bold' class='tooltip hover:cursor-pointer' href=''>$2</a>")
+		.replace(myReg, "<a style='color:#ffc130;font-weight:bold' class='tooltip hover:cursor-pointer'>$2</a>")
 		.replaceAll('\\n', '<br>');
 	if (content == null) {
 		return <div style={style} className={className} dangerouslySetInnerHTML={{ __html: myStringReturn }}></div>;

@@ -6,9 +6,11 @@ import { formatArray } from '../utils/utils';
 import { DebounceInput } from 'react-debounce-input';
 import { ViewportList } from 'react-viewport-list';
 import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
 
 function Base() {
-	const { translate, itemBase, en } = useContext(AppContext);
+	const { translate, itemBase, dataI18n } = useContext(AppContext);
+	const { t } = useTranslation();
 	// eslint-disable-next-line
 	const [listType, setListType] = useState(null);
 	const [currentType, setCurrentType] = useState(null);
@@ -54,7 +56,7 @@ function Base() {
 		}
 	};
 
-	if (itemBase === null || listType === null || en === null) {
+	if (itemBase === null || listType === null || dataI18n === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 
@@ -76,11 +78,11 @@ function Base() {
 	return (
 		<>
 			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500">Base</div>
-			<div className="flex flex-row">
-				<div className="flex flex-row gap-2 items-center p-2">
+			<div className="flex flex-col md:flex-row">
+				<div className="flex flex-row gap-2 items-center p-2 md:w-auto w-full justify-between">
 					<label>Type</label>
 					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
-						<option value=""> -- Select type --</option>
+						<option value=""> -- {t('commons:select_type')} --</option>
 						{listType.map((type, index) => (
 							<option key={type} value={type}>
 								{type}
@@ -88,28 +90,28 @@ function Base() {
 						))}
 					</select>
 				</div>
-				<div className="flex flex-row gap-2 items-center p-2">
-					<label>Minimum Level require</label>
+				<div className="flex flex-col md:flex-row gap-2 items-center p-2 md:w-auto w-full">
+					<label className="md:w-auto w-full">{t('commons:minimum_level_require')}</label>
 					<DebounceInput
 						type="number"
-						className="w-auto bg-[#282828] border rounded border-slate-500"
-						placeholder="minimum Level..."
+						className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto"
+						placeholder={t('commons:minimum_level') + '...'}
 						debounceTimeout={500}
 						onChange={(event) => onChangeCurrentLevel(event.target.value)}
 					/>
 				</div>
 				{currentType !== null && typeForAttr.includes(currentType) ? (
-					<div className="flex flex-row gap-2 items-center p-2">
-						<label>Attributes</label>
+					<div className="flex flex-row gap-2 items-center p-2 md:w-auto w-full justify-between">
+						<label>{t('commons:attributes')}</label>
 						<select
 							value={currrentAttr}
 							onChange={onChangeAttr}
 							className="w-auto bg-[#282828] border rounded border-slate-500"
 						>
-							<option value=""> -- Select attr --</option>
-							<option value={'INT'}>INT</option>
-							<option value={'DEX'}>DEX</option>
-							<option value={'STR'}>STR</option>
+							<option value=""> -- {t('commons:select_attr')} --</option>
+							<option value={'INT'}>{t('commons:INT')}</option>
+							<option value={'DEX'}>{t('commons:DEX')}</option>
+							<option value={'STR'}>{t('commons:STR')}</option>
 						</select>
 					</div>
 				) : null}
