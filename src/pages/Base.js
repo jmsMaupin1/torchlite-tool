@@ -78,8 +78,8 @@ function Base() {
 	return (
 		<>
 			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500">Base</div>
-			<div className="flex flex-row">
-				<div className="flex flex-row gap-2 items-center p-2">
+			<div className="flex flex-col md:flex-row">
+				<div className="flex flex-row gap-2 items-center p-2 md:w-auto w-full justify-between">
 					<label>Type</label>
 					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
@@ -90,18 +90,18 @@ function Base() {
 						))}
 					</select>
 				</div>
-				<div className="flex flex-row gap-2 items-center p-2">
-					<label>{t('commons:minimum_level_require')}</label>
+				<div className="flex flex-col md:flex-row gap-2 items-center p-2 md:w-auto w-full">
+					<label className="md:w-auto w-full">{t('commons:minimum_level_require')}</label>
 					<DebounceInput
 						type="number"
-						className="w-auto bg-[#282828] border rounded border-slate-500"
+						className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto"
 						placeholder={t('commons:minimum_level') + '...'}
 						debounceTimeout={500}
 						onChange={(event) => onChangeCurrentLevel(event.target.value)}
 					/>
 				</div>
 				{currentType !== null && typeForAttr.includes(currentType) ? (
-					<div className="flex flex-row gap-2 items-center p-2">
+					<div className="flex flex-row gap-2 items-center p-2 md:w-auto w-full justify-between">
 						<label>{t('commons:attributes')}</label>
 						<select
 							value={currrentAttr}

@@ -89,7 +89,7 @@ function Skills() {
 					{t('commons:skills')}
 				</div>
 				<div className="flex flex-col md:flex-row mb-2 gap-2 md:items-center p-2">
-					<div className="flex flex-col md:flex-row gap-2 items-center">
+					<div className="flex flex-col md:flex-row gap-2 md:items-center">
 						<label className="text-white">{t('commons:skill_tag')}</label>
 						<select
 							onChange={onChangeType}
@@ -103,7 +103,7 @@ function Skills() {
 							))}
 						</select>
 					</div>
-					<div className="flex flex-col md:flex-row gap-2 items-center">
+					<div className="flex flex-col md:flex-row gap-2 md:items-center">
 						<label className="text-white">{t('commons:skill')} </label>
 						<DebounceInput
 							placeholder={t('commons:name_of_the_skill')}

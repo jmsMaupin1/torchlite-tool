@@ -54,7 +54,7 @@ function Talent() {
 			<div className="md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500">
 				{t('commons:talent')}
 			</div>
-			<div className="flex flex-row items-center gap-2 mb-2">
+			<div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
 				<label>{t('commons:select_class')}</label>
 				<select onChange={onChangeClass} className="w-auto bg-[#282828] border rounded border-slate-500">
 					<option value=""> -- {t('commons:select_class')} --</option>
