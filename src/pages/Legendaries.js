@@ -109,9 +109,12 @@ function Legendaries() {
 			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">
 				{t('commons:legendaries')}
 			</div>
-			<div className="flex flex-row gap-2 items-center mb-2 p-2">
+			<div className="flex flex-col md:flex-row md:gap-2 md:items-center mb-2 p-2 w-full">
 				<label>{t('commons:type')}</label>
-				<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
+				<select
+					onChange={onChangeType}
+					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
+				>
 					<option value=""> -- {t('commons:select_type')} --</option>
 					{listType.map((type, index) => (
 						<option key={type} value={type}>
@@ -121,14 +124,14 @@ function Legendaries() {
 				</select>
 				<label>{t('commons:name')}</label>
 				<DebounceInput
-					className="w-auto bg-[#282828] border rounded border-slate-500"
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
 					placeholder={t('commons:search_item_by_name')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeName(event.target.value)}
 				/>
 				<label>Affix</label>
 				<DebounceInput
-					className="w-auto bg-[#282828] border rounded border-slate-500"
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
 					placeholder={t('commons:search_item_by_affix')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeAffix(event.target.value)}
