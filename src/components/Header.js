@@ -28,16 +28,16 @@ const Header = () => {
 			label: t('commons:lang_fr'),
 			img: <FR title="France" className="h-5" />,
 		},
-		{
-			value: 'de',
-			label: t('commons:lang_de'),
-			img: <DE title="Germany" className="h-5" />,
-		},
-		{
-			value: 'es',
-			label: t('commons:lang_es'),
-			img: <ES title="Spain" className="h-5" />,
-		},
+		// {
+		// 	value: 'de',
+		// 	label: t('commons:lang_de'),
+		// 	img: <DE title="Germany" className="h-5" />,
+		// },
+		// {
+		// 	value: 'es',
+		// 	label: t('commons:lang_es'),
+		// 	img: <ES title="Spain" className="h-5" />,
+		// },
 	];
 	return (
 		<header>
