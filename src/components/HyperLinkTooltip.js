@@ -22,7 +22,7 @@ function HyperLinkTooltip({ str, className, style }) {
 		}
 	}
 	let myStringReturn = str
-		.replace(myReg, "<a style='color:#ffc130;font-weight:bold' class='tooltip hover:cursor-pointer' href=''>$2</a>")
+		.replace(myReg, "<a style='color:#ffc130;font-weight:bold' class='tooltip hover:cursor-pointer'>$2</a>")
 		.replaceAll('\\n', '<br>');
 	if (content == null) {
 		return <div style={style} className={className} dangerouslySetInnerHTML={{ __html: myStringReturn }}></div>;
