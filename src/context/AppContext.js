@@ -66,6 +66,11 @@ const AppContextProvider = (props) => {
 						setDataI18n(data.default);
 					});
 					break;
+				case 'de':
+					import('../i18n/de/de.json').then((data) => {
+						setDataI18n(data.default);
+					});
+					break;
 				default:
 					import('../i18n/en/en.json').then((data) => {
 						setDataI18n(data.default);

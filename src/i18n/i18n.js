@@ -2,10 +2,12 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './en';
 import fr from './fr';
+import de from './de';
 
 const dict = {
 	fr,
 	en,
+	de,
 };
 
 export const initI18n = () => {
