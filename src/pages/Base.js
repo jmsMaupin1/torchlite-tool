@@ -9,7 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useTranslation } from 'react-i18next';
 
 function Base() {
-	const { translate, itemBase, en } = useContext(AppContext);
+	const { translate, itemBase, dataI18n } = useContext(AppContext);
 	const { t } = useTranslation();
 	// eslint-disable-next-line
 	const [listType, setListType] = useState(null);
@@ -56,7 +56,7 @@ function Base() {
 		}
 	};
 
-	if (itemBase === null || listType === null || en === null) {
+	if (itemBase === null || listType === null || dataI18n === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 

@@ -6,7 +6,7 @@ import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 
 function Talent() {
-	const { translate, profession, talent, en, replaceTag } = useContext(AppContext);
+	const { translate, profession, talent, dataI18n, replaceTag } = useContext(AppContext);
 	const [currentClass, setCurrentClass] = useState(null);
 	const [currentSearch, setCurrentSearch] = useState(null);
 	const { t } = useTranslation();
@@ -46,7 +46,7 @@ function Talent() {
 			return isFind;
 		}
 	};
-	if (profession == null || en == null || talent == null) {
+	if (profession == null || dataI18n == null || talent == null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (

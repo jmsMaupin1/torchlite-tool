@@ -9,7 +9,7 @@ import { formatArray } from '../utils/utils';
 import { useTranslation } from 'react-i18next';
 
 function Legendaries() {
-	const { translate, itemGold, itemBase, en } = useContext(AppContext);
+	const { translate, itemGold, itemBase, dataI18n } = useContext(AppContext);
 	const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
 	const isLarge = useMediaQuery({ query: '(min-width: 1024px)' });
 	const { t } = useTranslation();
@@ -91,7 +91,7 @@ function Legendaries() {
 		}
 	};
 
-	if (listType == null || en == null || itemGold == null) {
+	if (listType == null || dataI18n == null || itemGold == null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 

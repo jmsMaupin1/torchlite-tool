@@ -7,7 +7,7 @@ const AppContextProvider = (props) => {
 	const [currentPage, setCurrentPage] = useState('home');
 	const { i18n } = useTranslation();
 	const [skills, setSkills] = useState(null);
-	const [en, setDataI18n] = useState(null); //todo: Rename en to dataI18n
+	const [dataI18n, setDataI18n] = useState(null);
 	const [itemBase, setItemBase] = useState(null);
 	const [itemGold, setItemGold] = useState(null);
 	const [modifiers, setModifiers] = useState(null);
@@ -20,10 +20,6 @@ const AppContextProvider = (props) => {
 	const topMenu = useRef(null);
 
 	useEffect(() => {
-		/*import('../i18n/en/en.json').then((data) => {
-			setDataI18n(data.default);
-			console.log('translation loaded');
-		});*/
 		import('./../data/skills.json').then((data) => {
 			console.log('skills loaded');
 			setSkills(data.default);
@@ -81,7 +77,7 @@ const AppContextProvider = (props) => {
 	}, [i18n.language]);
 
 	const translate = (key) => {
-		let data = en.find((e) => e.index === key);
+		let data = dataI18n.find((e) => e.index === key);
 		if (data !== undefined) {
 			//let myReg = /<e[^>]*>(.*?)<\/e>/img;
 			//en.find((h) => h.index === "hyperlink|des|")
@@ -124,7 +120,7 @@ const AppContextProvider = (props) => {
 				modifiers,
 				profession,
 				skillTag,
-				en, //todo: Rename en to dataI18n
+				dataI18n,
 				replaceTag,
 				perk,
 				hero,

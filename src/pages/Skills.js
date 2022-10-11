@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 function Skills() {
 	const { t } = useTranslation();
-	const { translate, skills, skillTag, en } = useContext(AppContext);
+	const { translate, skills, skillTag, dataI18n } = useContext(AppContext);
 	const [skillList, setSkillList] = useState(null);
 	const [listType, setListType] = useState(null);
 	const [currentType, setCurrentType] = useState(null);
@@ -39,7 +39,7 @@ function Skills() {
 	}, [currentName, currentType]);
 
 	useEffect(() => {
-		if (skillTag !== null && en !== null) {
+		if (skillTag !== null && dataI18n !== null) {
 			let listTypeInit = [];
 			skillTag.forEach((s) => {
 				let myTranslate = translate(s.des);
@@ -78,7 +78,7 @@ function Skills() {
 		}
 		return temp;
 	};
-	if (skills == null || skillTag == null || listType == null || en == null) {
+	if (skills == null || skillTag == null || listType == null || dataI18n == null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 

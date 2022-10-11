@@ -23,7 +23,7 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 function Build() {
-	const { translate, topMenu, sortAlpha, profession, skills, talent, en, itemGold } = useContext(AppContext);
+	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
 	const { t } = useTranslation();
@@ -557,7 +557,7 @@ function Build() {
 	}, [debounce, handleScroll]);
 
 	useEffect(() => {
-		if (searchParams.get('skills') !== null && skills !== null && en !== null && profession !== null) {
+		if (searchParams.get('skills') !== null && skills !== null && dataI18n !== null && profession !== null) {
 			loadBuild();
 		}
 		// eslint-disable-next-line
@@ -959,7 +959,7 @@ function Build() {
 			});
 		//.then(data => {console.log(data.url);
 	};
-	if (profession === null || en === null || itemGold === null || talent === null) {
+	if (profession === null || dataI18n === null || itemGold === null || talent === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (
