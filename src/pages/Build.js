@@ -561,7 +561,7 @@ function Build() {
 			loadBuild();
 		}
 		// eslint-disable-next-line
-	}, [searchParams.get('skills'), skills, en, profession]);
+	}, [searchParams.get('skills'), skills, dataI18n, profession]);
 
 	useEffect(() => {
 		saveBuild();

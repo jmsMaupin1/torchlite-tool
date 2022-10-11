@@ -51,7 +51,7 @@ function Skills() {
 			setListType([...listTypeInit]);
 		}
 		// eslint-disable-next-line
-	}, [skillTag, en]);
+	}, [skillTag, dataI18n]);
 
 	useEffect(() => {
 		if (skills !== null) {
