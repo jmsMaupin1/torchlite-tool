@@ -18,7 +18,6 @@ function BuildSkill(props) {
 	/* // energy 0 , 10 , 15 , 50 , 100 */
 	const tabEnergy = [0, 10, 25, 75, 175];
 
-	const [currentEnergyCost, setCurrentEnergyCost] = useState(0);
 	const [skill, setSkill] = useState(null);
 	const [isVisible, setIsVisible] = useState(false);
 

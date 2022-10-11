@@ -69,7 +69,7 @@ const Header = () => {
 							menuOpen ? '' : 'hidden'
 						} justify-between items-center w-full md:flex md:w-auto md:order-1`}
 					>
-						<ul className="flex flex-col p-2 pb-2 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
+						<ul className="flex flex-col p-2 pb-2 mt-4 rounded-lg border md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
 							<li>
 								<Link
 									onClick={() => setMenuOpen(false)}
