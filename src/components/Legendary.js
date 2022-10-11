@@ -18,34 +18,34 @@ function Legendary(props) {
 			setCurrentDisplay(1);
 		}
 	};
-	useEffect(() => {
-		filterByAffix();
-		// eslint-disable-next-line
-	}, [currentAffix]);
+	// useEffect(() => {
+	// 	filterByAffix();
+	// 	// eslint-disable-next-line
+	// }, [currentAffix]);
 
-	const filterByAffix = () => {
-		if (currentAffix === null) {
-			setIsVisible(true);
-			return;
-		}
-		let tabAffix = [];
-		if (b.prefix !== undefined && b.prefix !== []) {
-			b.prefix
-				.filter((e) => e !== null)
-				.forEach((p) => {
-					if (currentDisplay === 0) {
-						tabAffix.push(p.tier0[0]);
-					} else {
-						tabAffix.push(p.tier1[0]);
-					}
-				});
-			if (tabAffix.find((a) => a.indexOf(currentAffix) > -1) !== undefined) {
-				setIsVisible(true);
-			} else {
-				setIsVisible(false);
-			}
-		}
-	};
+	// const filterByAffix = () => {
+	// 	if (currentAffix === null) {
+	// 		setIsVisible(true);
+	// 		return;
+	// 	}
+	// 	let tabAffix = [];
+	// 	if (b.prefix !== undefined && b.prefix !== []) {
+	// 		b.prefix
+	// 			.filter((e) => e !== null)
+	// 			.forEach((p) => {
+	// 				if (currentDisplay === 0) {
+	// 					tabAffix.push(p.tier0[0]);
+	// 				} else {
+	// 					tabAffix.push(p.tier1[0]);
+	// 				}
+	// 			});
+	// 		if (tabAffix.find((a) => a.indexOf(currentAffix) > -1) !== undefined) {
+	// 			setIsVisible(true);
+	// 		} else {
+	// 			setIsVisible(false);
+	// 		}
+	// 	}
+	// };
 
 	const currentBase = itemBase.find((e) => e.id === b.base_id);
 
