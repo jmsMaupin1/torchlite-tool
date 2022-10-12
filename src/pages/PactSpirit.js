@@ -1,102 +1,164 @@
 import pactSpirit from './../data/servant.json';
-import contract from './../data/gen_contract_servant.json';
 import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import { useTranslation } from 'react-i18next';
+import { DebounceInput } from 'react-debounce-input';
+import Loader from '../components/Loader';
+import { ViewportList } from 'react-viewport-list';
+import PactSpiritCard from '../components/PactSpiritCard';
+import { useMediaQuery } from 'react-responsive';
+import { formatArray } from '../utils/utils';
+
 function PactSpirit() {
-	const { translate, en } = useContext(AppContext);
+	const { translate, dataI18n } = useContext(AppContext);
+	const { t } = useTranslation();
 	//state
 	const [currentRarity, setCurrentRarity] = useState(null);
 	const [currentType, setCurrentType] = useState(null);
+	const [currentName, setCurrentName] = useState(null);
+	const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
 
-	const getRarity = (rarity) => {
-		switch (rarity) {
-			case '2':
-				return 'Magic';
-			case '3':
-				return 'Rare';
-			case '100':
-				return 'Legendary';
-			default:
-				return rarity;
+	const listRarity = [
+		{ id: '2', name: 'Magic' },
+		{ id: '3', name: 'Rare' },
+		{ id: '100', name: 'Legendary' },
+	];
+	const listType = [
+		{ id: '1', name: 'Attack' },
+		{ id: '2', name: 'Spell' },
+		{ id: '3', name: 'Persistent' },
+		{ id: '4', name: 'Summon' },
+		{ id: '5', name: 'Survival' },
+		{ id: '6', name: 'Drop' },
+		{ id: '100', name: 'Legendary' },
+	];
+	const filterByRarity = (e) => {
+		if (currentRarity != null) {
+			if (e.rarity === currentRarity) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
 		}
 	};
-	const getType = (type) => {
-		switch (type) {
-			case '1':
-				return 'Attack';
-			case '2':
-				return 'Spell';
-			case '3':
-				return 'Persistent';
-			case '4':
-				return 'Summon';
-			case '5':
-				return 'Survival';
-			case '6':
-				return 'Drop';
-			case '100':
-				return 'Legendary';
-			default:
-				return type;
+	const filterByType = (e) => {
+		if (currentType != null) {
+			if (e.type === currentType) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
 		}
 	};
+	const filterByName = (e) => {
+		if (currentName != null) {
+			if (translate(e.name).toLowerCase().indexOf(currentName.toLowerCase()) > -1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	};
+	const onChangeType = (e) => {
+		if (e.target.value === '') {
+			setCurrentType(null);
+		} else {
+			setCurrentType(e.target.value);
+		}
+	};
+	const onChangeRarity = (e) => {
+		if (e.target.value === '') {
+			setCurrentRarity(null);
+		} else {
+			setCurrentRarity(e.target.value);
+		}
+	};
+	const onChangeName = (value) => {
+		if (value === '') {
+			setCurrentName(null);
+		} else {
+			setCurrentName(value);
+		}
+	};
+	let formatedArray = pactSpirit
+		.filter(filterByType)
+		.filter(filterByRarity)
+		.filter(filterByName)
+		.sort((a, b) => a.rarity - b.rarity);
 
-	if (en === null) {
-		return;
+	if (isMedium) formatedArray = formatArray(formatedArray, 3);
+
+	if (dataI18n === null) {
+		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
-
 	return (
-		<div className="grid grid-cols-5 gap-2">
-			{pactSpirit
-				.sort((a, b) => a.rarity - b.rarity)
-				.map((p) => (
-					<div className="bg-[#282828] flex flex-col gap-2 border rounded-md p-2">
-						<div className="flex flex-row items-center">
-							<div>
-								<img
-									loading="lazy"
-									className="h-20"
-									src={`img/icons/PetIcons/${p.icon_small}.png`}
-									alt="Icons"
-								/>
-							</div>
-							<div className="title">{translate(p.name)}</div>
-						</div>
-						<div>Rarity : {getRarity(p.rarity)}</div>
-						<div>Type : {getType(p.type)}</div>
-						<div>{translate(p.des_effect)}</div>
-						<div
-							className="text-center"
-							dangerouslySetInnerHTML={{ __html: translate(p.des_promotion).split('|').join('<br>') }}
-						></div>
-
-						<div className="flex flex-row flex-wrap border-red border">
-							{contract
-								.filter((c) => c.ServantId === p.id && c.StarLevel === '0')
-								.map((con) => (
-									<div>
-										<div>Contrat : {con.ContractPointAffix}</div>
-										<div>Affix : {con.ServantAffix}</div>
-										<div>StartLevel : {con.StarLevel}</div>
-									</div>
-								))}
-						</div>
-						<div className="flex flex-row flex-wrap">
-							{p.information_point_icon.split(';').map((point, index) => (
-								<div className="flex flex-col">
-									<div>
-										<img
-											src={`img/icons/PetIcons/contract/${point.split(':')[1]}.png`}
-											alt="Contract"
-										/>
-									</div>
-									<div className="flex flex-col">{p.transformation.split('||')[index]}</div>
+		<>
+			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">
+				{t('commons:legendaries')}
+			</div>
+			<div className="flex flex-col md:flex-row md:gap-2 md:items-center mb-2 w-full p-2 md:p-0">
+				<label>{t('commons:name')}</label>
+				<DebounceInput
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+					placeholder={t('commons:search_item_by_name')}
+					debounceTimeout={500}
+					onChange={(event) => onChangeName(event.target.value)}
+				/>
+				<label>{t('commons:type')}</label>
+				<select
+					onChange={onChangeType}
+					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
+				>
+					<option value=""> -- {t('commons:select_type')} --</option>
+					{listType.map((type, index) => (
+						<option key={type.id} value={type.id}>
+							{t('commons:' + type.name)}
+						</option>
+					))}
+				</select>
+				<label>{t('commons:rarity')}</label>
+				<select
+					onChange={onChangeRarity}
+					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
+				>
+					<option value=""> -- {t('commons:select_rarity')} --</option>
+					{listRarity.map((rarity, index) => (
+						<option key={rarity.id} value={rarity.id}>
+							{t('commons:' + rarity.name)}
+						</option>
+					))}
+				</select>
+			</div>
+			{isMedium ? (
+				<div className="grid grid-cols-1 gap-2 mx-auto">
+					<ViewportList items={formatedArray}>
+						{(items, index) => {
+							return (
+								<div className="grid grid-cols-3 gap-2" key={index}>
+									{items.map((item, key) => {
+										return <PactSpiritCard p={item} key={key} />;
+									})}
 								</div>
-							))}
-						</div>
-					</div>
-				))}
-		</div>
+							);
+						}}
+					</ViewportList>
+				</div>
+			) : (
+				<div className="grid grid-cols-1 gap-2 mx-auto p-2">
+					<ViewportList items={formatedArray}>
+						{(item, index) => {
+							return <PactSpiritCard p={item} key={index} />;
+						}}
+					</ViewportList>
+				</div>
+			)}
+		</>
 	);
 }
 export default PactSpirit;
