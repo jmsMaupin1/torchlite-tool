@@ -6,9 +6,9 @@ import hero from './../data/hero.json';
 import perk from './../data/perk.json';
 
 function Trait() {
-	const { translate, en } = useContext(AppContext);
+	const { translate, dataI18n } = useContext(AppContext);
 
-	if (en == null || hero == null) {
+	if (dataI18n == null || hero == null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (

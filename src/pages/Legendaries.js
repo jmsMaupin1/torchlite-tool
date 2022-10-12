@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import Legendary from '../components/Legendary';
 import { AppContext } from '../context/AppContext';
 import { DebounceInput } from 'react-debounce-input';
@@ -6,11 +6,14 @@ import Loader from '../components/Loader';
 import { ViewportList } from 'react-viewport-list';
 import { useMediaQuery } from 'react-responsive';
 import { formatArray } from '../utils/utils';
+import { useTranslation } from 'react-i18next';
 
 function Legendaries() {
-	const { translate, itemGold, itemBase, en } = useContext(AppContext);
+	const { translate, itemGold, itemBase, dataI18n } = useContext(AppContext);
 	const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
 	const isLarge = useMediaQuery({ query: '(min-width: 1024px)' });
+	const { t } = useTranslation();
+	const ref = useRef(null);
 
 	// eslint-disable-next-line
 	const [listType, setListType] = useState(null);
@@ -88,14 +91,35 @@ function Legendaries() {
 			return true;
 		}
 	};
+	const filterByAffix = (e) => {
+		if (currentAffix === null) {
+			return true;
+		}
+		let tabAffix = [];
+		if (e.prefix !== undefined && e.prefix !== []) {
+			e.prefix
+				.filter((e) => e !== null)
+				.forEach((p) => {
+					tabAffix.push(p.tier0[0]);
+					tabAffix.push(p.tier1[0]);
+				});
+			if (tabAffix.find((a) => a.indexOf(currentAffix) > -1) !== undefined) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	};
 
-	if (listType == null || en == null || itemGold == null) {
+	if (listType == null || dataI18n == null || itemGold == null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 
 	let formatedArray = itemGold
 		.filter(findBase)
 		.filter(filterByName)
+		// add this filter
+		.filter(filterByAffix)
 		.sort((a, b) => a.require_level - b.require_level);
 
 	//format Array for matching 2/4 items per chunks
@@ -104,35 +128,40 @@ function Legendaries() {
 
 	return (
 		<>
-			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">Legendaries</div>
-			<div className="flex flex-row gap-2 items-center mb-2 p-2">
-				<label>Type</label>
-				<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
-					<option value=""> -- Select type --</option>
+			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">
+				{t('commons:legendaries')}
+			</div>
+			<div className="flex flex-col md:flex-row md:gap-2 md:items-center mb-2 p-2 w-full">
+				<label>{t('commons:type')}</label>
+				<select
+					onChange={onChangeType}
+					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
+				>
+					<option value=""> -- {t('commons:select_type')} --</option>
 					{listType.map((type, index) => (
 						<option key={type} value={type}>
 							{type}
 						</option>
 					))}
 				</select>
-				<label>Name</label>
+				<label>{t('commons:name')}</label>
 				<DebounceInput
-					className="w-auto bg-[#282828] border rounded border-slate-500"
-					placeholder="Search item by name..."
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+					placeholder={t('commons:search_item_by_name')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeName(event.target.value)}
 				/>
 				<label>Affix</label>
 				<DebounceInput
-					className="w-auto bg-[#282828] border rounded border-slate-500"
-					placeholder="Search item by affix"
+					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+					placeholder={t('commons:search_item_by_affix')}
 					debounceTimeout={500}
 					onChange={(event) => onChangeAffix(event.target.value)}
 				/>
 			</div>
 			{isMedium || isLarge ? (
-				<div className="grid grid-cols-1 gap-10 mx-auto">
-					<ViewportList items={formatedArray}>
+				<div className="grid grid-cols-1 gap-10 mx-auto" ref={ref}>
+					<ViewportList items={formatedArray} viewportRef={ref}>
 						{(items, index) => {
 							return (
 								<div className="grid grid-cols-2 lg:grid-cols-3 gap-10 px-2" key={index}>

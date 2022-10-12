@@ -5,11 +5,13 @@ import BuildSkillSlot from './BuildSkillSlot';
 import { BuildContext } from '../context/BuildContext';
 import { Tooltip } from 'flowbite-react';
 import Skill from '../components/Skill';
+import { useTranslation } from 'react-i18next';
 
 function BuildSkill2(props) {
 	const { translate, skills } = useContext(AppContext);
 	const { changePrimarySecondary, setCurrentModalType, openModal, getSkillByPrimary, onChangeSkillForced } =
 		useContext(BuildContext);
+	const { t } = useTranslation();
 	let ind = props.ind;
 	// let onChangeCurrentModalType = props.onChangeCurrentModalType;
 	// let onChangeSupport=props.onChangeSupport;
@@ -126,7 +128,7 @@ function BuildSkill2(props) {
 					<BuildSkillSlot secondary={5} primary={ind} />
 					<div></div>
 					<div className="text-center col-span-5 pt-10">
-						Energy required :{' '}
+						{t('commons:energy_required')} :{' '}
 						{tabEnergy[currentSkill.support.filter((e) => Object.keys(e).length > 0).length - 1] | 0}
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 import { Tooltip } from 'flowbite-react';
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 function HeroTrait(props) {
 	const perk = props.perk;
@@ -11,6 +12,7 @@ function HeroTrait(props) {
 
 	const { translate } = useContext(AppContext);
 	const [selectedTrait, setSelectedTrait] = useState(currentTrait.specId);
+	const { t } = useTranslation();
 
 	const _setSelectedTrait = (id, name) => {
 		setSelectedTrait(id);
@@ -63,7 +65,7 @@ function HeroTrait(props) {
 															{translate(p.name)}
 														</div>
 														<div className="text-base text-center font-normal text-white">
-															Level {p.level}
+															{t('commons:level')} {p.level}
 														</div>
 														<div className="text-center ">
 															<input
@@ -126,7 +128,7 @@ function HeroTrait(props) {
 																{translate(p.name)}
 															</div>
 															<div className="text-base text-center font-normal text-white">
-																Level {p.level}
+																{t('commons:level')} {p.level}
 															</div>
 															{index === 32 || index === 62 || index === 80 ? (
 																<div className="text-center ">
