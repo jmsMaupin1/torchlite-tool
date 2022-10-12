@@ -10,6 +10,7 @@ import Talent from '../pages/Talent';
 import Modifier from '../pages/Modifier';
 import Skills from '../pages/Skills';
 import Base from '../pages/Base';
+import PactSpirit from '../pages/PactSpirit';
 
 const Router = () => {
 	return (
@@ -22,6 +23,7 @@ const Router = () => {
 				<Route path="mod" element={<Modifier />} />
 				<Route path="talent" element={<Talent />} />
 				<Route path="trait" element={<Trait />} />
+				<Route path="pact-spirit" element={<PactSpirit />} />
 				<Route
 					path="build"
 					element={

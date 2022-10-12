@@ -21,40 +21,40 @@ const AppContextProvider = (props) => {
 
 	useEffect(() => {
 		import('./../data/skills.json').then((data) => {
-			console.log('skills loaded');
+			console.info('skills loaded');
 			setSkills(data.default);
 		});
 		import('./../data/item_base.json').then((data) => {
 			setItemBase(data.default);
-			console.log('bases loaded');
+			console.info('bases loaded');
 		});
 		import('./../data/item_gold.json').then((data) => {
 			setItemGold(data.default);
-			console.log('legendary loaded');
+			console.info('legendary loaded');
 		});
 		import('./../data/modifiers.json').then((data) => {
 			setModifiers(data.default);
-			console.log('modifiers loaded');
+			console.info('modifiers loaded');
 		});
 		import('./../data/profession.json').then((data) => {
 			setProfession(data.default);
-			console.log('profession loaded');
+			console.info('profession loaded');
 		});
 		import('./../data/skill_tag.json').then((data) => {
 			setSkillTag(data.default);
-			console.log('skill tag loaded');
+			console.info('skill tag loaded');
 		});
 		import('./../data/talent.json').then((data) => {
 			setTalent(data.default);
-			console.log('talent loaded');
+			console.info('talent loaded');
 		});
 		import('./../data/perk.json').then((data) => {
 			setPerk(data.default);
-			console.log('perk loaded');
+			console.info('perk loaded');
 		});
 		import('./../data/hero.json').then((data) => {
 			setHero(data.default);
-			console.log('hero loaded');
+			console.info('hero loaded');
 		});
 	}, []);
 
@@ -76,7 +76,7 @@ const AppContextProvider = (props) => {
 						setDataI18n(data.default);
 					});
 
-					console.log(`translation ${i18n.language} loaded`);
+					console.info(`translation ${i18n.language} loaded`);
 			}
 		}
 	}, [i18n.language]);
