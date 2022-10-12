@@ -19,9 +19,19 @@ export const initI18n = () => {
 		debug: false,
 		resources: dict,
 		lng, // lng: 'en', force en lang, lng: 'fr'
-		fallbackLng: 'en',
+		//fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false,
+		},
+		saveMissing: true,
+		missingKeyHandler: function (lngs, ns, key, fallbackValue, updateMissing, options) {
+			// add logger to track missing key
+			console.groupCollapsed('Missing translation : ' + key);
+			console.log('key', key);
+			console.log('lngs', lngs);
+			console.log('fallbackValue', fallbackValue);
+			console.log('options', options);
+			console.groupEnd();
 		},
 	};
 
