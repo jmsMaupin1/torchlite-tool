@@ -1,14 +1,14 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import HyperLinkTooltip from './HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 
 function Legendary(props) {
 	const b = props.legendary;
-	const currentAffix = props.currentAffix;
+	//const currentAffix = props.currentAffix;
 	const { translate, itemBase } = useContext(AppContext);
 	const [currentDisplay, setCurrentDisplay] = useState(1);
-	const [isVisible, setIsVisible] = useState(true);
+	//const [isVisible, setIsVisible] = useState(true);
 	const { t } = useTranslation();
 
 	const changeDisplay = () => {
@@ -53,11 +53,7 @@ function Legendary(props) {
 
 	return (
 		<div
-			className={`${
-				isVisible === false ? 'hidden' : ''
-			} flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-between shadow-lg shadow-black ${
-				props.className
-			}`}
+			className={`flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-between shadow-lg shadow-black ${props.className}`}
 		>
 			<div className="flex flex-row gap-2 items-center flex-wrap justify-between">
 				<div className="flex flex-row gap-2 items-center">

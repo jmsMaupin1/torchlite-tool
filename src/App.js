@@ -9,7 +9,12 @@ import { initI18n } from './i18n/i18n';
 initI18n();
 
 function App() {
-	const currentBasename = process.env.REACT_APP_BASENAME;
+	let currentBasename = '';
+	// trick for github page based on node env , when build is production when npm start => development
+	const currentEnv = process.env.NODE_ENV;
+	if (currentEnv === 'production') {
+		currentBasename = '/torchlight-helper';
+	}
 	return (
 		<BrowserRouter basename={currentBasename}>
 			<AppContextProvider>

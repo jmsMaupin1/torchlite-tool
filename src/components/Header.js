@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import { switchLang } from './../i18n/i18n';
-import { US, FR, DE, ES } from 'country-flag-icons/react/3x2';
+import { US, FR, DE } from 'country-flag-icons/react/3x2';
 
 const Header = () => {
 	const { currentPage, setCurrentPage, topMenu, i18n } = useContext(AppContext);
