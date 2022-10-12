@@ -221,6 +221,26 @@ const Header = () => {
 								</Link>
 							</li>
 							<li>
+								<Link
+									onClick={() => setMenuOpen(false)}
+									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+									to="fate-card"
+								>
+									<div
+										className={`flex flex-row gap-2 items-center  ${
+											currentPage === 'fate-card' ? 'text-white' : ''
+										}`}
+									>
+										<img
+											className="w-[30px] grayscale"
+											src="img/icons/ui/UI_Fight_MenuIconNLDZ.png"
+											alt="fate-card"
+										/>
+										Fate Card
+									</div>
+								</Link>
+							</li>
+							<li>
 								{/* <Link onClick={() => setCurrentPage('mod')} className={`block py-2 pr-4 pl-3 ${currentPage === "mod" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`} to="mod">Mod</Link> */}
 							</li>
 

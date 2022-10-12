@@ -14,7 +14,7 @@ function Home() {
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 				<div className="border rounded-lg relative">
 					<Link onClick={() => setCurrentPage('skills')} to="skills">
-						<img loading="lazy" className="rounded-lg" src={'img/skills.png'} alt="Skills" />
+						<img className="rounded-lg" src={'img/skills.png'} alt="Skills" />
 						<h2 className="bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4">
 							{t('commons:skills')}
 						</h2>
@@ -22,7 +22,7 @@ function Home() {
 				</div>
 				<div className="border rounded-lg relative">
 					<Link onClick={() => setCurrentPage('base')} to="base">
-						<img loading="lazy" className="rounded-lg" src={'img/base.png'} alt="Base" />
+						<img className="rounded-lg" src={'img/base.png'} alt="Base" />
 						<h2 className="bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4">
 							{t('commons:bases')}
 						</h2>
@@ -30,7 +30,7 @@ function Home() {
 				</div>
 				<div className="border rounded-lg relative">
 					<Link onClick={() => setCurrentPage('legendary')} to="legendary">
-						<img loading="lazy" className="rounded-lg" src={'img/legendary.png'} alt="Legendary" />
+						<img className="rounded-lg" src={'img/legendary.png'} alt="Legendary" />
 						<h2 className="bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4">
 							{t('commons:legendary')}
 						</h2>
@@ -39,7 +39,7 @@ function Home() {
 				<div className="border rounded-lg relative">
 					<Link onClick={() => setCurrentPage('talent')} to="talent" className="flex">
 						<div>
-							<img loading="lazy" className="rounded-lg" src={'img/talent_big.png'} alt="Talent" />
+							<img className="rounded-lg" src={'img/talent_big.png'} alt="Talent" />
 						</div>
 						<h2 className="bottom-0 absolute w-full rounded-b-lg text-2xl bg-gradient-to-r from-black p-4">
 							{t('commons:talent')}
