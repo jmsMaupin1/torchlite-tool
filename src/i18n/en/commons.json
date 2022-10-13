@@ -9,13 +9,16 @@
 	"Legendary": "Legendary",
 	"Magic": "Magic",
 	"Middle": "Middle",
+	"OR": "OR",
 	"Outer": "Outer",
 	"Persistent": "Persistent",
 	"Rare": "Rare",
 	"STR": "STR",
+	"Secondary_type": "Secondary type",
 	"Spell": "Spell",
 	"Summon": "Summon",
 	"Survival": "Survival",
+	"Type": "Type",
 	"Upgrade": "Upgrade",
 	"actives_skills": "Actives Skills",
 	"add_point": "add point",
@@ -71,5 +74,5 @@
 	"talent": "Talent",
 	"total_stats": "Total Stats",
 	"tree": "Tree",
-	"type": "Type"
+	"type": "type"
 }
