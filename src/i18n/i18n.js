@@ -19,7 +19,7 @@ export const initI18n = () => {
 		debug: false,
 		resources: dict,
 		lng, // lng: 'en', force en lang, lng: 'fr'
-		//fallbackLng: 'en',
+		fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false,
 		},
