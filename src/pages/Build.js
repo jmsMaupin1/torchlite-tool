@@ -849,7 +849,10 @@ function Build() {
 			let items = searchParams.get('items').split(',');
 			let tabItems = [];
 			items.forEach((i) => {
-				tabItems.push(itemGold.find((g) => g.id === i));
+				if (i !== null && i !== undefined) {
+					itemGold.find((g) => g.id === i);
+					tabItems.push();
+				}
 			});
 			setCurrentItems(tabItems);
 		}
@@ -945,7 +948,7 @@ function Build() {
 			});
 		//.then(data => {console.log(data.url);
 	};
-	if (profession === null || dataI18n === null || itemGold === null || talent === null) {
+	if (profession === null || dataI18n === null || itemGold === null || talent === null || itemGold === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (
