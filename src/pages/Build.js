@@ -553,11 +553,17 @@ function Build() {
 	}, [debounce, handleScroll]);
 
 	useEffect(() => {
-		if (searchParams.get('skills') !== null && skills !== null && dataI18n !== null && profession !== null && talent !== null) {
+		if (
+			searchParams.get('skills') !== null &&
+			skills !== null &&
+			dataI18n !== null &&
+			profession !== null &&
+			talent !== null &&
+			itemGold !== null
+		) {
 			loadBuild();
 		}
-		// eslint-disable-next-line
-	}, [searchParams.get('skills'), skills, dataI18n, profession, talent]);
+	}, [searchParams.get('skills'), skills, dataI18n, profession, talent, itemGold]);
 
 	useEffect(() => {
 		saveBuild();
@@ -850,8 +856,10 @@ function Build() {
 			let tabItems = [];
 			items.forEach((i) => {
 				if (i !== null && i !== undefined) {
-					itemGold.find((g) => g.id === i);
-					tabItems.push();
+					if (itemGold !== null) {
+						let tempItem = itemGold.find((g) => g.id === i);
+						if (tempItem !== undefined) tabItems.push(tempItem);
+					}
 				}
 			});
 			setCurrentItems(tabItems);
