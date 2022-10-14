@@ -59,7 +59,7 @@ function BuildSkillSlot(props) {
 		if (primary > 5) {
 			setCurrentModalType('');
 		} else {
-			setCurrentModalType('Support');
+			setCurrentModalType('Passive');
 		}
 
 		changePrimarySecondary(primary, secondary);
@@ -92,7 +92,7 @@ function BuildSkillSlot(props) {
 						<div>
 							<img
 								loading="lazy"
-								src={`img/icons/skills/${currentSupport.img}.png`}
+								src={`img/icons/CoreTalentIcon/${currentSupport.img}.png`}
 								className="w-[50px]"
 								alt="Icon"
 							/>
@@ -103,9 +103,7 @@ function BuildSkillSlot(props) {
 				)}
 			</div>
 			{currentSupport !== undefined && Object.keys(currentSupport).length > 0 ? (
-				<div className="mt-[20%] max-w-[120px] absolute flex-wrap text-sm text-center">
-					{currentSupport.label}
-				</div>
+				<div className="mt-[20%] max-w-[120px] absolute flex-wrap text-sm text-center">{currentSupport.label}</div>
 			) : null}
 		</div>
 	);

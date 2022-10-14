@@ -29,7 +29,7 @@ function SelectWithImage(props) {
 					<div>
 						<img
 							loading="lazy"
-							src={`img/icons/skills/${skill.img}.png`}
+							src={`img/icons/CoreTalentIcon/${skill.img}.png`}
 							className="w-[24px] aspect-square"
 							alt="Icon"
 						/>

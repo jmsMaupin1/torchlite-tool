@@ -9,6 +9,7 @@
 	"Legendary": "Legendary",
 	"Magic": "Magic",
 	"Middle": "Middle",
+	"OR": "ODER",
 	"Outer": "Outer",
 	"Persistent": "Persistent",
 	"Rare": "Rare",
@@ -16,6 +17,7 @@
 	"Spell": "Spell",
 	"Summon": "Summon",
 	"Survival": "Survival",
+	"Type": "Typ",
 	"Upgrade": "Upgrade ",
 	"actives_skills": "Aktive Fähigkeiten",
 	"add_point": "Punkt hinzufügen",
@@ -40,6 +42,7 @@
 	"lang_fr": "FR",
 	"legendaries": "Legendäre Gegenstände",
 	"legendary": "Legendäre Gegenstände",
+	"level": "level",
 	"mandatory_items": "Benötigte Gegenstände",
 	"minimum_level": "Minimum",
 	"minimum_level_require": "Benötigtes Level",
@@ -71,5 +74,5 @@
 	"talent": "Talente",
 	"total_stats": "Gesamtstatistik",
 	"tree": "Baum",
-	"type": "Typ"
+	"type": "typ"
 }

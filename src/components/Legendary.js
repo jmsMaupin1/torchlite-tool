@@ -1,14 +1,14 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import HyperLinkTooltip from './HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
+import LegendaryLine from './LegendaryLine';
 
 function Legendary(props) {
 	const b = props.legendary;
-	//const currentAffix = props.currentAffix;
-	const { translate, itemBase } = useContext(AppContext);
+	const currentAffix = props.currentAffix;
+	const { translate, itemBase, i18n } = useContext(AppContext);
 	const [currentDisplay, setCurrentDisplay] = useState(1);
-	//const [isVisible, setIsVisible] = useState(true);
 	const { t } = useTranslation();
 
 	const changeDisplay = () => {
@@ -18,42 +18,33 @@ function Legendary(props) {
 			setCurrentDisplay(1);
 		}
 	};
-	// useEffect(() => {
-	// 	filterByAffix();
-	// 	// eslint-disable-next-line
-	// }, [currentAffix]);
-
-	// const filterByAffix = () => {
-	// 	if (currentAffix === null) {
-	// 		setIsVisible(true);
-	// 		return;
-	// 	}
-	// 	let tabAffix = [];
-	// 	if (b.prefix !== undefined && b.prefix !== []) {
-	// 		b.prefix
-	// 			.filter((e) => e !== null)
-	// 			.forEach((p) => {
-	// 				if (currentDisplay === 0) {
-	// 					tabAffix.push(p.tier0[0]);
-	// 				} else {
-	// 					tabAffix.push(p.tier1[0]);
-	// 				}
-	// 			});
-	// 		if (tabAffix.find((a) => a.indexOf(currentAffix) > -1) !== undefined) {
-	// 			setIsVisible(true);
-	// 		} else {
-	// 			setIsVisible(false);
-	// 		}
-	// 	}
-	// };
-
+	const hightlightSearch = (str) => {
+		if (currentAffix === null || currentAffix === undefined || currentAffix === '') {
+			return str;
+		}
+		let tempStr = str;
+		let replace = str;
+		let regex = new RegExp(`${currentAffix}`, 'gi');
+		if (Array.isArray(str)) {
+			tempStr = str[0];
+			let test = regex.exec(tempStr);
+			if (test != null && test[0] !== undefined) {
+				replace = [tempStr.replace(regex, `<mark>${test[0]}</mark>`)];
+			}
+		} else {
+			let test = regex.exec(tempStr);
+			if (test != null && test[0] !== undefined) {
+				replace = tempStr.replace(regex, `<mark>${test[0]}</mark>`);
+			}
+		}
+		return replace;
+	};
 	const currentBase = itemBase.find((e) => e.id === b.base_id);
 
 	if (!b || !currentBase) return;
-
 	return (
 		<div
-			className={`flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-between shadow-lg shadow-black ${props.className}`}
+			className={`flex flex-col border rounded bg-[#222] text-white p-2 gap-2 justify-start shadow-lg shadow-black ${props.className}`}
 		>
 			<div className="flex flex-row gap-2 items-center flex-wrap justify-between">
 				<div className="flex flex-row gap-2 items-center">
@@ -66,7 +57,7 @@ function Legendary(props) {
 							{t('commons:require_level')} {b.require_level}
 						</div>
 						<div className="border border-[#333] rounded-md px-2 text-[#bfbfbf] text-sm">
-							{currentBase.description1_display}
+							{translate(currentBase.description1)} ({translate(currentBase.description2)})
 						</div>
 					</div>
 				</div>
@@ -74,10 +65,8 @@ function Legendary(props) {
 					<button className="p-1 text-[#f67370] border items-center flex rounded-tl-lg rounded-br-lg px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
 						<label className="inline-flex relative items-center cursor-pointer">
 							<input type="checkbox" onChange={changeDisplay} className="sr-only peer" />
-							<div className="w-11 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-5 after:transition-all dark:border-gray-600"></div>
-							<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-								{t('commons:corroded')}
-							</span>
+							<div className="w-11 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:z-0 after:h-4 after:w-5 after:transition-all dark:border-gray-600"></div>
+							<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{t('commons:corroded')}</span>
 						</label>
 					</button>
 				</div>
@@ -86,7 +75,7 @@ function Legendary(props) {
 				<HyperLinkTooltip
 					style={{ width: '100%' }}
 					className="w-full text-center border-b border-slate-500"
-					str={currentBase.suffix}
+					str={hightlightSearch(currentBase.suffix)}
 				/>
 			) : null}
 			<div className="flex flex-col">
@@ -95,31 +84,21 @@ function Legendary(props) {
 					b.prefix
 						.filter((e) => e !== null)
 						.map((s, i) => (
-							<div key={s.id + '-' + i} className="prefix">
-								{s.tier0[0] !== null && currentDisplay === 0 && (
-									<div className="flex flex-row gap-2 items-start">
-										<div className="text-[#f67370] border rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
+							<div key={i} className="prefix">
+								{s['tier0_' + i18n.language][0] !== null && currentDisplay === 0 && (
+									<div className="flex flex-row gap-2 items-center ">
+										<div className="text-[#f67370] border self-start rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
 											T0
 										</div>
-										{/* <div key={"prefix-"+i} style={{filter: 'contrast(0.5) brightness(2.5)',backgroundImage: 'url(img/T_Fx_Tile_015_LXJ.png)'}} className='font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900' dangerouslySetInnerHTML={{__html: replaceTag(s.tier0)}}></div> */}
-										<HyperLinkTooltip
-											key={'prefix-' + i}
-											style={{
-												filter: 'contrast(0.5) brightness(2.5)',
-												backgroundImage: 'url(img/T_Fx_Tile_015_LXJ.png)',
-											}}
-											className="font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900"
-											str={s.tier0}
-										/>
+										<LegendaryLine tierNumber={'0'} s={s} i={i} hightlightSearch={hightlightSearch} />
 									</div>
 								)}
 								{currentDisplay === 1 && (
-									<div className="flex flex-row gap-2 items-start">
-										<div className="text-[#f67370] border rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
+									<div className="flex flex-row gap-2 items-center">
+										<div className="text-[#f67370] border self-start rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
 											T1
 										</div>
-										{/* <div key={"prefix-"+i} className='' dangerouslySetInnerHTML={{__html: replaceTag(s.tier1)}}></div> */}
-										<HyperLinkTooltip key={'prefix-' + i} str={s.tier1} />
+										<LegendaryLine tierNumber={'1'} s={s} i={i} hightlightSearch={hightlightSearch} />
 									</div>
 								)}
 							</div>
@@ -129,22 +108,13 @@ function Legendary(props) {
 					b.suffix
 						.filter((e) => e !== null)
 						.map((s, i) => (
-							<div key={s.id + '-' + i} className="suffix">
-								{s.tier0[0] !== null && currentDisplay === 0 && (
+							<div key={i} className="suffix">
+								{s['tier0_' + i18n.language][0] !== null && currentDisplay === 0 && (
 									<div className="flex flex-row gap-2 items-start">
 										<div className="text-[#f67370] border rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
 											T0
 										</div>
-										{/* <div style={{filter: 'contrast(0.5) brightness(2.5)',backgroundImage: 'url(img/T_Fx_Tile_015_LXJ.png)'}} className='font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900' dangerouslySetInnerHTML={{__html: replaceTag(s.tier0)}}></div> */}
-										<HyperLinkTooltip
-											style={{
-												filter: 'contrast(0.5) brightness(2.5)',
-												backgroundImage: 'url(img/T_Fx_Tile_015_LXJ.png)',
-											}}
-											className="font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900"
-											key={'prefix-' + i}
-											str={s.tier0}
-										/>
+										<LegendaryLine tierNumber={'0'} s={s} i={i} hightlightSearch={hightlightSearch} />
 									</div>
 								)}
 								{currentDisplay === 1 && (
@@ -152,8 +122,7 @@ function Legendary(props) {
 										<div className="text-[#f67370] border rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
 											T1
 										</div>
-										{/* <div key={"suffix-"+i} className='' dangerouslySetInnerHTML={{__html: replaceTag(s.tier1)}}></div> */}
-										<HyperLinkTooltip str={s.tier1} />
+										<LegendaryLine tierNumber={'1'} s={s} i={i} hightlightSearch={hightlightSearch} />
 									</div>
 								)}
 							</div>

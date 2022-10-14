@@ -23,7 +23,7 @@ import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
 
 function Build() {
-	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
+	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
 	const { t } = useTranslation();
@@ -375,8 +375,7 @@ function Build() {
 						if (_mainProfStat[a.split(':')[0]] === undefined) {
 							_mainProfStat[a.split(':')[0]] = 0;
 						}
-						_mainProfStat[a.split(':')[0]] +=
-							parseInt(value) * parseInt(a.split(':')[1].replace('[', '').replace(']', ''));
+						_mainProfStat[a.split(':')[0]] += parseInt(value) * parseInt(a.split(':')[1].replace('[', '').replace(']', ''));
 					});
 				}
 			}
@@ -415,8 +414,7 @@ function Build() {
 						if (_spec1Stat[a.split(':')[0]] === undefined) {
 							_spec1Stat[a.split(':')[0]] = 0;
 						}
-						_spec1Stat[a.split(':')[0]] +=
-							parseInt(value) * parseInt(a.split(':')[1].replace('[', '').replace(']', ''));
+						_spec1Stat[a.split(':')[0]] += parseInt(value) * parseInt(a.split(':')[1].replace('[', '').replace(']', ''));
 					});
 				}
 			}
@@ -435,8 +433,7 @@ function Build() {
 						if (_spec2Stat[a.split(':')[0]] === undefined) {
 							_spec2Stat[a.split(':')[0]] = 0;
 						}
-						_spec2Stat[a.split(':')[0]] +=
-							parseInt(value) * parseInt(a.split(':')[1].replace('[', '').replace(']', ''));
+						_spec2Stat[a.split(':')[0]] += parseInt(value) * parseInt(a.split(':')[1].replace('[', '').replace(']', ''));
 					});
 				}
 			}
@@ -527,8 +524,7 @@ function Build() {
 	};
 	// eslint-disable-next-line
 	const handleScroll = () => {
-		if (topMenu.current !== null)
-			window.scrollY > topMenu.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
+		if (topMenu.current !== null) window.scrollY > topMenu.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
 	};
 
 	// This function handles the scroll performance issue
@@ -557,13 +553,7 @@ function Build() {
 	}, [debounce, handleScroll]);
 
 	useEffect(() => {
-		if (
-			searchParams.get('skills') !== null &&
-			skills !== null &&
-			dataI18n !== null &&
-			profession !== null &&
-			talent !== null
-		) {
+		if (searchParams.get('skills') !== null && skills !== null && dataI18n !== null && profession !== null && talent !== null) {
 			loadBuild();
 		}
 		// eslint-disable-next-line
@@ -682,8 +672,7 @@ function Build() {
 				tabMainTree.push(position + ':' + value);
 			}
 		}
-		string +=
-			'&trees=core1:' + mainProfPoint.core1 + '-core2:' + mainProfPoint.core2 + '-' + tabMainTree.join('-') + ',';
+		string += '&trees=core1:' + mainProfPoint.core1 + '-core2:' + mainProfPoint.core2 + '-' + tabMainTree.join('-') + ',';
 
 		let tabSpec1Tree = [];
 		for (const [position, value] of Object.entries(spec1Point)) {
@@ -815,15 +804,15 @@ function Build() {
 					let value = temp[1];
 					if (value !== '0') {
 						if (index === 0) {
-							_mainProfPoint[position] = value;
+							_mainProfPoint[position] = parseInt(value);
 							if (position !== 'core1' && position !== 'core2') cptPointMain += parseInt(value);
 						}
 						if (index === 1) {
-							_spec1Point[position] = value;
+							_spec1Point[position] = parseInt(value);
 							if (position !== 'core1' && position !== 'core2') cptPointSpec1 += parseInt(value);
 						}
 						if (index === 2) {
-							_spec2Point[position] = value;
+							_spec2Point[position] = parseInt(value);
 							if (position !== 'core1' && position !== 'core2') cptPointSpec2 += parseInt(value);
 						}
 					}
@@ -915,16 +904,7 @@ function Build() {
 	const findBase = (e) => {
 		if (e.icon !== '') {
 			// filter for test item
-			if (
-				(e.prefix[0] != null &&
-					e.prefix[0].tier1[0] === '(40-60) strength' &&
-					e.prefix[1] != null &&
-					e.prefix[1].tier1[0] === '(40-60) strength') ||
-				(e.suffix[0] != null &&
-					e.suffix[0].tier1[0] === '(40-60) strength' &&
-					e.suffix[1] != null &&
-					e.suffix[1].tier1[0] === '(40-60) strength')
-			) {
+			if (parseInt(e.id) < 100) {
 				return false;
 			} else {
 				return true;
@@ -1010,7 +990,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill1.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill1.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1020,7 +1000,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill2.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill2.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1030,7 +1010,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill3.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill3.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1040,7 +1020,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill4.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill4.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1050,7 +1030,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill5.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill5.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1064,9 +1044,7 @@ function Build() {
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
 							style={{
 								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${
-									currentMainProf.background.split('|')[0]
-								}.png`,
+								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
 							}}
 						>
 							<div className="flex flex-row gap-2">
@@ -1103,9 +1081,7 @@ function Build() {
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
 							style={{
 								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${
-									currentMainProf.background.split('|')[0]
-								}.png`,
+								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
 							}}
 						>
 							<div className="flex flex-row gap-2">
@@ -1148,20 +1124,12 @@ function Build() {
 						>
 							<div className="flex flex-row gap-2">
 								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${spec1.icon}.png`}
-										alt="Icon"
-									/>
+									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon" />
 								</div>
 								<div>{translate(spec1.name)}</div>
 							</div>
 							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:cursor-pointer hover:bg-gray-900"
-									onClick={() => _setSpec1(null)}
-								>
+								<button className="text-gray-300 hover:cursor-pointer hover:bg-gray-900" onClick={() => _setSpec1(null)}>
 									x
 								</button>
 							</div>
@@ -1186,20 +1154,12 @@ function Build() {
 						>
 							<div className="flex flex-row gap-2">
 								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${spec2.icon}.png`}
-										alt="Icon"
-									/>
+									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon" />
 								</div>
 								<div>{translate(spec2.name)}</div>
 							</div>
 							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:bg-gray-900 hover:cursor-pointer"
-									onClick={() => _setSpec2(null)}
-								>
+								<button className="text-gray-300 hover:bg-gray-900 hover:cursor-pointer" onClick={() => _setSpec2(null)}>
 									x
 								</button>
 							</div>
@@ -1228,11 +1188,7 @@ function Build() {
 						</div>
 					) : null}
 				</div>
-				<div
-					onClick={() => toggleSideMneu()}
-					className="bg-black w-3 flex flex-row items-center"
-					style={{ transition: '0.3s' }}
-				>
+				<div onClick={() => toggleSideMneu()} className="bg-black w-3 flex flex-row items-center" style={{ transition: '0.3s' }}>
 					<MdArrowLeft />
 				</div>
 			</div>
@@ -1282,7 +1238,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill1.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill1.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1292,7 +1248,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill2.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill2.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1302,7 +1258,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill3.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill3.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1312,7 +1268,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill4.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill4.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1322,7 +1278,7 @@ function Build() {
 										<img
 											loading="lazy"
 											className="h-6"
-											src={`img/icons/skills/${skill5.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill5.skill.img}.png`}
 											alt="Icon"
 										/>
 									</div>
@@ -1336,9 +1292,7 @@ function Build() {
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
 							style={{
 								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${
-									currentMainProf.background.split('|')[0]
-								}.png`,
+								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
 							}}
 						>
 							<div className="flex flex-row gap-2">
@@ -1376,9 +1330,7 @@ function Build() {
 							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
 							style={{
 								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${
-									currentMainProf.background.split('|')[0]
-								}.png`,
+								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
 							}}
 						>
 							<div className="flex flex-row gap-2">
@@ -1421,20 +1373,12 @@ function Build() {
 						>
 							<div className="flex flex-row gap-2">
 								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${spec1.icon}.png`}
-										alt="Icon"
-									/>
+									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon" />
 								</div>
 								<div>{translate(spec1.name)}</div>
 							</div>
 							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:cursor-pointer hover:bg-gray-900"
-									onClick={() => _setSpec1(null)}
-								>
+								<button className="text-gray-300 hover:cursor-pointer hover:bg-gray-900" onClick={() => _setSpec1(null)}>
 									x
 								</button>
 							</div>
@@ -1459,20 +1403,12 @@ function Build() {
 						>
 							<div className="flex flex-row gap-2">
 								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${spec2.icon}.png`}
-										alt="Icon"
-									/>
+									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon" />
 								</div>
 								<div>{translate(spec2.name)}</div>
 							</div>
 							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:bg-gray-900 hover:cursor-pointer"
-									onClick={() => _setSpec2(null)}
-								>
+								<button className="text-gray-300 hover:bg-gray-900 hover:cursor-pointer" onClick={() => _setSpec2(null)}>
 									x
 								</button>
 							</div>
@@ -1521,7 +1457,7 @@ function Build() {
 									options={skills
 										.filter(
 											(x) =>
-												(x.tag.includes(currentModalType) || currentModalType === '') &&
+												(currentModalType === '' || x['tag_' + i18n.language].includes(currentModalType)) &&
 												x.name !== translate(x.name)
 										)
 										.sort(sortAlpha)
@@ -1533,7 +1469,7 @@ function Build() {
 											<div>
 												<img
 													loading="lazy"
-													src={`img/icons/skills/${skill.img}.png`}
+													src={`img/icons/CoreTalentIcon/${skill.img}.png`}
 													className="w-[24px] aspect-square"
 													alt="Icon"
 												/>
@@ -1651,15 +1587,10 @@ function Build() {
 							))}
 					</div>
 				</div>
-				<div
-					ref={fieldRefSelectMainProf}
-					className={`${currentMainProf === null ? '' : 'hidden'} text-center text-xl font-bold`}
-				>
+				<div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? '' : 'hidden'} text-center text-xl font-bold`}>
 					{t('commons:select_initial_profession')}
 				</div>
-				<div
-					className={`${currentMainProf === null ? '' : 'hidden'} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}
-				>
+				<div className={`${currentMainProf === null ? '' : 'hidden'} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
 					{profession
 						.filter((p) => p.before_id === '0')
 						.map((p) => (
@@ -1667,9 +1598,7 @@ function Build() {
 								<div
 									className="bg-contain flex flex-col justify-between bg-no-repeat bg-right-top"
 									style={{
-										backgroundImage: `url("img/icons/TalentGodsIcon/${
-											p.background.split('|')[0]
-										}.png`,
+										backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`,
 									}}
 								>
 									<div>
@@ -1677,9 +1606,7 @@ function Build() {
 											<img loading="lazy" src={`img/icons/TalentIcon/${p.icon}.png`} alt="Icon" />
 										</div>
 										<div>{translate(p.name)}</div>
-										<HyperLinkTooltip
-											str={translate(p.des).replaceAll('#4', '').replace('|', '<br>')}
-										/>
+										<HyperLinkTooltip str={translate(p.des).replaceAll('#4', '').replace('|', '<br>')} />
 									</div>
 									<div className="text-center">
 										<input
@@ -1698,9 +1625,7 @@ function Build() {
 				{/* SPEC 1 */}
 				<div
 					ref={fieldRefSelectSpec1}
-					className={`${
-						currentMainProf === null || spec1 !== null ? 'hidden' : ''
-					} text-center text-xl font-bold`}
+					className={`${currentMainProf === null || spec1 !== null ? 'hidden' : ''} text-center text-xl font-bold`}
 				>
 					{t('commons:select_sub_profession_1')}
 				</div>
@@ -1715,26 +1640,17 @@ function Build() {
 							<div
 								key={subp.id + '-' + subp.id}
 								style={{
-									backgroundImage: `url("img/icons/TalentGodsIcon/${
-										subp.background.split('|')[0]
-									}.png`,
+									backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`,
 								}}
 								className="bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg "
 							>
 								<div className="text-center font-bold">{translate(subp.name)}</div>
 								<div className="flex flex-row justify-between items-center gap-4">
 									<div className="flex flex-col items-center">
-										<img
-											loading="lazy"
-											src={`img/icons/TalentIcon/${subp.icon}.png`}
-											className="h-20"
-											alt="Icon"
-										/>
+										<img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className="h-20" alt="Icon" />
 										<div className="text-center font-bold text-xl">{translate(subp.name)}</div>
 									</div>
-									<HyperLinkTooltip
-										str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')}
-									/>
+									<HyperLinkTooltip str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')} />
 								</div>
 								<div className="text-center">
 									<input
@@ -1761,9 +1677,9 @@ function Build() {
 					.map((p) => (
 						<div
 							key={p.id}
-							className={`${
-								currentMainProf !== null && spec2 === null && spec1 !== null ? '' : 'hidden'
-							} subProf-${p.id} flex flex-col md:flex-row gap-2 mb-2`}
+							className={`${currentMainProf !== null && spec2 === null && spec1 !== null ? '' : 'hidden'} subProf-${
+								p.id
+							} flex flex-col md:flex-row gap-2 mb-2`}
 						>
 							{profession
 								.filter((p2) => p2.before_id === p.id)
@@ -1771,9 +1687,7 @@ function Build() {
 									<div
 										key={p.id + '-' + subp.id}
 										style={{
-											backgroundImage: `url("img/icons/TalentGodsIcon/${
-												p.background.split('|')[0]
-											}.png`,
+											backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`,
 										}}
 										className={`${
 											spec1 !== null && spec1.id === subp.id ? 'grayscale text-gray-500' : ''
@@ -1785,18 +1699,12 @@ function Build() {
 												<img
 													loading="lazy"
 													src={`img/icons/TalentIcon/${subp.icon}.png`}
-													className={`h-20 ${
-														spec1 !== null && spec1.id === subp.id ? 'contrast-0' : ''
-													}`}
+													className={`h-20 ${spec1 !== null && spec1.id === subp.id ? 'contrast-0' : ''}`}
 													alt="Icon"
 												/>
-												<div className="text-center font-bold text-xl">
-													{translate(subp.name)}
-												</div>
+												<div className="text-center font-bold text-xl">{translate(subp.name)}</div>
 											</div>
-											<HyperLinkTooltip
-												str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')}
-											/>
+											<HyperLinkTooltip str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')} />
 										</div>
 										<div className="text-center">
 											{spec1 !== null && spec1.id === subp.id ? (
@@ -1818,12 +1726,7 @@ function Build() {
 				<div className="border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between">
 					<div className="flex flex-row gap-2 items-center">
 						<div>
-							<img
-								loading="lazy"
-								src="img/rightBtn.png"
-								alt="Right click"
-								style={{ transform: 'rotateY(180deg)' }}
-							/>
+							<img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{ transform: 'rotateY(180deg)' }} />
 						</div>
 						<div>{t('commons:add_point')}</div>
 						<div>
@@ -1872,8 +1775,7 @@ function Build() {
 										/>
 									</div>
 									<div>
-										{mainProfPoint.nb} /{' '}
-										{currentTree.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
+										{mainProfPoint.nb} / {currentTree.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
 									</div>
 								</div>
 								<div className="flex flex-col items-center">
@@ -1887,8 +1789,7 @@ function Build() {
 										/>
 									</div>
 									<div>
-										{mainProfPoint.nb} /{' '}
-										{currentTree.filter((e) => e.position === '0|0').slice(3)[0].need_points}
+										{mainProfPoint.nb} / {currentTree.filter((e) => e.position === '0|0').slice(3)[0].need_points}
 									</div>
 								</div>
 							</div>
@@ -1937,9 +1838,7 @@ function Build() {
 					<div
 						ref={fieldRefSpec1}
 						style={{
-							backgroundImage: `url("img/icons/TalentGodsIcon/${
-								spec1 !== null ? spec1.background.split('|')[0] : null
-							}.png`,
+							backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] : null}.png`,
 						}}
 						className="bg-[#282828] bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2"
 					>
@@ -1970,11 +1869,7 @@ function Build() {
 										/>
 									</div>
 									<div>
-										{spec1Point.nb} /{' '}
-										{
-											currentTreeSpec1.filter((e) => e.position === '0|0').slice(0, 3)[0]
-												.need_points
-										}
+										{spec1Point.nb} / {currentTreeSpec1.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
 									</div>
 								</div>
 								<div className="flex flex-col items-center">
@@ -1988,8 +1883,7 @@ function Build() {
 										/>
 									</div>
 									<div>
-										{spec1Point.nb} /{' '}
-										{currentTreeSpec1.filter((e) => e.position === '0|0').slice(3)[0].need_points}
+										{spec1Point.nb} / {currentTreeSpec1.filter((e) => e.position === '0|0').slice(3)[0].need_points}
 									</div>
 								</div>
 							</div>
@@ -2040,9 +1934,7 @@ function Build() {
 					<div
 						ref={fieldRefSpec2}
 						style={{
-							backgroundImage: `url("img/icons/TalentGodsIcon/${
-								spec2 !== null ? spec2.background.split('|')[0] : null
-							}.png`,
+							backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] : null}.png`,
 						}}
 						className="bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2"
 					>
@@ -2073,11 +1965,7 @@ function Build() {
 										/>
 									</div>
 									<div>
-										{spec2Point.nb} /{' '}
-										{
-											currentTreeSpec2.filter((e) => e.position === '0|0').slice(0, 3)[0]
-												.need_points
-										}
+										{spec2Point.nb} / {currentTreeSpec2.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
 									</div>
 								</div>
 								<div className="flex flex-col items-center">
@@ -2091,8 +1979,7 @@ function Build() {
 										/>
 									</div>
 									<div>
-										{spec2Point.nb} /{' '}
-										{currentTreeSpec2.filter((e) => e.position === '0|0').slice(3)[0].need_points}
+										{spec2Point.nb} / {currentTreeSpec2.filter((e) => e.position === '0|0').slice(3)[0].need_points}
 									</div>
 								</div>
 							</div>
