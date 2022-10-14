@@ -45,9 +45,7 @@ const Header = () => {
 				<div className="container flex flex-wrap justify-between items-center mx-auto">
 					<div className="flex items-center">
 						<img src={'logo.png'} className="mr-3 h-[52px] " alt="TorchLight Helper Logo" />
-						<span className="title self-center text-xl font-semibold whitespace-nowrap text-white">
-							Torchlight Helper
-						</span>
+						<span className="title self-center text-xl font-semibold whitespace-nowrap text-white">Torchlight Helper</span>
 					</div>
 					<div className="flex md:order-2">
 						<button
@@ -74,11 +72,7 @@ const Header = () => {
 							</svg>
 						</button>
 					</div>
-					<div
-						className={`${
-							menuOpen ? '' : 'hidden'
-						} justify-between items-center w-full md:flex md:w-auto md:order-1`}
-					>
+					<div className={`${menuOpen ? '' : 'hidden'} justify-between items-center w-full md:flex md:w-auto md:order-1`}>
 						<ul className="flex flex-col p-2 pb-2 mt-4 rounded-lg border md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700">
 							<li>
 								<Link
@@ -91,11 +85,7 @@ const Header = () => {
 											currentPage === '' || currentPage === null ? 'text-white' : ''
 										}`}
 									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconTP.png"
-											alt="Home"
-										/>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconTP.png" alt="Home" />
 										{t('commons:home')}
 									</div>
 								</Link>
@@ -106,16 +96,8 @@ const Header = () => {
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-white  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
 									to="skills"
 								>
-									<div
-										className={`flex flex-row gap-2 items-center ${
-											currentPage === 'skills' ? 'text-white' : ''
-										}`}
-									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconSKL.png"
-											alt="Skills"
-										/>
+									<div className={`flex flex-row gap-2 items-center ${currentPage === 'skills' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconSKL.png" alt="Skills" />
 										{t('commons:skills')}
 									</div>
 								</Link>
@@ -126,16 +108,8 @@ const Header = () => {
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
 									to="base"
 								>
-									<div
-										className={`flex flex-row gap-2 items-center ${
-											currentPage === 'base' ? 'text-white' : ''
-										}`}
-									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconDZ.png"
-											alt="Base"
-										/>
+									<div className={`flex flex-row gap-2 items-center ${currentPage === 'base' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconDZ.png" alt="Base" />
 										{t('commons:base')}
 									</div>
 								</Link>
@@ -146,16 +120,8 @@ const Header = () => {
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
 									to="legendary"
 								>
-									<div
-										className={`flex flex-row gap-2 items-center ${
-											currentPage === 'legendary' ? 'text-white' : ''
-										}`}
-									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconST.png"
-											alt="Legendary"
-										/>
+									<div className={`flex flex-row gap-2 items-center ${currentPage === 'legendary' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconST.png" alt="Legendary" />
 										{t('commons:legendary')}
 									</div>
 								</Link>
@@ -166,16 +132,8 @@ const Header = () => {
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
 									to="talent"
 								>
-									<div
-										className={`flex flex-row gap-2 items-center  ${
-											currentPage === 'talent' ? 'text-white' : ''
-										}`}
-									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconTAL.png"
-											alt="Talent"
-										/>
+									<div className={`flex flex-row gap-2 items-center  ${currentPage === 'talent' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconTAL.png" alt="Talent" />
 										{t('commons:talent')}
 									</div>
 								</Link>
@@ -186,16 +144,8 @@ const Header = () => {
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
 									to="trait"
 								>
-									<div
-										className={`flex flex-row gap-2 items-center  ${
-											currentPage === 'trait' ? 'text-white' : ''
-										}`}
-									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconCHA.png"
-											alt="trait"
-										/>
+									<div className={`flex flex-row gap-2 items-center  ${currentPage === 'trait' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconCHA.png" alt="trait" />
 										{t('commons:heroTrait')}
 									</div>
 								</Link>
@@ -207,21 +157,12 @@ const Header = () => {
 									to="pact-spirit"
 								>
 									<div
-										className={`flex flex-row gap-2 items-center  ${
-											currentPage === 'pact-spirit' ? 'text-white' : ''
-										}`}
+										className={`flex flex-row gap-2 items-center  ${currentPage === 'pact-spirit' ? 'text-white' : ''}`}
 									>
-										<img
-											className="w-[30px] grayscale"
-											src="img/icons/ui/UI_Fight_ICONPet.png"
-											alt="pact-spirit"
-										/>
+										<img className="w-[30px] grayscale" src="img/icons/ui/UI_Fight_ICONPet.png" alt="pact-spirit" />
 										Pact Spirit
 									</div>
 								</Link>
-							</li>
-							<li>
-								{/* <Link onClick={() => setCurrentPage('mod')} className={`block py-2 pr-4 pl-3 ${currentPage === "mod" ? "text-white":"text-gray-700"} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`} to="mod">Mod</Link> */}
 							</li>
 
 							<li>
@@ -237,27 +178,16 @@ const Header = () => {
 											currentPage === 'build' ? 'text-white' : ''
 										}`}
 									>
-										<img
-											className="w-[30px]"
-											src="img/icons/ui/UI_Fight_MenuIconCHA.png"
-											alt="Build"
-										/>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconCHA.png" alt="Build" />
 										{t('commons:build')}
-										<div className="absolute text-sm text-red-600 -top-2 -right-2 rotate-12">
-											{t('commons:beta')}
-										</div>
+										<div className="absolute text-sm text-red-600 -top-2 -right-2 rotate-12">{t('commons:beta')}</div>
 									</div>
 								</Link>
 							</li>
 							<li>
-								<a
-									rel="noreferrer"
-									className="title"
-									href="http://paypal.me/TheConcepteur"
-									target="_blank"
-								>
+								<a rel="noreferrer" className="title" href="http://paypal.me/TheConcepteur" target="_blank">
 									<div
-										className={`hover:bg-red-900 hover:text-white pt-1 md:pt-0 flex flex-row gap-2 items-center px-2 rounded bg-red-600 bg-opacity-20`}
+										className={`hover:bg-red-900 hover:text-white pt-1 md:pt-0 flex flex-row gap-1 items-center pl-1 pr-2 rounded bg-red-600 bg-opacity-20`}
 									>
 										<div className="w-[30px] text-2xl">💗</div>
 										<div>{t('commons:donate')}</div>

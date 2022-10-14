@@ -74,5 +74,7 @@
 	"talent": "Talent",
 	"total_stats": "Total Stats",
 	"tree": "Tree",
-	"type": "type"
+	"type": "type",
+	"Random_affix": "< Random Affix >",
+	"level": "level"
 }

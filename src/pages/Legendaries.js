@@ -38,6 +38,7 @@ function Legendaries() {
 			let tempType = test.filter((e) => e !== undefined);
 			setListType(tempType);
 		}
+		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 	useEffect(() => {
 		if (itemBase !== null) {
@@ -53,6 +54,7 @@ function Legendaries() {
 			let tempType = test.filter((e) => e !== undefined && e.indexOf('|') === -1);
 			setListTypeSecondary(tempType);
 		}
+		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 	useEffect(() => {
 		// on change currentType we need to adapt listType
@@ -70,6 +72,7 @@ function Legendaries() {
 			let tempType = test.filter((e) => e !== undefined);
 			setListType(tempType);
 		}
+		// eslint-disable-next-line
 	}, [currentTypeSecondary, dataI18n]);
 
 	const onChangeType = (e) => {
@@ -113,23 +116,13 @@ function Legendaries() {
 
 	const findBase = (e) => {
 		let baseTemp = itemBase.find((b) => b.id === e.base_id);
-		const currentLang = i18n.language;
 		if (
 			e.icon !== '' &&
 			(currentTypeSecondary === null || translate(baseTemp.description2) === currentTypeSecondary) &&
 			(currentType === null || translate(baseTemp.description1) === currentType)
 		) {
 			// filter for test item
-			if (
-				(e.prefix[0] != null &&
-					e.prefix[0]['tier1_' + currentLang][0] === '(40-60) strength' &&
-					e.prefix[1] != null &&
-					e.prefix[1]['tier1_' + currentLang][0] === '(40-60) strength') ||
-				(e.suffix[0] != null &&
-					e.suffix[0]['tier1_' + currentLang][0] === '(40-60) strength' &&
-					e.suffix[1] != null &&
-					e.suffix[1]['tier1_' + currentLang][0] === '(40-60) strength')
-			) {
+			if (parseInt(e.id) < 100) {
 				return false;
 			} else {
 				return true;
@@ -140,7 +133,7 @@ function Legendaries() {
 	};
 	const filterByName = (e) => {
 		if (currentName != null) {
-			if (translate(e.name).toLowerCase().indexOf(currentName.toLowerCase()) > -1) {
+			if (translate(e.name).toLowerCase().includes(currentName.toLowerCase())) {
 				return true;
 			} else {
 				return false;
@@ -202,15 +195,17 @@ function Legendaries() {
 		<>
 			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">{t('commons:legendaries')}</div>
 			<div className="flex flex-col md:flex-row md:gap-2 md:items-center mb-2 p-2 w-full">
-				<label>{t('commons:name')}</label>
-				<DebounceInput
-					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
-					placeholder={t('commons:search_item_by_name')}
-					debounceTimeout={500}
-					onChange={(event) => onChangeName(event.target.value)}
-				/>
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center md:w-auto w-full justify-between">
-					<label>{t('commons:Type')}</label>
+				<div className="flex flex-col">
+					<label className="font-bold">{t('commons:name')}</label>
+					<DebounceInput
+						className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+						placeholder={t('commons:search_item_by_name')}
+						debounceTimeout={500}
+						onChange={(event) => onChangeName(event.target.value)}
+					/>
+				</div>
+				<div className="flex flex-col">
+					<label className="font-bold">{t('commons:Type')}</label>
 					<select onChange={onChangeTypeSecondary} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
 						{listTypeSecondary.map((type, index) => (
@@ -220,8 +215,8 @@ function Legendaries() {
 						))}
 					</select>
 				</div>
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center md:w-auto w-full justify-between">
-					<label>{t('commons:Secondary_type')}</label>
+				<div className="flex flex-col">
+					<label className="font-bold">{t('commons:Secondary_type')}</label>
 					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
 						{listType.map((type, index) => (
@@ -232,8 +227,8 @@ function Legendaries() {
 					</select>
 				</div>
 
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center md:w-auto w-full">
-					<label className="md:w-auto w-full">{t('commons:minimum_level_require')}</label>
+				<div className="flex flex-col">
+					<label className="font-bold md:w-auto w-full">{t('commons:minimum_level_require')}</label>
 					<DebounceInput
 						type="number"
 						className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto"
@@ -242,17 +237,18 @@ function Legendaries() {
 						onChange={(event) => onChangeCurrentLevel(event.target.value)}
 					/>
 				</div>
-
-				<label>Affix</label>
-				<DebounceInput
-					className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
-					placeholder={t('commons:search_item_by_affix')}
-					debounceTimeout={500}
-					onChange={(event) => onChangeAffix(event.target.value)}
-				/>
+				<div className="flex flex-col">
+					<label className="font-bold">Affix</label>
+					<DebounceInput
+						className="md:w-auto w-full bg-[#282828] border rounded border-slate-500"
+						placeholder={t('commons:search_item_by_affix')}
+						debounceTimeout={500}
+						onChange={(event) => onChangeAffix(event.target.value)}
+					/>
+				</div>
 			</div>
 			{isMedium || isLarge ? (
-				<div className="grid grid-cols-1 gap-10 mx-auto" ref={ref}>
+				<div className="grid grid-cols-1 gap-4 mx-auto" ref={ref}>
 					<ViewportList items={formatedArray} viewportRef={ref}>
 						{(items, index) => {
 							return (
@@ -266,7 +262,7 @@ function Legendaries() {
 					</ViewportList>
 				</div>
 			) : (
-				<div className="grid grid-cols-1 gap-10 mx-auto p-2">
+				<div className="grid grid-cols-1 gap-4 mx-auto p-2">
 					<ViewportList items={formatedArray}>
 						{(item, key) => {
 							return <Legendary key={key} legendary={item} currentAffix={currentAffix} />;

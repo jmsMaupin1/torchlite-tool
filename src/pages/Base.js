@@ -50,6 +50,7 @@ function Base() {
 			let tempType = test.filter((e) => e !== undefined);
 			setListType(tempType);
 		}
+		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 	useEffect(() => {
 		if (itemBase !== null) {
@@ -65,6 +66,7 @@ function Base() {
 			let tempType = test.filter((e) => e !== undefined && e.indexOf('|') === -1);
 			setListTypeSecondary(tempType);
 		}
+		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 
 	useEffect(() => {
@@ -83,6 +85,7 @@ function Base() {
 			let tempType = test.filter((e) => e !== undefined);
 			setListType(tempType);
 		}
+		// eslint-disable-next-line
 	}, [currentTypeSecondary, dataI18n]);
 
 	const onChangeCurrentLevel = (value) => {
@@ -157,8 +160,8 @@ function Base() {
 		<>
 			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500">Base</div>
 			<div className="flex flex-col md:flex-row gap-1">
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center px-2 md:w-auto w-full justify-between">
-					<label>{t('commons:Type')}</label>
+				<div className="flex flex-col px-2 md:w-auto w-full">
+					<label className="font-bold">{t('commons:Type')}</label>
 					<select onChange={onChangeTypeSecondary} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
 						{listTypeSecondary.map((type, index) => (
@@ -168,8 +171,8 @@ function Base() {
 						))}
 					</select>
 				</div>
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center px-2 md:w-auto w-full justify-between">
-					<label>{t('commons:Secondary_type')}</label>
+				<div className="flex flex-col px-2 md:w-auto w-full">
+					<label className="font-bold">{t('commons:Secondary_type')}</label>
 					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
 						{listType.map((type, index) => (
@@ -180,8 +183,8 @@ function Base() {
 					</select>
 				</div>
 
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center p-2 md:w-auto w-full">
-					<label className="md:w-auto w-full">{t('commons:minimum_level_require')}</label>
+				<div className="flex flex-col px-2 md:w-auto w-full">
+					<label className="font-bold md:w-auto w-full">{t('commons:minimum_level_require')}</label>
 					<DebounceInput
 						type="number"
 						className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto"
@@ -190,8 +193,8 @@ function Base() {
 						onChange={(event) => onChangeCurrentLevel(event.target.value)}
 					/>
 				</div>
-				<div className="flex flex-col md:flex-row md:gap-2 md:items-center p-2 md:w-auto w-full justify-between">
-					<label>{t('commons:attributes')}</label>
+				<div className="flex flex-col px-2 md:w-auto w-full">
+					<label className="font-bold">{t('commons:attributes')}</label>
 					<DebounceInput
 						type="text"
 						className="bg-[#282828] border rounded border-slate-500 w-full md:w-auto"

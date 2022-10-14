@@ -61,7 +61,7 @@
 	"select_class": "Sélect classe",
 	"select_initial_profession": "Sélect la première prof",
 	"select_rarity": "Sélect rareté",
-	"select_skills": "Selectionner une compétence",
+	"select_skills": "Sélectionner une compétence",
 	"select_sub_profession_1": "Sélect la sous prof 1",
 	"select_sub_profession_2": "Sélect la sous prof 2",
 	"select_tag": "Sélectionner un tag",
@@ -74,5 +74,7 @@
 	"talent": "Talent",
 	"total_stats": "Total Stats",
 	"tree": "Arbre",
-	"type": "type"
+	"type": "type",
+	"Random_affix": "< Affix aléatoire >",
+	"level": "level"
 }

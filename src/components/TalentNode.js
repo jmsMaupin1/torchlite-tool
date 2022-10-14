@@ -14,12 +14,12 @@ function TalentNode(props) {
 	const search = props.search;
 
 	const [isHightlight, setIsHightlight] = useState(false);
-	const { translate } = useContext(AppContext);
+	const { i18n } = useContext(AppContext);
 	let shouldHl = false;
 
 	useEffect(() => {
-		if (column !== undefined && column.affix !== undefined && search !== null) {
-			column.affix.forEach((a) => {
+		if (column !== undefined && column['affix_' + i18n.language] !== undefined && search !== null) {
+			column['affix_' + i18n.language].forEach((a) => {
 				if (a.toLowerCase().indexOf(search.toLowerCase()) > -1) {
 					// eslint-disable-next-line
 					shouldHl = true;
@@ -45,7 +45,7 @@ function TalentNode(props) {
 						content={
 							<>
 								<div>
-									{column.affix.map((affix) => (
+									{column['affix_' + i18n.language].map((affix) => (
 										<HyperLinkTooltip key={affix} str={affix} />
 									))}
 								</div>

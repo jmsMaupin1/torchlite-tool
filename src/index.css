@@ -15,6 +15,7 @@
 }
 [role='tooltip'] {
 	max-width: 200px;
+	z-index: 1;
 }
 
 .title {
