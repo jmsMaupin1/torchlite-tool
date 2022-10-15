@@ -11,9 +11,9 @@ const dict = {
 };
 
 export const initI18n = () => {
-	const userLanguage = window.navigator.language.split('-')[0] || window.navigator.userLanguage;
+	//const userLanguage = window.navigator.language.split('-')[0] || window.navigator.userLanguage;
 
-	const lng = localStorage.getItem('language') || userLanguage || 'en';
+	const lng = localStorage.getItem('language') || 'en';
 
 	const i18nConfig = {
 		debug: false,
