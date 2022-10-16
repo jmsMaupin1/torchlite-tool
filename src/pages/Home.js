@@ -10,7 +10,7 @@ function Home() {
 	const currentEnv = process.env.NODE_ENV;
 	let currentBasename = '';
 	if (currentEnv === 'production') {
-		currentBasename = '/torchlight-helper';
+		currentBasename = '/torchlight-helper/';
 	}
 	return (
 		<>
