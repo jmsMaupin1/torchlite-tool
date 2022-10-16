@@ -802,7 +802,6 @@ function Build() {
 			let cptPointMain = 0;
 			let cptPointSpec1 = 0;
 			let cptPointSpec2 = 0;
-
 			data.forEach((node) => {
 				if (node !== '') {
 					let temp = node.split(':');
@@ -811,14 +810,32 @@ function Build() {
 					if (value !== '0') {
 						if (index === 0) {
 							_mainProfPoint[position] = parseInt(value);
+							if (position === 'core1') {
+								_mainProfPoint['core1'] = value;
+							}
+							if (position === 'core2') {
+								_mainProfPoint['core2'] = value;
+							}
 							if (position !== 'core1' && position !== 'core2') cptPointMain += parseInt(value);
 						}
 						if (index === 1) {
 							_spec1Point[position] = parseInt(value);
+							if (position === 'core1') {
+								_spec1Point['core1'] = value;
+							}
+							if (position === 'core2') {
+								_spec1Point['core2'] = value;
+							}
 							if (position !== 'core1' && position !== 'core2') cptPointSpec1 += parseInt(value);
 						}
 						if (index === 2) {
 							_spec2Point[position] = parseInt(value);
+							if (position === 'core1') {
+								_spec2Point['core1'] = value;
+							}
+							if (position === 'core2') {
+								_spec2Point['core2'] = value;
+							}
 							if (position !== 'core1' && position !== 'core2') cptPointSpec2 += parseInt(value);
 						}
 					}
