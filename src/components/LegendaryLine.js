@@ -38,7 +38,7 @@ function LegendaryLine({ tierNumber, s, i, hightlightSearch }) {
 								tierNumber === '0'
 									? 'font-bold bg-clip-text text-transparent bg-gradient-to-b from-purple-400 to-purple-900'
 									: 'text-[#ffc130]'
-							} font-bold`}
+							} font-bold hover:cursor-pointer`}
 							style={{
 								filter: tierNumber === '0' ? 'contrast(0.5) brightness(2.5)' : '',
 								backgroundImage: tierNumber === '0' ? 'url(img/T_Fx_Tile_015_LXJ.png)' : '',

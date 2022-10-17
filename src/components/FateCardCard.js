@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'flowbite-react';
 import Legendary from './Legendary';
 function FateCardCard({ card }) {
-	const { translate, itemBase, itemGold } = useContext(AppContext);
+	const { translate, itemBase, itemGold, skills } = useContext(AppContext);
 	const [isShow, setIsShow] = useState(false);
 
 	const { t } = useTranslation();
@@ -28,13 +28,26 @@ function FateCardCard({ card }) {
 	let possibleItems = [];
 	currentReward?.forEach((r) => {
 		// r = "item:3|300120481|1|1|1,100"
-		const itemId = r.split('|')[1];
+		// r = "skill:7401|1|21|0|1,100"
+		let itemId = r.split('|')[1];
+		const type = r.split(':')[0];
 		//console.log(r);
-		const myItem = itemBase.find((i) => i.id === itemId);
-		if (myItem !== undefined)
+		let myItem = null;
+		let level = null;
+		if (type === 'item') {
+			myItem = itemBase.find((i) => i.id === itemId);
+		}
+		if (type === 'skill') {
+			itemId = r.split('|')[0].split(':')[1];
+			level = r.split('|')[2];
+			myItem = skills.find((s) => s.name === 'item_base|name|' + itemId);
+		}
+
+		if (myItem !== null && myItem !== undefined)
 			possibleItems.push({
 				item: myItem,
-				type: 'base',
+				type: type,
+				level: level,
 				weight: r.split(',')[0].split('|')[r.split('|').length - 1],
 			});
 	});
@@ -45,7 +58,7 @@ function FateCardCard({ card }) {
 		}
 	});
 
-	if (card.id === '6043') {
+	if (card.id === '6026') {
 		console.log('possibleItem', possibleItems);
 		console.log('currentReward', currentReward);
 		console.log('rewardGroupId', rewardGroupId);
@@ -80,6 +93,12 @@ function FateCardCard({ card }) {
 			style={{ backgroundImage: `url("img/FateCard/${currentItemBase.icon_card}.png")` }}
 			className="relative border rounded-lg bg-[#222] text-white gap-1 shadow-lg shadow-black bg-cover bg-no-repeat"
 		>
+			<div className="hidden to-[#b5b5b5]"></div>
+			<div className="hidden to-[#1fa8df]"></div>
+			<div className="hidden to-[#7d1999]"></div>
+			<div className="hidden to-[#ad1769]"></div>
+			<div className="hidden to-[#dc6d23]"></div>
+			<div className="hidden to-[#88c859]"></div>
 			<div className="bg-cover bg-black bg-opacity-80 top-0 left-0 w-full h-full z-0 rounded-lg">
 				<div className="content z-1 w-full h-full rounded-lg">
 					<div
@@ -91,12 +110,7 @@ function FateCardCard({ card }) {
 							{translate(currentItemBase.name)} {card.id}
 						</div>
 						<div className="flex flex-row items-center gap-2">
-							<img
-								alt="Icon"
-								className="h-14"
-								loading="lazy"
-								src={`img/icons/${currentItemBase.icon}.png`}
-							/>
+							<img alt="Icon" className="h-14" loading="lazy" src={`img/icons/${currentItemBase.icon}.png`} />
 							<div className="text-4xl">x{card.stack}</div>
 						</div>
 					</div>
@@ -130,28 +144,33 @@ function FateCardCard({ card }) {
 												alt="Icon"
 												className="h-10"
 												loading="lazy"
-												src={`img/icons/${i.item.icon}.png`}
+												src={`img/icons/${i.type === 'skill' ? 'CoreTalentIcon/' : ''}${i.item.icon}.png`}
 											/>
 										</div>
 										<div className="flex flex-row justify-between w-full">
 											<div className="hover:cursor-pointer">
 												<Tooltip
 													content={
-														i.type === 'base' ? (
+														(i.type === 'item' && (
 															<div
 																dangerouslySetInnerHTML={{
 																	__html: translate(i.item.description2),
 																}}
 															></div>
-														) : (
-															<Legendary legendary={i.item} currentAffix={null} />
-														)
+														)) ||
+														(i.type === 'gold' && <Legendary legendary={i.item} currentAffix={null} />)
 													}
-													trigger="hover"
+													trigger={`${i.type === 'base' ? 'hover' : 'click'}`}
 												>
-													{translate(i.item.name)}
+													<div>{translate(i.item.name)}</div>
+													{i.type === 'skill' && (
+														<div>
+															{t('commons:level')} {i.level}
+														</div>
+													)}
 												</Tooltip>
 											</div>
+
 											<div>
 												<Tooltip content={'Weight'} trigger="hover">
 													{i.weight}
