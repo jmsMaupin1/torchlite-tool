@@ -9,8 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 function BuildSkill2(props) {
 	const { translate, skills } = useContext(AppContext);
-	const { changePrimarySecondary, setCurrentModalType, openModal, getSkillByPrimary, onChangeSkillForced } =
-		useContext(BuildContext);
+	const { changePrimarySecondary, setCurrentModalType, openModal, getSkillByPrimary, onChangeSkillForced } = useContext(BuildContext);
 	const { t } = useTranslation();
 	let ind = props.ind;
 	// let onChangeCurrentModalType = props.onChangeCurrentModalType;
@@ -86,18 +85,13 @@ function BuildSkill2(props) {
 						>
 							{Object.keys(currentSkill.skill).length > 0 ? (
 								<Tooltip
-									content={
-										<Skill
-											showDetail={false}
-											skill={skills.find((s) => s.id === currentSkill.skill.value)}
-										/>
-									}
+									content={<Skill showDetail={false} skill={skills.find((s) => s.id === currentSkill.skill.value)} />}
 									trigger="hover"
 								>
 									<div>
 										<img
 											loading="lazy"
-											src={`img/icons/skills/${currentSkill.skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${currentSkill.skill.img}.png`}
 											className="w-[70px]"
 											alt="Icon"
 										/>

@@ -4,7 +4,7 @@ import { Tooltip } from 'flowbite-react';
 import HyperLinkTooltip from './HyperLinkTooltip';
 
 function CoreTooltip(props) {
-	const { translate } = useContext(AppContext);
+	const { translate, i18n } = useContext(AppContext);
 
 	const [visible, setVisible] = useState(false);
 
@@ -38,7 +38,7 @@ function CoreTooltip(props) {
 						key={tree.id + '-' + index}
 						content={
 							<div>
-								{tree.affix?.map((affix) => (
+								{tree['affix_' + i18n.language].map((affix) => (
 									<HyperLinkTooltip key={affix} str={affix} />
 								))}
 							</div>
@@ -54,12 +54,7 @@ function CoreTooltip(props) {
 							} `}
 						>
 							<div>
-								<img
-									loading="lazy"
-									className="w-[54px]"
-									src={`img/icons/CoreTalentIcon/${tree.icon}.png`}
-									alt="Icon"
-								/>
+								<img loading="lazy" className="w-[54px]" src={`img/icons/CoreTalentIcon/${tree.icon}.png`} alt="Icon" />
 							</div>
 							<div>{translate(tree.name)}</div>
 						</div>
@@ -74,7 +69,7 @@ function CoreTooltip(props) {
 							key={tree.id + '-' + index}
 							content={
 								<div>
-									{tree.affix.map((affix) => (
+									{tree['affix_' + i18n.language].map((affix) => (
 										<HyperLinkTooltip key={affix} str={affix} />
 									))}
 								</div>
@@ -87,12 +82,7 @@ function CoreTooltip(props) {
 								} `}
 							>
 								<div>
-									<img
-										loading="lazy"
-										className="w-[54px]"
-										src={`img/icons/CoreTalentIcon/${tree.icon}.png`}
-										alt="Icon"
-									/>
+									<img loading="lazy" className="w-[54px]" src={`img/icons/CoreTalentIcon/${tree.icon}.png`} alt="Icon" />
 								</div>
 								<div>{translate(tree.name)}</div>
 							</div>

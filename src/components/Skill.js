@@ -78,17 +78,22 @@ function Skill({ skill, index, showDetail }) {
 		<div key={skill.id + '-' + index} className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2">
 			<div className="flex flex-row gap-2 items-start">
 				<div>
-					<img loading="lazy" src={`img/icons/skills/${skill.icon}.png`} className="w-[64px]" alt="Icon" />
+					<img
+						loading="lazy"
+						src={`img/icons/CoreTalentIcon/${skill.icon}.png`}
+						className="w-[64px]"
+						alt="Icon"
+					/>
 				</div>
 				<div className="flex flex-col">
 					<div className="title">{translate(skill.name)}</div>
 					<div className="flex gap-2 flex-wrap">
-						{skill.tag.map((tag) => (
+						{skill.tag.split('|').map((tag) => (
 							<div
 								key={tag + '-' + skill.id}
 								className="float-left border border-[#333] rounded-md  px-2 text-[#bfbfbf] text-sm"
 							>
-								{tag}
+								{translate('skill_tag|des|' + tag)}
 							</div>
 						))}
 					</div>

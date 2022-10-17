@@ -6,8 +6,7 @@
 	font-family: 'Exo 2';
 	src: url('./../public/fonts/Exo2-ExtraBold.eot');
 	src: url('./../public/fonts/Exo2-ExtraBold.eot?#iefix') format('embedded-opentype'),
-		url('./../public/fonts/Exo2-ExtraBold.woff2') format('woff2'),
-		url('./../public/fonts/Exo2-ExtraBold.woff') format('woff'),
+		url('./../public/fonts/Exo2-ExtraBold.woff2') format('woff2'), url('./../public/fonts/Exo2-ExtraBold.woff') format('woff'),
 		url('./../public/fonts/Exo2-ExtraBold.ttf') format('truetype'),
 		url('./../public/fonts/Exo2-ExtraBold.svg#Exo2-ExtraBold') format('svg');
 	font-weight: bold;
@@ -16,6 +15,7 @@
 }
 [role='tooltip'] {
 	max-width: 200px;
+	z-index: 1;
 }
 
 .title {
@@ -41,8 +41,8 @@ html,
 }
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-		'Droid Sans', 'Helvetica Neue', sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	background-color: #282828;
@@ -97,4 +97,8 @@ code {
 }
 .rarity-rare {
 	color: #8a18ab;
+}
+mark {
+	background-color: rgb(255 255 0 / 60%);
+	color: black !important;
 }

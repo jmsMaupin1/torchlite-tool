@@ -6,7 +6,7 @@ import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 
 function Talent() {
-	const { translate, profession, talent, dataI18n, replaceTag } = useContext(AppContext);
+	const { translate, profession, talent, dataI18n, replaceTag, i18n } = useContext(AppContext);
 	const [currentClass, setCurrentClass] = useState(null);
 	const [currentSearch, setCurrentSearch] = useState(null);
 	const { t } = useTranslation();
@@ -38,7 +38,7 @@ function Talent() {
 		} else {
 			let isFind = false;
 			// eslint-disable-next-line
-			tree.affix.map((affix) => {
+			tree['affix_' + i18n.language].map((affix) => {
 				if (replaceTag(affix).toLowerCase().includes(currentSearch.toLowerCase())) {
 					isFind = true;
 				}
@@ -51,9 +51,7 @@ function Talent() {
 	}
 	return (
 		<div className="flex flex-col container p-2">
-			<div className="md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500">
-				{t('commons:talent')}
-			</div>
+			<div className="md:hidden title text-xl px-2 mb-2 text-center border-b border-slate-500">{t('commons:talent')}</div>
 			<div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
 				<label>{t('commons:select_class')}</label>
 				<select onChange={onChangeClass} className="w-auto bg-[#282828] border rounded border-slate-500">
@@ -82,23 +80,14 @@ function Talent() {
 							<div
 								className={`bg-[#282828] w-full relative flex flex-col md:flex-row justify-between border p-2 rounded-lg md:shadow-lg md:shadow-black bg-no-repeat bg-contain bg-right-top`}
 								style={{
-									backgroundImage: `url("img/icons/TalentGodsIcon/${
-										subp.background.split('|')[0]
-									}.png")`,
+									backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png")`,
 								}}
 							>
 								<div className="flex flex-col items-center w-full md:w-1/5">
 									<div className="text-center font-bold text-xl title">{translate(subp.name)}</div>
-									<img
-										loading="lazy"
-										src={`img/icons/TalentIcon/${subp.icon}.png`}
-										className={`h-20`}
-										alt="Icon"
-									/>
+									<img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className={`h-20`} alt="Icon" />
 									<div className="w-full">
-										<HyperLinkTooltip
-											str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')}
-										/>
+										<HyperLinkTooltip str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')} />
 									</div>
 								</div>
 
@@ -106,10 +95,7 @@ function Talent() {
 									{displayCore(subp)
 										.filter(filterAffix)
 										.map((tree) => (
-											<div
-												key={tree.id}
-												className="shadow-md shadow-black border-[#212121] border p-2"
-											>
+											<div key={tree.id} className="shadow-md shadow-black border-[#212121] border p-2">
 												<div className="flex flex-row gap-4 items-center border-b border-[#212121] pb-1 mb-1">
 													<img
 														loading="lazy"
@@ -120,7 +106,7 @@ function Talent() {
 													<div className="title">{translate(tree.name)}</div>
 												</div>
 												<div>
-													{tree.affix?.map((affix) => (
+													{tree['affix_' + i18n.language].map((affix) => (
 														<div key={affix}>
 															<HyperLinkTooltip str={affix} />
 														</div>

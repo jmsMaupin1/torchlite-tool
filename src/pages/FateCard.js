@@ -12,10 +12,12 @@ function FateCard() {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (
-		<div className="grid grid-cols-4 gap-2">
-			{cardRecipe.map((card, index) => (
-				<FateCardCard card={card} key={'recipe' + index} />
-			))}
+		<div className="grid grid-cols-5 gap-2">
+			{cardRecipe
+				.sort((a, b) => a.rarity - b.rarity)
+				.map((card, index) => (
+					<FateCardCard card={card} key={'recipe' + index} />
+				))}
 		</div>
 	);
 }

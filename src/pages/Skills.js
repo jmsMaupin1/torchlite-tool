@@ -43,11 +43,11 @@ function Skills() {
 			let listTypeInit = [];
 			skillTag.forEach((s) => {
 				let myTranslate = translate(s.des);
-				if (s.visible === '1' && myTranslate.indexOf('Abandoned') === -1) {
-					listTypeInit.push(translate(s.des));
+				if (s.visible === '1' && myTranslate.indexOf('(') === -1) {
+					listTypeInit.push({ id: s.des, value: translate(s.des) });
 				}
 			});
-			listTypeInit.sort();
+			listTypeInit.sort((a, b) => a.value.localeCompare(b.value));
 			setListType([...listTypeInit]);
 		}
 		// eslint-disable-next-line
@@ -70,7 +70,7 @@ function Skills() {
 			(el) =>
 				el.detail !== '' &&
 				el.detail !== translate(el.detail) &&
-				(el.tag.includes(currentType) || currentType == null)
+				(currentType == null || el.tag.includes(currentType.replace('skill_tag|des|', '')))
 		);
 
 		if (currentName !== null) {
@@ -97,8 +97,8 @@ function Skills() {
 						>
 							<option value={''}>{t('commons:select_tag')}</option>
 							{listType.map((type, i) => (
-								<option key={type + i} value={type}>
-									{type}
+								<option key={type.id + i} value={type.id}>
+									{type.value}
 								</option>
 							))}
 						</select>

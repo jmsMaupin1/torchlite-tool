@@ -81,7 +81,7 @@ function BuildSkill(props) {
 									<div>
 										<img
 											loading="lazy"
-											src={`img/icons/skills/${skill.img}.png`}
+											src={`img/icons/CoreTalentIcon/${skill.img}.png`}
 											className="w-[24px] aspect-square"
 											alt="Icon"
 										/>
@@ -102,12 +102,7 @@ function BuildSkill(props) {
 					>
 						{skill !== null ? (
 							<div>
-								<img
-									loading="lazy"
-									src={`img/icons/skills/${skill.icon}.png`}
-									className="w-[80px]"
-									alt="Icon"
-								/>
+								<img loading="lazy" src={`img/icons/CoreTalentIcon/${skill.icon}.png`} className="w-[80px]" alt="Icon" />
 							</div>
 						) : (
 							<div className="-mt-[14px]">+</div>
@@ -133,7 +128,7 @@ function BuildSkill(props) {
 											<div>
 												<img
 													loading="lazy"
-													src={`img/icons/skills/${tabSupport[index].icon}.png`}
+													src={`img/icons/CoreTalentIcon/${tabSupport[index].icon}.png`}
 													className="w-[80px]"
 													alt="Icon"
 												/>
@@ -143,12 +138,8 @@ function BuildSkill(props) {
 										<div className="-mt-[14px]">+</div>
 									)}
 								</div>
-								{tabSupport[index] !== null ? (
-									<div className="text-sm">{translate(tabSupport[index].name)}</div>
-								) : null}
-								{isSupportVisible[index] ? (
-									<SelectWithImage index={index} ind={ind} onChange={_onChangeSupport} />
-								) : null}
+								{tabSupport[index] !== null ? <div className="text-sm">{translate(tabSupport[index].name)}</div> : null}
+								{isSupportVisible[index] ? <SelectWithImage index={index} ind={ind} onChange={_onChangeSupport} /> : null}
 							</div>
 						))}
 					</div>
