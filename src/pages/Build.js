@@ -21,13 +21,14 @@ import HeroTrait from '../components/HeroTrait';
 import Legendary from '../components/Legendary';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
+import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
 
 function Build() {
 	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
+	const updateXArrow = useXarrow();
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
 	const { t } = useTranslation();
-
 	const {
 		closeModal,
 		modalVisible,
@@ -224,6 +225,7 @@ function Build() {
 		if (spec2 !== null) displayTalentSpec2();
 		// eslint-disable-next-line
 	}, [spec2]);
+
 	const displayTalent = () => {
 		let talentId = currentMainProf.talent_id.split('|');
 		let startId = talentId[0];
@@ -563,6 +565,7 @@ function Build() {
 		) {
 			loadBuild();
 		}
+		// eslint-disable-next-line
 	}, [searchParams.get('skills'), skills, dataI18n, profession, talent, itemGold]);
 
 	useEffect(() => {
@@ -1513,7 +1516,6 @@ function Build() {
 						</Modal.Body>
 					</Modal>
 				) : null}
-
 				<div className="flex flex-col">
 					<div ref={fieldRefSkills} className={`mb-2 `}>
 						<div
@@ -1840,24 +1842,47 @@ function Build() {
 									</div>
 								) : null}
 							</div>
-							<div className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0">
-								{currentTreeOrder.map((line, x) => (
-									<div key={'line' + x} className="flex flex-row  justify-center items-center">
-										{line.map((column, y) => (
-											<TalentNode
-												search={currentNodeFilter}
-												key={'talentNode' + y}
-												type={'main'}
-												column={column}
-												y={y}
-												profPoint={mainProfPoint}
-												x={x}
-												removePoint={removePoint}
-												addPoint={addPoint}
-											/>
-										))}
-									</div>
-								))}
+							<div
+								onScroll={() => updateXArrow()}
+								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative"
+							>
+								<Xwrapper>
+									{currentTreeOrder.map((line, x) => (
+										<div key={'line' + x} id={'line_' + x} className="flex flex-row justify-center items-center">
+											{line.map((column, y) => (
+												<TalentNode
+													search={currentNodeFilter}
+													key={'talentNode' + y}
+													type={'main'}
+													column={column}
+													y={y}
+													profPoint={mainProfPoint}
+													x={x}
+													removePoint={removePoint}
+													addPoint={addPoint}
+													id={column !== undefined ? column.id : null}
+												/>
+											))}
+										</div>
+									))}
+									{currentTreeOrder.map((line) =>
+										line
+											.filter((column) => column !== undefined && column.before_id !== '')
+											.map((column) => (
+												<Xarrow
+													key={column.id + '-' + column.before_id}
+													startAnchor={'left'}
+													color={'white'}
+													endAnchor={'right'}
+													start={column.id} //can be react ref
+													end={column.before_id} //or an id
+													strokeWidth={2}
+													showHead={false}
+													curveness={0}
+												/>
+											))
+									)}
+								</Xwrapper>
 							</div>
 						</div>
 					</div>
@@ -1936,24 +1961,47 @@ function Build() {
 									</div>
 								) : null}
 							</div>
-							<div className="overflow-auto md:overflow-visible flex flex-col items-start md:pl-0">
-								{currentTreeOrderSpec1.map((line, x) => (
-									<div key={'line' + x} className="flex flex-row  justify-center items-center">
-										{line.map((column, y) => (
-											<TalentNode
-												search={currentNodeFilter}
-												key={'talentNode' + y}
-												type={'spec1'}
-												column={column}
-												y={y}
-												profPoint={spec1Point}
-												x={x}
-												removePoint={removePoint}
-												addPoint={addPoint}
-											/>
-										))}
-									</div>
-								))}
+							<div
+								onScroll={() => updateXArrow()}
+								className="overflow-auto md:overflow-visible flex flex-col items-start md:pl-0 relative"
+							>
+								<Xwrapper>
+									{currentTreeOrderSpec1.map((line, x) => (
+										<div key={'line' + x} className="flex flex-row  justify-center items-center">
+											{line.map((column, y) => (
+												<TalentNode
+													search={currentNodeFilter}
+													key={'talentNode' + y}
+													type={'spec1'}
+													column={column}
+													y={y}
+													profPoint={spec1Point}
+													x={x}
+													removePoint={removePoint}
+													addPoint={addPoint}
+													id={column !== undefined ? column.id : null}
+												/>
+											))}
+										</div>
+									))}
+									{currentTreeOrderSpec1.map((line) =>
+										line
+											.filter((column) => column !== undefined && column.before_id !== '')
+											.map((column) => (
+												<Xarrow
+													key={column.id + '-' + column.before_id}
+													startAnchor={'left'}
+													color={'white'}
+													endAnchor={'right'}
+													start={column.id} //can be react ref
+													end={column.before_id} //or an id
+													strokeWidth={2}
+													showHead={false}
+													curveness={0}
+												/>
+											))
+									)}
+								</Xwrapper>
 							</div>
 						</div>
 					</div>
@@ -2032,24 +2080,47 @@ function Build() {
 									</div>
 								) : null}
 							</div>
-							<div className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0">
-								{currentTreeOrderSpec2.map((line, x) => (
-									<div key={'line' + x} className="flex flex-row  justify-center items-center">
-										{line.map((column, y) => (
-											<TalentNode
-												search={currentNodeFilter}
-												key={'talentNode' + y}
-												type={'spec2'}
-												column={column}
-												y={y}
-												profPoint={spec2Point}
-												x={x}
-												removePoint={removePoint}
-												addPoint={addPoint}
-											/>
-										))}
-									</div>
-								))}
+							<div
+								onScroll={() => updateXArrow()}
+								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative"
+							>
+								<Xwrapper>
+									{currentTreeOrderSpec2.map((line, x) => (
+										<div key={'line' + x} className="flex flex-row  justify-center items-center">
+											{line.map((column, y) => (
+												<TalentNode
+													search={currentNodeFilter}
+													key={'talentNode' + y}
+													type={'spec2'}
+													column={column}
+													y={y}
+													profPoint={spec2Point}
+													x={x}
+													removePoint={removePoint}
+													addPoint={addPoint}
+													id={column !== undefined ? column.id : null}
+												/>
+											))}
+										</div>
+									))}
+									{currentTreeOrderSpec2.map((line) =>
+										line
+											.filter((column) => column !== undefined && column.before_id !== '')
+											.map((column) => (
+												<Xarrow
+													key={column.id + '-' + column.before_id}
+													startAnchor={'left'}
+													color={'white'}
+													endAnchor={'right'}
+													start={column.id} //can be react ref
+													end={column.before_id} //or an id
+													strokeWidth={2}
+													showHead={false}
+													curveness={0}
+												/>
+											))
+									)}
+								</Xwrapper>
 							</div>
 						</div>
 					</div>
