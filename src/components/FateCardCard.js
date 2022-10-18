@@ -10,18 +10,14 @@ function FateCardCard({ card }) {
 	const [isShow, setIsShow] = useState(false);
 
 	const { t } = useTranslation();
-	if (itemBase === null || card === null) {
-		return <Loader className="w-full container mx-auto max-h-40 flex" />;
-	}
+
 	const currentItemBase = itemBase.find((i) => i.id === card.id);
 	const rewardGroupId = card.reward_group_id.split(';').map((g) => {
 		return g.split(':')[0];
 	});
 	const rewardUniqueId = card.recipe_unique.split(';').map((u) => {
-		return u.split(':')[0];
+		if (u !== undefined && u !== '') return { id: u.split(':')[0], weight: u.split(':')[1].split('|')[0] };
 	});
-	//"recipe_unique": "113310:100|80",
-	//console.log('rewardGroupId', rewardGroupId);
 
 	const currentReward = rewardGroup.find((r) => rewardGroupId.includes(r.id))?.rewards.split(';');
 
@@ -31,7 +27,6 @@ function FateCardCard({ card }) {
 		// r = "skill:7401|1|21|0|1,100"
 		let itemId = r.split('|')[1];
 		const type = r.split(':')[0];
-		//console.log(r);
 		let myItem = null;
 		let level = null;
 		if (type === 'item') {
@@ -52,24 +47,14 @@ function FateCardCard({ card }) {
 			});
 	});
 	rewardUniqueId?.forEach((u) => {
-		const myItem = itemGold.find((i) => i.id === u);
-		if (myItem !== undefined) {
-			possibleItems.push({ item: myItem, type: 'gold', weight: 0 });
+		if (itemGold !== null && u !== undefined) {
+			const myItem = itemGold.find((i) => i.id === u.id);
+			if (myItem !== undefined) {
+				possibleItems.push({ item: myItem, type: 'gold', weight: u.weight });
+			}
 		}
 	});
 
-	if (card.id === '6026') {
-		console.log('possibleItem', possibleItems);
-		console.log('currentReward', currentReward);
-		console.log('rewardGroupId', rewardGroupId);
-		console.log('rewardUniqueId', rewardUniqueId);
-	}
-	//UI_Common_QualityIcon_02Big.png
-	//img/icons/UI/
-	//console.log('currentReward', currentReward);
-	// violet 7d1999
-	// bleu 208eb7
-	// gris 9d9d9d
 	const returnColorByRarity = (rarity) => {
 		switch (rarity) {
 			case '1':
@@ -88,10 +73,14 @@ function FateCardCard({ card }) {
 				return 'b1b1b1';
 		}
 	};
+
+	if (itemBase === null || card === null || itemGold === null) {
+		return <Loader className="w-full container mx-auto max-h-40 flex" />;
+	}
 	return (
 		<div
 			style={{ backgroundImage: `url("img/FateCard/${currentItemBase.icon_card}.png")` }}
-			className="relative border rounded-lg bg-[#222] text-white gap-1 shadow-lg shadow-black bg-cover bg-no-repeat"
+			className={`relative border rounded-lg bg-[#222] text-white gap-1 shadow-lg shadow-black bg-cover bg-no-repeat`}
 		>
 			<div className="hidden to-[#b5b5b5]"></div>
 			<div className="hidden to-[#1fa8df]"></div>
@@ -107,7 +96,7 @@ function FateCardCard({ card }) {
 						)}] `}
 					>
 						<div className="title" style={{ color: 'white' }}>
-							{translate(currentItemBase.name)} {card.id}
+							{translate(currentItemBase.name)}
 						</div>
 						<div className="flex flex-row items-center gap-2">
 							<img alt="Icon" className="h-14" loading="lazy" src={`img/icons/${currentItemBase.icon}.png`} />
@@ -116,6 +105,10 @@ function FateCardCard({ card }) {
 					</div>
 					<div className="p-2">
 						<div className="text-center title">{translate(card.tips_summary)}</div>
+						<div>
+							{currentItemBase.description2 !== translate(currentItemBase.description2) &&
+								translate(currentItemBase.description2)}
+						</div>
 						<div>
 							{possibleItems.length > 0 && (
 								<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">
@@ -130,7 +123,7 @@ function FateCardCard({ card }) {
 											<img
 												src="img/icons/UI/UI_Common_Png9_01.png"
 												alt="Toggle"
-												className={`${isShow ? '' : '-'}rotate-90 h-4`}
+												className={`${isShow ? 'rotate-90' : '-rotate-90'} h-4`}
 											/>
 										</div>
 									</div>
