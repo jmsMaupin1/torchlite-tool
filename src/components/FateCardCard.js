@@ -121,6 +121,7 @@ function FateCardCard({ card }) {
 										</div>
 										<div>
 											<img
+												loading="lazy"
 												src="img/icons/UI/UI_Common_Png9_01.png"
 												alt="Toggle"
 												className={`${isShow ? 'rotate-90' : '-rotate-90'} h-4`}
@@ -134,9 +135,9 @@ function FateCardCard({ card }) {
 									<div key={index} className="flex flex-row items-center gap-2">
 										<div>
 											<img
+												loading="lazy"
 												alt="Icon"
 												className="h-10"
-												loading="lazy"
 												src={`img/icons/${i.type === 'skill' ? 'CoreTalentIcon/' : ''}${i.item.icon}.png`}
 											/>
 										</div>
