@@ -148,7 +148,7 @@ function FateCardCard({ card }) {
 														(i.type === 'item' && (
 															<div
 																dangerouslySetInnerHTML={{
-																	__html: translate(i.item.description2),
+																	__html: translate(i.item.description2).replaceAll('\\n', '<br>'),
 																}}
 															></div>
 														)) ||
