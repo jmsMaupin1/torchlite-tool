@@ -1844,7 +1844,7 @@ function Build() {
 							</div>
 							<div
 								onScroll={() => updateXArrow()}
-								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative"
+								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative md:static"
 							>
 								<Xwrapper>
 									{currentTreeOrder.map((line, x) => (
@@ -1963,7 +1963,7 @@ function Build() {
 							</div>
 							<div
 								onScroll={() => updateXArrow()}
-								className="overflow-auto md:overflow-visible flex flex-col items-start md:pl-0 relative"
+								className="overflow-auto md:overflow-visible flex flex-col items-start md:pl-0 relative md:static"
 							>
 								<Xwrapper>
 									{currentTreeOrderSpec1.map((line, x) => (
@@ -2082,7 +2082,7 @@ function Build() {
 							</div>
 							<div
 								onScroll={() => updateXArrow()}
-								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative"
+								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative md:static"
 							>
 								<Xwrapper>
 									{currentTreeOrderSpec2.map((line, x) => (
