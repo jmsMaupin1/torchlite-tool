@@ -131,7 +131,7 @@ const Header = () => {
 										{t('commons:Items')}
 										<img
 											loading="lazy"
-											src="img/icons/UI/UI_Common_Png9_01.png"
+											src="img/icons/ui/UI_Common_Png9_01.png"
 											alt="Toggle"
 											className={`${dropDownOpen ? 'rotate-90' : '-rotate-90'} h-4`}
 										/>
