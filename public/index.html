@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%PUBLIC_URL%/logo.png" />
+		<link rel="icon" id="favicon" href="%PUBLIC_URL%/logo.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#000000" />
 		<meta name="description" content="Database and tools for Torchlight : Infinite" />
@@ -30,6 +30,19 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
 		<title>Torchlight Infinite : Helper</title>
+		<script>
+			const usesDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches || false;
+			const favicon = document.getElementById('favicon');
+			
+			function switchIcon(usesDarkMode) {
+			  if (!usesDarkMode) { 
+				favicon.href = '%PUBLIC_URL%/logo_black.png';
+			  }
+			}
+	  
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener( "change", (e) => switchIcon(e.matches));
+			switchIcon(usesDarkMode);
+		</script>
 		<!-- Start Single Page Apps for GitHub Pages -->
 		<script type="text/javascript">
 			// Single Page Apps for GitHub Pages
