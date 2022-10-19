@@ -5,14 +5,23 @@ import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import { switchLang } from './../i18n/i18n';
 import { US, FR, DE } from 'country-flag-icons/react/3x2';
+//Dropdown
+import { Dropdown } from 'flowbite-react';
 
 const Header = () => {
 	const { currentPage, setCurrentPage, topMenu, i18n } = useContext(AppContext);
 	const location = useLocation();
-	const [menuOpen, setMenuOpen] = useState(false);
+	const [menuOpen, _setMenuOpen] = useState(false);
+	const [dropDownOpen, setDropDownOpen] = useState(false);
 
 	const { t } = useTranslation();
 
+	const setMenuOpen = (data) => {
+		_setMenuOpen(data);
+		if (data == false) {
+			setDropDownOpen(false);
+		}
+	};
 	useEffect(() => {
 		setCurrentPage(location.pathname.replace('/', ''));
 		// eslint-disable-next-line
@@ -103,6 +112,115 @@ const Header = () => {
 								</Link>
 							</li>
 							<li>
+								<div
+									onClick={() => setDropDownOpen(!dropDownOpen)}
+									className={`hidden md:flex title hover:text-white hover:cursor-pointer block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+									to="base"
+								>
+									<div
+										className={`flex flex-row gap-2 items-center ${
+											currentPage === 'base' ||
+											currentPage === 'legendary' ||
+											currentPage === 'fate-card' ||
+											currentPage === 'pact-spirit'
+												? 'text-white'
+												: ''
+										}`}
+									>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconDZ.png" alt="Base" />
+										{t('commons:Items')}
+										<img
+											loading="lazy"
+											src="img/icons/UI/UI_Common_Png9_01.png"
+											alt="Toggle"
+											className={`${dropDownOpen ? 'rotate-90' : '-rotate-90'} h-4`}
+										/>
+									</div>
+								</div>
+
+								<div
+									id="dropdownNavbar"
+									className={`${
+										dropDownOpen ? '' : 'hidden'
+									} bg-[#282828] text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44 absolute`}
+								>
+									<div className="flex flex-col">
+										<div>
+											<Link
+												onClick={() => setMenuOpen(false)}
+												className={`title hover:text-white block rounded hover:bg-gray-100 md:hover:bg-gray-700  px-2 py-1  dark:border-gray-700`}
+												to="base"
+											>
+												<div
+													className={`flex flex-row gap-2 items-center ${
+														currentPage === 'base' ? 'text-white' : ''
+													}`}
+												>
+													<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconDZ.png" alt="Base" />
+													{t('commons:base')}
+												</div>
+											</Link>
+										</div>
+										<div>
+											<Link
+												onClick={() => setMenuOpen(false)}
+												className={`title hover:text-white block px-2 py-1 rounded hover:bg-gray-700 dark:border-gray-700`}
+												to="legendary"
+											>
+												<div
+													className={`flex flex-row gap-2 items-center ${
+														currentPage === 'legendary' ? 'text-white' : ''
+													}`}
+												>
+													<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconST.png" alt="Legendary" />
+													{t('commons:legendary')}
+												</div>
+											</Link>
+										</div>
+										<div>
+											<Link
+												onClick={() => setMenuOpen(false)}
+												className={`title hover:text-white block rounded hover:bg-gray-100 md:hover:bg-gray-700  px-2 py-1  dark:border-gray-700`}
+												to="fate-card"
+											>
+												<div
+													className={`flex flex-row gap-2 items-center  ${
+														currentPage === 'fate-card' ? 'text-white' : ''
+													}`}
+												>
+													<img
+														className="w-[30px] grayscale"
+														src="img/icons/ui/UI_Fight_MenuIconNLDZ.png"
+														alt="fate-card"
+													/>
+													{t('commons:Fate_card')}
+												</div>
+											</Link>
+										</div>
+										<div>
+											<Link
+												onClick={() => setMenuOpen(false)}
+												className={`title hover:text-white block rounded hover:bg-gray-100 md:hover:bg-gray-700  px-2 py-1  dark:border-gray-700`}
+												to="pact-spirit"
+											>
+												<div
+													className={`flex flex-row gap-2 items-center  ${
+														currentPage === 'pact-spirit' ? 'text-white' : ''
+													}`}
+												>
+													<img
+														className="w-[30px] grayscale"
+														src="img/icons/ui/UI_Fight_ICONPet.png"
+														alt="pact-spirit"
+													/>
+													{t('commons:Pact_Spirit')}
+												</div>
+											</Link>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li className="md:hidden">
 								<Link
 									onClick={() => setMenuOpen(false)}
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
@@ -114,7 +232,7 @@ const Header = () => {
 									</div>
 								</Link>
 							</li>
-							<li>
+							<li className="md:hidden">
 								<Link
 									onClick={() => setMenuOpen(false)}
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
@@ -138,6 +256,18 @@ const Header = () => {
 									</div>
 								</Link>
 							</li>
+							{/* <li>
+								<Link
+									onClick={() => setMenuOpen(false)}
+									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+									to="drop"
+								>
+									<div className={`flex flex-row gap-2 items-center  ${currentPage === 'drop' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconSUIT.png" alt="Drop" />
+										{t('commons:Drop')}
+									</div>
+								</Link>
+							</li> */}
 							<li>
 								<Link
 									onClick={() => setMenuOpen(false)}
@@ -150,7 +280,7 @@ const Header = () => {
 									</div>
 								</Link>
 							</li>
-							<li>
+							<li className="md:hidden">
 								<Link
 									onClick={() => setMenuOpen(false)}
 									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
@@ -164,7 +294,18 @@ const Header = () => {
 									</div>
 								</Link>
 							</li>
-
+							<li className="md:hidden">
+								<Link
+									onClick={() => setMenuOpen(false)}
+									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+									to="fate-card"
+								>
+									<div className={`flex flex-row gap-2 items-center  ${currentPage === 'fate-card' ? 'text-white' : ''}`}>
+										<img className="w-[30px] grayscale" src="img/icons/ui/UI_Fight_MenuIconNLDZ.png" alt="fate-card" />
+										{t('commons:Fate_card')}
+									</div>
+								</Link>
+							</li>
 							<li>
 								<Link
 									onClick={() => setMenuOpen(false)}

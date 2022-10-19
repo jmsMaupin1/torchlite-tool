@@ -14,7 +14,7 @@
 	font-display: swap;
 }
 [role='tooltip'] {
-	max-width: 200px;
+	max-width: 300px;
 	z-index: 10;
 }
 
