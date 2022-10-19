@@ -142,13 +142,13 @@ const Header = () => {
 									id="dropdownNavbar"
 									className={`${
 										dropDownOpen ? '' : 'hidden'
-									} bg-[#282828] p-2 text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44 absolute`}
+									} bg-[#282828] text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44 absolute`}
 								>
-									<div className="flex flex-col gap-1">
+									<div className="flex flex-col">
 										<div>
 											<Link
 												onClick={() => setMenuOpen(false)}
-												className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+												className={`title hover:text-white block rounded hover:bg-gray-100 md:hover:bg-gray-700  px-2 py-1  dark:border-gray-700`}
 												to="base"
 											>
 												<div
@@ -164,7 +164,7 @@ const Header = () => {
 										<div>
 											<Link
 												onClick={() => setMenuOpen(false)}
-												className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+												className={`title hover:text-white block px-2 py-1 rounded hover:bg-gray-700 dark:border-gray-700`}
 												to="legendary"
 											>
 												<div
@@ -180,7 +180,7 @@ const Header = () => {
 										<div>
 											<Link
 												onClick={() => setMenuOpen(false)}
-												className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+												className={`title hover:text-white block rounded hover:bg-gray-100 md:hover:bg-gray-700  px-2 py-1  dark:border-gray-700`}
 												to="fate-card"
 											>
 												<div
@@ -200,7 +200,7 @@ const Header = () => {
 										<div>
 											<Link
 												onClick={() => setMenuOpen(false)}
-												className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+												className={`title hover:text-white block rounded hover:bg-gray-100 md:hover:bg-gray-700  px-2 py-1  dark:border-gray-700`}
 												to="pact-spirit"
 											>
 												<div
@@ -256,6 +256,18 @@ const Header = () => {
 									</div>
 								</Link>
 							</li>
+							{/* <li>
+								<Link
+									onClick={() => setMenuOpen(false)}
+									className={`title hover:text-white block py-2 pr-4 pl-3 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0  dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+									to="drop"
+								>
+									<div className={`flex flex-row gap-2 items-center  ${currentPage === 'drop' ? 'text-white' : ''}`}>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconSUIT.png" alt="Drop" />
+										{t('commons:Drop')}
+									</div>
+								</Link>
+							</li> */}
 							<li>
 								<Link
 									onClick={() => setMenuOpen(false)}

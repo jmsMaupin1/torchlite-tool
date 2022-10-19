@@ -154,7 +154,7 @@ function FateCardCard({ card }) {
 														)) ||
 														(i.type === 'gold' && <Legendary legendary={i.item} currentAffix={null} />)
 													}
-													trigger={`${i.type === 'base' ? 'hover' : 'click'}`}
+													trigger={`${i.type !== 'gold' ? 'hover' : 'click'}`}
 												>
 													<div>{translate(i.item.name)}</div>
 													{i.type === 'skill' && (

@@ -162,7 +162,7 @@ function FateCard() {
 					/>
 				</div>
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+			<div className="grid p-2 grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
 				{cardRecipe
 					.filter(filterByName)
 					.filter(filterByRarity)
