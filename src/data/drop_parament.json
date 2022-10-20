@@ -1,7 +1,6 @@
 [
 	{
 		"des": "主线掉落",
-		"des_en": "Main Line Drops",
 		"enum": "zhuxian",
 		"id": "1",
 		"modifier_extra": "1",
@@ -13,7 +12,6 @@
 	},
 	{
 		"des": "异界掉落",
-		"des_en": "Otherworldly drops",
 		"enum": "yijie",
 		"id": "2",
 		"modifier_extra": "1",
@@ -25,7 +23,6 @@
 	},
 	{
 		"des": "异界2.0掉落",
-		"des_en": "Otherworldly 2.0 drops",
 		"enum": "yijie2",
 		"id": "3",
 		"modifier_extra": "0",
@@ -37,7 +34,6 @@
 	},
 	{
 		"des": "巨力之神",
-		"des_en": "God of Giant Power",
 		"enum": "juli",
 		"id": "101",
 		"modifier_extra": "1",
@@ -49,7 +45,6 @@
 	},
 	{
 		"des": "征战之神",
-		"des_en": "God of Conquest",
 		"enum": "zhengzhan",
 		"id": "102",
 		"modifier_extra": "1",
@@ -61,7 +56,6 @@
 	},
 	{
 		"des": "神秘宝箱",
-		"des_en": "Mystery Treasure Chest",
 		"enum": "baoxiang",
 		"id": "103",
 		"modifier_extra": "1",
@@ -73,7 +67,6 @@
 	},
 	{
 		"des": "狩猎之神",
-		"des_en": "God of Hunting",
 		"enum": "shoulie",
 		"id": "104",
 		"modifier_extra": "1",
@@ -85,7 +78,6 @@
 	},
 	{
 		"des": "机械之神",
-		"des_en": "God of Machinery",
 		"enum": "jixie",
 		"id": "105",
 		"modifier_extra": "1",
@@ -97,7 +89,6 @@
 	},
 	{
 		"des": "赛季玩法-黑潮",
-		"des_en": "Season Play - Black Tide",
 		"enum": "season_heichao",
 		"id": "201",
 		"modifier_extra": "1",
@@ -109,7 +100,6 @@
 	},
 	{
 		"des": "黑潮玩法限定掉落",
-		"des_en": "Black Tide play limited drops",
 		"enum": "unique_heichao",
 		"id": "202",
 		"modifier_extra": "0",
@@ -121,7 +111,6 @@
 	},
 	{
 		"des": "黑潮小BOSS限定掉落",
-		"des_en": "Black Tide mini-boss limited drops",
 		"enum": "unique_heichao_s",
 		"id": "203",
 		"modifier_extra": "0",
@@ -133,7 +122,6 @@
 	},
 	{
 		"des": "黑潮大BOSS限定掉落",
-		"des_en": "Black tide big boss limited drops",
 		"enum": "unique_heichao_l",
 		"id": "204",
 		"modifier_extra": "0",
@@ -145,7 +133,6 @@
 	},
 	{
 		"des": "爬塔",
-		"des_en": "Tower",
 		"enum": "tower",
 		"id": "301",
 		"modifier_extra": "0",
@@ -157,7 +144,6 @@
 	},
 	{
 		"des": "关卡限定掉落",
-		"des_en": "Level limited drops",
 		"enum": "unique_level",
 		"id": "401",
 		"modifier_extra": "0",
@@ -169,7 +155,6 @@
 	},
 	{
 		"des": "区域BOSS限定掉落",
-		"des_en": "Regional BOSS limited drops",
 		"enum": "unique_area",
 		"id": "402",
 		"modifier_extra": "0",
@@ -181,7 +166,6 @@
 	},
 	{
 		"des": "世界BOSS限定掉落",
-		"des_en": "World BOSS limited drops",
 		"enum": "unique_world",
 		"id": "403",
 		"modifier_extra": "0",
@@ -193,7 +177,6 @@
 	},
 	{
 		"des": "六神玩法限定掉落",
-		"des_en": "Six gods play limited drops",
 		"enum": "unique_god",
 		"id": "404",
 		"modifier_extra": "0",
@@ -205,7 +188,6 @@
 	},
 	{
 		"des": "信标",
-		"des_en": "Beacons",
 		"enum": "map",
 		"id": "1001",
 		"modifier_extra": "0",
@@ -217,7 +199,6 @@
 	},
 	{
 		"des": "蒙尘信标",
-		"des_en": "Dusty beacons",
 		"enum": "map_unveal",
 		"id": "1002",
 		"modifier_extra": "0",
@@ -229,7 +210,6 @@
 	},
 	{
 		"des": "契灵",
-		"des_en": "Pact",
 		"enum": "servant",
 		"id": "2001",
 		"modifier_extra": "0",
@@ -241,7 +221,6 @@
 	},
 	{
 		"des": "无掉落物",
-		"des_en": "No drop",
 		"enum": "no_drop",
 		"id": "10001",
 		"modifier_extra": "0",

@@ -13,6 +13,7 @@ const Footer = () => {
 			<footer className="border-t mt-2 border-gray-500">
 				<div className="text-sm flex justify-between p-2 gap-2 container mx-auto">
 					<div>{t('commons:footer_copy')}</div>
+					<div>Last update with 20 october 2022 game files</div>
 					<div>{t('commons:footer_author')}</div>
 				</div>
 			</footer>

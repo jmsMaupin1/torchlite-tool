@@ -45,7 +45,7 @@
 			"+1 maximum <e id=719>Tenacity Blessing</e> stacks"
 		],
 		"affix_fr": [
-			"+15 % de chance gagner 1 cumul de <e id=737>Bénédiction de ténacité</e> lors de la défaite",
+			"+15 % de chance gagner 1 cumul de <e id=719>Bénédiction de ténacité</e> lors de la défaite",
 			"+1 au maximum de cumuls de <e id=719>Bénédiction de Ténacité</e>"
 		],
 		"attr": "89511:[15,1];961638:[1]",
@@ -383,7 +383,7 @@
 	{
 		"affix_de": ["+10% <e id=719>Zähigkeitssegen</e>-Dauer"],
 		"affix_en": ["+10% <e id=719>Tenacity Blessing</e> Duration"],
-		"affix_fr": ["+10 % à la durée de <e id=737>Bénédiction de ténacité</e>"],
+		"affix_fr": ["+10 % à la durée de <e id=719>Bénédiction de ténacité</e>"],
 		"attr": "470016:[10]",
 		"before_id": "",
 		"des": "+10% 坚韧祝福持续时间",
@@ -558,7 +558,7 @@
 		"affix_de": ["+100% Chance, Feinde bei einem Treffer zu <e id=704>lähmen</e>", "-50% Rüstungswert des Ziels beim Treff für 2 Sek."],
 		"affix_en": ["+100% chance to <e id=704>Paralyze</e> enemies On Hit", "-50% target Armor for 2 s on hit"],
 		"affix_fr": [
-			"+100 % de chances de <e id=713>Paralyser</e> les ennemis lors d'un coup",
+			"+100 % de chances de <e id=704>Paralyser</e> les ennemis lors d'un coup",
 			"-50% d'Armure pendant 2 seconde lors du coup"
 		],
 		"attr": "103010022:[100];953550:[-50,2]",
@@ -914,7 +914,7 @@
 	{
 		"affix_de": ["+10% <e id=719>Zähigkeitssegen</e>-Dauer"],
 		"affix_en": ["+10% <e id=719>Tenacity Blessing</e> Duration"],
-		"affix_fr": ["+10 % à la durée de <e id=737>Bénédiction de ténacité</e>"],
+		"affix_fr": ["+10 % à la durée de <e id=719>Bénédiction de ténacité</e>"],
 		"attr": "470016:[10]",
 		"before_id": "",
 		"des": "+10% 坚韧祝福持续时间",
@@ -1032,7 +1032,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+20% Skill-Bereich", "+24% Projektilgeschwindigkeit", "+1 Stapel von horizontalen Projektildurchdringungen"],
+		"affix_de": ["+20% Skill-Bereich", "+24% Projektilgeschwindigkeit", "+1 Stapel von horizontalen Projektildurchdring."],
 		"affix_en": ["+20% skill area", "+24% projectile speed", "+1 stacks of horizontal projectile piercings"],
 		"affix_fr": [
 			"+20 % à la zone de compétence",
@@ -1328,7 +1328,7 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["100% Magie-Verbrauch wandelt sich in LP-Verbrauch um", "+40% maximale Lebensdauer"],
+		"affix_de": ["100% Mana-Verbrauch wandelt sich in LP-Verbrauch um", "+40% maximale Lebensdauer"],
 		"affix_en": ["Converts 100% of Mana Cost to Life Cost", "+40% maximum life"],
 		"affix_fr": ["100% de coût de Mana convertissent en coût de Vie", "+40 % à la Vie maximale"],
 		"attr": "101080036:[100];101010102:[40]",
@@ -1400,7 +1400,7 @@
 	},
 	{
 		"affix_de": [
-			"Beim niedrigen Blut, +100% zusätzliches natürliches Wiederherstellungstempo von LP",
+			"Bei niedrigen LP, +100% zusätzliches natürliches Wiederherstellungstempo von LP",
 			"Innerhalb von 2 Sek. nach Treff, 1% pro Sek. nach Treff natürlich wiederherstellen, max. 15 Schichten stapelbar"
 		],
 		"affix_en": [
@@ -1858,7 +1858,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+3% Bewegungsgeschwindigkeit", "+4% Angriffs- und Wirkgeschwindigkeit des Mobilitäts-Skills"],
+		"affix_de": ["+3% Bewegungsgeschw.", "+4% Angriffs- und Wirkgeschwindigkeit des Mobilitäts-Skills"],
 		"affix_en": ["+3% movement speed", "+4% Mobility skill Attack and Cast Speed"],
 		"affix_fr": ["+3 % de vitesse de déplacement", "+4 % à l'attaque et à la vitesse d'incantation des compétences de mobilité"],
 		"attr": "101010040:[3];697134:[4]",
@@ -2048,7 +2048,7 @@
 	{
 		"affix_de": [
 			"+100% zusätzlicher Feuerschaden gegen Feinde mit <e id=121>mit niedrigem Leben</e>",
-			"+100% Schergen-Feuerschaden gegen Feinde mit <e id=121>niedrigem Leben</e>"
+			"+100% Beschwörte-Feuerschaden gegen Feinde mit <e id=121>niedrigem Leben</e>"
 		],
 		"affix_en": [
 			"+100% additional Fire Damage against <e id=121>Low Life</e> enemies",
@@ -2475,7 +2475,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+4% Feuerdurchdringung", "+4% Schergen Feuerdurchdringung"],
+		"affix_de": ["+4% Feuerdurchdringung", "+4% Beschwörte Feuerdurchdringung"],
 		"affix_en": ["+4% fire piercing", "+4% minion Fire Piercing"],
 		"affix_fr": ["+4 % de perforation de feu", "+4 % de perforation de feu des sbires"],
 		"attr": "101010038:[4];258889:[4]",
@@ -2582,7 +2582,7 @@
 	{
 		"affix_de": ["+10% <e id=719>Zähigkeitssegen</e>-Dauer"],
 		"affix_en": ["+10% <e id=719>Tenacity Blessing</e> Duration"],
-		"affix_fr": ["+10 % à la durée de <e id=737>Bénédiction de ténacité</e>"],
+		"affix_fr": ["+10 % à la durée de <e id=719>Bénédiction de ténacité</e>"],
 		"attr": "470016:[10]",
 		"before_id": "",
 		"des": "+10% 坚韧祝福持续时间",
@@ -2856,14 +2856,14 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["-4% des Blitzwiderstandes des Ziels für 2 Sekunden, bei Treffer mit Blitzschaden. Stapelt bis zu 8 -mal"],
-		"affix_en": ["-4% target's Lightning Resistance for 2 seconds on Lightning Damage hit. Stacks up to 8 times"],
+		"affix_de": ["-2% des Blitzwiderstandes des Ziels für 2 Sekunden, bei Treffer mit Blitzschaden. Stapelt bis zu 16 -mal"],
+		"affix_en": ["-2% target's Lightning Resistance for 2 seconds on Lightning Damage hit. Stacks up to 16 times"],
 		"affix_fr": [
-			"-4 % de la résistance à la foudre de la cible pendant 2 secondes en cas de dégâts causés par la foudre. Se cumule jusqu'à 8 cumuls"
+			"-2 % de la résistance à la foudre de la cible pendant 2 secondes en cas de dégâts causés par la foudre. Se cumule jusqu'à 16 cumuls"
 		],
-		"attr": "780358:[-4,2,8]",
+		"attr": "780358:[-2,2,16]",
 		"before_id": "",
-		"des": "造成闪电伤害时，使目标 -4% 闪电抗性，持续 2 秒，最多叠加 8 层",
+		"des": "造成闪电伤害时，使目标 -2% 闪电抗性，持续 2 秒，最多叠加 16 层",
 		"icon": "UI_CoreTalentIcon_mabi_Icon_128",
 		"id": "200012",
 		"level_up_time": "1",
@@ -2894,7 +2894,7 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["+20% Bewegungsgeschwindigkeit", "+35% zusätzlicher Schaden, wenn du dich vor kurzem mehr als 5 Meter bewegt hast"],
+		"affix_de": ["+20% Bewegungsgeschw.", "+35% zusätzlicher Schaden, wenn du dich vor kurzem mehr als 5 Meter bewegt hast"],
 		"affix_en": ["+20% movement speed", "+35% additional damage if moved more than 5 meters recently"],
 		"affix_fr": ["+20 % de vitesse de déplacement", "+35 % de dégâts supplémentaires si déplacé de plus de 5 mètres récemment"],
 		"attr": "101010040:[20];522019:[5,35]",
@@ -2909,12 +2909,12 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["-40% zusätzlicher Mindestschaden", "+40% zusätzlicher maximaler Schaden"],
-		"affix_en": ["-40% extra minimum damage", "+40% extra maximum damage"],
-		"affix_fr": ["-40 % dégâts minimaux supplémentaires", "+40 % dégâts maximaux supplémentaires"],
-		"attr": "101010674:[-40];101010675:[40]",
+		"affix_de": ["-30% zusätzlicher Mindestschaden", "+30% zusätzlicher maximaler Schaden"],
+		"affix_en": ["-30% extra minimum damage", "+30% extra maximum damage"],
+		"affix_fr": ["-30 % dégâts minimaux supplémentaires", "+30 % dégâts maximaux supplémentaires"],
+		"attr": "101010674:[-30];101010675:[30]",
 		"before_id": "",
-		"des": "额外 -40% 最小伤害\\n额外 +40% 最大伤害",
+		"des": "额外 -30% 最小伤害\\n额外 +30% 最大伤害",
 		"icon": "UI_CoreTalentIcon_shishiwuchang_Icon_128",
 		"id": "200022",
 		"level_up_time": "1",
@@ -2925,7 +2925,7 @@
 	},
 	{
 		"affix_de": [
-			"1 Schicht von 1 <e id=716>Flexibilitätssegen</e> erhalten, wenn du unleitende Bewegungsfähigkeit verwendest",
+			"1 Schicht von 1 <e id=716>Geschicklichkeitssegen</e> erhalten, wenn du unleitende Bewegungsfähigkeit verwendest",
 			"25% Chance, die maximalen <e id=716>Geschicklichkeitssegen</e>-Stapel zu erhalten, wenn <e id=716>Geschicklichkeitssegen</e> gewonnen wird"
 		],
 		"affix_en": [
@@ -3068,7 +3068,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+3% Bewegungsgeschwindigkeit"],
+		"affix_de": ["+3% Bewegungsgeschw."],
 		"affix_en": ["+3% movement speed"],
 		"affix_fr": ["+3 % de vitesse de déplacement"],
 		"attr": "101010040:[3]",
@@ -3128,7 +3128,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+6% Bewegungsgeschwindigkeit", "+15% Erholungsgeschwindigkeit der Abklingzeit des Mobilitäts-Skills"],
+		"affix_de": ["+6% Bewegungsgeschw.", "+15% Erholungsgeschw. der Abklingzeit des Mobilitäts-Skills"],
 		"affix_en": ["+6% movement speed", "+15% mobility skill cooldown recovery speed"],
 		"affix_fr": ["+6 % de vitesse de déplacement", "+15 % à la vitesse de récupération du rechargement des compétences de mobilité"],
 		"attr": "101010040:[6];101010055:[15]",
@@ -3443,7 +3443,7 @@
 		"affix_en": ["+1 maximum <e id=716>Agility Blessing</e> stacks", "+5% Evasion per stack of <e id=716>Agility Blessing</e>"],
 		"affix_fr": [
 			"s +1 au maximum detacks de <e id=716>Bénédiction d'agilité</e>",
-			"+5 % d'esquive par cumul de <e id=719>Bénédiction d'agilité</e>"
+			"+5 % d'esquive par cumul de <e id=716>Bénédiction d'agilité</e>"
 		],
 		"attr": "589129:[1];228126:[5]",
 		"before_id": "",
@@ -3836,7 +3836,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+3% Bewegungsgeschwindigkeit", "+10% Ausweichen"],
+		"affix_de": ["+3% Bewegungsgeschw.", "+10% Ausweichen"],
 		"affix_en": ["+3% movement speed", "+10% evasion"],
 		"affix_fr": ["+3 % de vitesse de déplacement", "+10 % à l'esquive"],
 		"attr": "101010040:[3];101010300:[10]",
@@ -3911,7 +3911,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+6% Bewegungsgeschwindigkeit", "+50% Ausweichen während Bewegung"],
+		"affix_de": ["+6% Bewegungsgeschw.", "+50% Ausweichen während Bewegung"],
 		"affix_en": ["+6% movement speed", "+50% evasion while moving"],
 		"affix_fr": ["+6 % de vitesse de déplacement", "+50 % d'esquive en mouvement"],
 		"attr": "101010040:[6];101010341:[50]",
@@ -4076,7 +4076,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+2 Stapel von horizontalen Projektildurchdringungen"],
+		"affix_de": ["+2 Stapel von horizontalen Projektildurchdring."],
 		"affix_en": ["+2 stacks of horizontal projectile piercings"],
 		"affix_fr": ["+2 cumuls de perforation des projectiles horizontaux"],
 		"attr": "101080025:[2]",
@@ -4139,9 +4139,9 @@
 		"affix_de": [
 			"+10% Chance, 1 <e id=716>Geschicklichkeitssegen</e>-Stapel zu erhalten, wenn du seltene oder legendäre Monster triffst"
 		],
-		"affix_en": ["+10% chance to gain 1 stacks of <e id=716>Agility Blessing</e> When Hitting rare or legendary monsters"],
+		"affix_en": ["+10% chance to gain 1 stacks of <e id=716>Agility Blessing</e> When hitting Rare or Legendary monsters"],
 		"affix_fr": [
-			"+10 % de chance gagner 1 cumul de <e id=737>Bénédiction d'agilité</e> lorsque des monstres rares ou légendaires sont touchés"
+			"+10 % de chance gagner 1 cumul de <e id=716>Bénédiction d'agilité</e> lorsque des monstres rares ou légendaires sont touchés"
 		],
 		"attr": "600452:[10,1]",
 		"before_id": "210805",
@@ -4155,12 +4155,12 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["3% getroffener Blitz-SCH als Basisschaden von <e id=712>Stromschlag</e>-SCH erhalten"],
-		"affix_en": ["Gains 3% of Lightning Damage hit as Base <e id=712>Shock</e> Damage"],
-		"affix_fr": ["Obtenez 3 % de dégâts de foudre subis comme dégâts d'<e id=712>Électrocution</e> de base"],
-		"attr": "797815:[3]",
+		"affix_de": ["5% getroffener Blitz-SCH als Basisschaden von <e id=712>Stromschlag</e>-SCH erhalten"],
+		"affix_en": ["Gains 5% of Lightning Damage hit as Base <e id=712>Shock</e> Damage"],
+		"affix_fr": ["Obtenez 5 % de dégâts de foudre subis comme dégâts d'<e id=712>Électrocution</e> de base"],
+		"attr": "797815:[5]",
 		"before_id": "",
-		"des": "获得击中闪电伤害的 3% 作为基础触电伤害",
+		"des": "获得击中闪电伤害的 5% 作为基础触电伤害",
 		"icon": "UI_CoreTalentIcon_daodian_Icon_128",
 		"id": "220011",
 		"level_up_time": "1",
@@ -4222,7 +4222,7 @@
 	},
 	{
 		"affix_de": [
-			"Schaden, der von Schergen und dir gegen <e id=712>geschockte</e> Feinde verursacht wird, löst <e id=116>Glück</e> aus."
+			"Schaden, der von Beschwörten und dir gegen <e id=712>geschockte</e> Feinde verursacht wird, löst <e id=116>Glück</e> aus."
 		],
 		"affix_en": ["Damage dealt by minions and you against <e id=712>Shocked</e> enemies triggers <e id=116>Lucky</e>"],
 		"affix_fr": [
@@ -4579,7 +4579,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+3% Bewegungsgeschwindigkeit"],
+		"affix_de": ["+3% Bewegungsgeschw."],
 		"affix_en": ["+3% movement speed"],
 		"affix_fr": ["+3 % de vitesse de déplacement"],
 		"attr": "101010040:[3]",
@@ -4626,7 +4626,7 @@
 	{
 		"affix_de": [
 			"50% physischer Schaden umgewandelt in Blitzschaden",
-			"50% des physischen Schadens des Schergens in Blitzschaden umgewandelt"
+			"50% des physischen Schadens des Beschwörten in Blitzschaden umgewandelt"
 		],
 		"affix_en": ["50% physical damage converted to lightning damage", "50% of minion Physical Damage converted to Lightning Damage"],
 		"affix_fr": [
@@ -4661,7 +4661,7 @@
 	},
 	{
 		"affix_de": ["Zurücksetzen des Mobilitäts-Skill-CDs beim Besiegen eines seltenen Monsters"],
-		"affix_en": ["Reset Mobility skill CDs when defeating a rare monster"],
+		"affix_en": ["Reset Mobility skill CDs when defeating a Rare monster"],
 		"affix_fr": ["Réinitialisation des rechargements de compétences de mobilité lors de la défaite d'un monstre rare"],
 		"attr": "633381:[]",
 		"before_id": "220503",
@@ -4782,7 +4782,7 @@
 	{
 		"affix_de": [
 			"1 - 20 hat Blitzschaden zu Angriffen und Zaubern hinzugefügt",
-			"Schergen verursachen 1 - 25 zusätzlichen Blitzschaden"
+			"Beschwörte verursachen 1 - 25 zusätzlichen Blitzschaden"
 		],
 		"affix_en": ["1 - 20 added lightning damage to attacks and spells", "Minions deal 1 - 25 added Lightning Damage"],
 		"affix_fr": [
@@ -4915,7 +4915,7 @@
 			"+4% Cast Speed for each skill recently used, stacking up to 15 times"
 		],
 		"affix_fr": [
-			"+3 % de vitesse de régénération de la santé et du mana par compétence utilisée récemment, jusqu'à 45 %",
+			"+3 % de vitesse de régénération de la santé et du mana par compétence utilisée récemment, jusqu'à 45 %",
 			"+4% de Vitesse d'incantation sur une compétence utilisée récemment, jusqu'à 15 cumuls"
 		],
 		"attr": "103010145:[];562303:[4,15]",
@@ -5354,8 +5354,8 @@
 	},
 	{
 		"affix_de": [
-			"Stelle 2% Leben wieder her, wenn du den <e id=716>geistlichen Segen</e> erhältst.",
-			"Stelle 2% Mana wieder her, wenn du <e id=716>geistlichen Segen</e> erhältst."
+			"Stelle 2% Leben wieder her, wenn du den <e id=716>Geschicklichkeitssegen</e> erhältst.",
+			"Stelle 2% Mana wieder her, wenn du <e id=716>Geschicklichkeitssegen</e> erhältst."
 		],
 		"affix_en": [
 			"Restore 2% Life when receiving <e id=716>Agility Blessing</e>",
@@ -5542,7 +5542,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+4% Zaubertempo pro 1 Schicht von <e id=716>Flexibilitätssegen</e>"],
+		"affix_de": ["+4% Zaubertempo pro 1 Schicht von <e id=716>Geschicklichkeitssegen</e>"],
 		"affix_en": ["+4% Cast Speed per stack of <e id=716>Agility Blessing</e> owned"],
 		"affix_fr": ["+4 % de vitesse de d'incantation par cumuls de <e id=716>Bénédiction d'agilité</e>"],
 		"attr": "133641:[4]",
@@ -5632,7 +5632,7 @@
 	{
 		"affix_de": ["+10% Chance, 1 <e id=716>Geschicklichkeitssegen</e>-Stapel zu erhalten, wenn du zauberst"],
 		"affix_en": ["+10% chance to gain 1 stacks of <e id=716>Agility Blessing</e> when casting"],
-		"affix_fr": ["+10 % de chance gagner 1 cumul de <e id=737>Bénédiction d'agilité</e> lors d'une incantation"],
+		"affix_fr": ["+10 % de chance gagner 1 cumul de <e id=716>Bénédiction d'agilité</e> lors d'une incantation"],
 		"attr": "445601:[10,1]",
 		"before_id": "230801",
 		"des": "施法时，+10% 概率获得 1 层灵动祝福",
@@ -5769,7 +5769,7 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["Immune gegen <e id=735>Eisknote</e>", "+20% zusätzlicher Eis- und Feuer-SCH"],
+		"affix_de": ["Immune gegen <e id=735>Erfrierung</e>", "+20% zusätzlicher Eis- und Feuer-SCH"],
 		"affix_en": ["Immune to <e id=735>Frostbite</e>", "+20% additional Cold and Fire Damage"],
 		"affix_fr": ["Immunisé contre la <e id=735>Morsure de froid</e>", "+20% de dégâts de froid et de feu supplémentaires"],
 		"attr": "637013:[];918515:[20]",
@@ -5786,7 +5786,7 @@
 	{
 		"affix_de": [
 			"Erhalte 1 Stapel <e id=737>Fokus-Segen</e> für jede 10% verbrauchtes Mana",
-			"+25% natürliches Wiederherstellungstempo der Magie pro 1 Schicht von <e id=737>Energiesammlungssegen</e>"
+			"+25% natürliches Wiederherstellungstempo der Mana pro 1 Schicht von <e id=737>Energiesammlungssegen</e>"
 		],
 		"affix_en": [
 			"Gain 1 stacks of <e id=737>Focus Blessing</e> for every 10% Mana consumed",
@@ -6198,7 +6198,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+12% Zeitdauer von <e id=735>Eisknote</e>"],
+		"affix_de": ["+12% Zeitdauer von <e id=735>Erfrierung</e>"],
 		"affix_en": ["+12% <e id=735>Frostbite</e> duration"],
 		"affix_fr": ["+12 % à la durée de <e id=735>Morsure de froid</e>"],
 		"attr": "646016:[12]",
@@ -7017,7 +7017,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["Wenn SCH verursacht wird, +1% Kältedurchdringung pro 5 <e id=735>Eisknote</e>-Wert von Feinden"],
+		"affix_de": ["Wenn SCH verursacht wird, +1% Kältedurchdringung pro 5 <e id=735>Erfrierung</e>-Wert von Feinden"],
 		"affix_en": ["+1% Cold Piercing per 5 <e id=735>Frostbites</e> on enemy when dealing damage"],
 		"affix_fr": [
 			"+1 % de perforation de froid pour chaque 5 <e id=735>Morsure de froid</e> que les ennemis ont lorsque des dégâts leur sont infligés"
@@ -7049,7 +7049,7 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["Skills kosten 15% des aktuellen Manas", "Wenn die Magie die Obergrenze erreicht, +35% für nächste Fähigkeit"],
+		"affix_de": ["Skills kosten 15% des aktuellen Manas", "Wenn das Mana die Obergrenze erreicht, +35% für nächste Fähigkeit"],
 		"affix_en": ["Skills cost 15% of the current Mana", "+35% additional damage for the next skill when Mana reaches the maximum"],
 		"affix_fr": [
 			"Les compétences coûtent 15 % du Mana actuel",
@@ -7068,8 +7068,8 @@
 	},
 	{
 		"affix_de": [
-			"Für Feinde, deren <e id=735>Eisknote</e>-Wert die Obergrenze erreicht, +30% zusätzlicher SCH",
-			"Wenn Kälte-SCH verursacht wird, wird <e id=735>Eisknote</e> verursacht"
+			"Für Feinde, deren <e id=735>Erfrierung</e>-Wert die Obergrenze erreicht, +30% zusätzlicher SCH",
+			"Wenn Kälte-SCH verursacht wird, wird <e id=735>Erfrierung</e> verursacht"
 		],
 		"affix_en": [
 			"+30% additional damage dealt to enemies with maximum <e id=735>Frostbites</e>",
@@ -7092,7 +7092,7 @@
 	},
 	{
 		"affix_de": [
-			"Kälte-Zauber-SCH von max. Magie an Feinden <e id=102>in der Nähe</e> bei Besiegung der Feinde; Dieser SCH erhöht sich mit der Steigerung Charakterlevel"
+			"Kälte-Zauber-SCH von max. Mana an Feinden <e id=102>in der Nähe</e> bei Besiegung der Feinde; Dieser SCH erhöht sich mit der Steigerung Charakterlevel"
 		],
 		"affix_en": [
 			"When defeating an enemy, deal Cold Spell Damage based on the Maximum Mana to its <e id=102>nearby</e> enemies. The damage increases with character level."
@@ -7113,7 +7113,7 @@
 	},
 	{
 		"affix_de": [
-			"Der Basiseffekt von <e id=737>Energiesammlungsse.</e> wird umgewandelt in: ANGR und Zauber fügen Kälte-SCH von 2% der max. Magie zu"
+			"Der Basiseffekt von <e id=737>Energiesammlungsse.</e> wird umgewandelt in: ANGR und Zauber fügen Kälte-SCH von 2% der max. Mana zu"
 		],
 		"affix_en": [
 			"Changes the base effect of <e id=737>Focus Blessing</e> to: Adds Cold Damage equal to 2% of Maximum Mana to attacks and spells"
@@ -7420,7 +7420,7 @@
 	{
 		"affix_de": [
 			"50% physischer Schaden in Kälteschaden umgewandelt",
-			"50% des physischer Schadens des Schergens in Kälteschaden umgewandelt"
+			"50% des physischen Schadens des Beschwörten in Kälteschaden umgewandelt"
 		],
 		"affix_en": ["50% physical damage converted to cold damage", "50% of minion Physical Damage converted to Cold Damage"],
 		"affix_fr": [
@@ -7575,7 +7575,7 @@
 		],
 		"affix_fr": [
 			"Gagnez 1 cumuls de <e id=737>Bénédiction de concentration</e> supplémentaires",
-			"+10 % de chances de gagner 1 cumul de <e id=737>Bénédiction de concentration</e> lorsqu'une cible est atteinte de <e id=735>Morsure de froid/e> une cible."
+			"+10 % de chances de gagner 1 cumul de <e id=737>Bénédiction de concentration</e> lorsqu'une cible est atteinte de <e id=735>Morsure de froid/e> une cible.</e>"
 		],
 		"attr": "417341:[1];424329:[10]",
 		"before_id": "320602",
@@ -7634,7 +7634,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+6% Zeitdauer von <e id=735>Eisknote</e>"],
+		"affix_de": ["+6% Zeitdauer von <e id=735>Erfrierung</e>"],
 		"affix_en": ["+6% <e id=735>Frostbite</e> duration"],
 		"affix_fr": ["+6 % à la durée de <e id=735>Morsure de froid</e>"],
 		"attr": "646016:[6]",
@@ -7709,7 +7709,10 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+15% Zeitdauer von <e id=735>Eisknote</e>", "Wenn Kälte-SCH verursacht wird 4 <e id=735>Eisknote</e>-Wert zugefügt"],
+		"affix_de": [
+			"+15% Zeitdauer von <e id=735>Erfrierung</e>",
+			"Wenn Kälte-SCH verursacht wird 4 <e id=735>Erfrierung</e>-Wert zugefügt"
+		],
 		"affix_en": ["+15% <e id=735>Frostbite</e> duration", "Inflicts 4 <e id=735>Frostbites</e> when dealing Cold Damage"],
 		"affix_fr": [
 			"+15 % à la durée de <e id=735>Morsure de froid</e>",
@@ -8813,7 +8816,7 @@
 	{
 		"affix_de": ["+35% kritische Trefferwertung", "Stelle 8 Mana bei einem kritischen Treffer wieder her"],
 		"affix_en": ["+35% critical strike rating", "Restore 8 Mana on a Critical Strike"],
-		"affix_fr": ["+35 % au taux de coup critique", "Restaure 8  de Mana en cas de coup critique"],
+		"affix_fr": ["+35 % au taux de coup critique", "Restaure 8 points de de Mana en cas de coup critique"],
 		"attr": "101010037:[35];606952:[8]",
 		"before_id": "400202",
 		"des": "+35% 暴击值\\n暴击时，回复 8 魔力",
@@ -9071,7 +9074,7 @@
 	{
 		"affix_de": ["+10% <e id=711>Bluten</e>-Schaden", "+10% <e id=711>Bluten</e>-Dauer"],
 		"affix_en": ["+10% <e id=711>Bleed</e> damage", "+10% <e id=711>Bleeding</e> Duration"],
-		"affix_fr": ["+10 % des dégâts de <e id=711>Saignement</e>", "+10 % à la durée de <e id=737>Saignement</e>"],
+		"affix_fr": ["+10 % des dégâts de <e id=711>Saignement</e>", "+10 % à la durée de <e id=711>Saignement</e>"],
 		"attr": "101010012:[10];101010009:[10]",
 		"before_id": "",
 		"des": "+10% 流血伤害\\n+10% 流血持续时间",
@@ -9188,7 +9191,7 @@
 			"Erhalte <e id=739>Eifer</e>, wenn Feinde in der Nähe sind"
 		],
 		"affix_en": [
-			"Gain 10 <e id=740>Fervor rating</e> when Hitting a rare or legendary enemy",
+			"Gain 10 <e id=740>Fervor Rating</e> when hitting a Rare or Legendary enemy",
 			"Gain <e id=739>Fervor</e> when there are enemies nearby"
 		],
 		"affix_fr": [
@@ -9211,7 +9214,7 @@
 			"Wenn du einen <e id=711>blutenden</e> Feind triffst, werden 30% des aktuellen <e id=711>Bluten</e>-Schadens als zusätzlicher physischer Schaden hinzugefügt"
 		],
 		"affix_en": [
-			"When Hitting a <e id=711>Bleeding</e> enemy, adds 30% of the current <e id=711>Bleeding</e> damage as the extra final Physical Damage"
+			"When hitting a <e id=711>Bleeding</e> enemy, adds 30% of the current <e id=711>Bleeding</e> damage as the extra final Physical Damage"
 		],
 		"affix_fr": [
 			"Lorsqu'un ennemi atteint de <e id=711>Saignement</e> est touché, ajoute 30 % des dégâts actuels de <e id=711>Saignement</e> comme dégâts physiques finaux supplémentaires"
@@ -9935,7 +9938,7 @@
 			"Consume half of current <e id=740>Fervor Rating</e> when hit. -1% of the Damage per 1 point consumed"
 		],
 		"affix_fr": [
-			"Obtenez la <e id=740>Valeur de Ferveur</e> supplémentaire équivalente à 25% de <e id=740>Valeur de Ferveur</e> actuelle lors d'un coup. Le rechargement est de 0.3 secondes",
+			"Obtenez la <e id=740>Valeur de Ferveur</e> supplémentaire équivalente à 25% de <e id=739>Valeur de Ferveur</e> actuelle lors d'un coup. Le rechargement est de 0.3 secondes",
 			"Consomme la moitié de la <e id=740>Valeur de ferveur</e> actuelle si touché. -1 % des dégâts par 1 point consommé"
 		],
 		"attr": "894924:[25,3/10];570574:[-1]",
@@ -10972,7 +10975,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+8% Angriffs- und Wirkgeschwindigkeit", "+10% Bewegungsgeschwindigkeit"],
+		"affix_de": ["+8% Angriffs- und Wirkgeschwindigkeit", "+10% Bewegungsgeschw."],
 		"affix_en": ["+8% attack and cast speed", "+10% movement speed"],
 		"affix_fr": ["+8 % de vitesse d'attaque et d'incantation", "+10 % de vitesse de déplacement"],
 		"attr": "200000020:[8];101010040:[10]",
@@ -11034,7 +11037,7 @@
 	{
 		"affix_de": ["+12% maximales Mana", "Stelle 5 Mana bei einem kritischen Treffer wieder her"],
 		"affix_en": ["+12% maximum mana", "Restore 5 Mana on a Critical Strike"],
-		"affix_fr": ["+12 % au Mana maximal", "Restaure 5  de Mana en cas de coup critique"],
+		"affix_fr": ["+12 % au Mana maximal", "Restaure 5 points de de Mana en cas de coup critique"],
 		"attr": "101010158:[12];606952:[5]",
 		"before_id": "430402",
 		"des": "+12% 最大魔力\\n暴击时，回复 5 魔力",
@@ -11465,9 +11468,7 @@
 	{
 		"affix_de": ["<e id=721>Unschärfe</e> gewährt einen zusätzlichen Effekt: +30% DoT von Feinden in der Nähe"],
 		"affix_en": ["<e id=721>Blur</e> grants additional Effect: +30% additional DoT taken by Nearby enemies"],
-		"affix_fr": [
-			"<e id=721>Insaissable</e> octroie un effet supplémentaire : +30 % de dégâts sur la durée subis par les ennemis proches"
-		],
+		"affix_fr": ["<e id=721>Mystère</e> octroie un effet supplémentaire : +30 % de dégâts sur la durée subis par les ennemis proches"],
 		"attr": "758659:[]",
 		"before_id": "",
 		"des": "迷踪获得额外效果：额外 +30% 周围敌人受到的持续伤害",
@@ -11592,7 +11593,7 @@
 		"affix_en": ["+8% maximum energy shield", "Gain <e id=721>Blur</e> when Energy Shield starts to <e id=129>Charge</e>"],
 		"affix_fr": [
 			"+8 % au maximum du Bouclier énergétique",
-			"Gagne <e id=721>Insaisissable</e> lorsque le Bouclier énergétique commence à <e id=129>Charger</e>"
+			"Gagne <e id=721>Mystère</e> lorsque le Bouclier énergétique commence à <e id=129>Charger</e>"
 		],
 		"attr": "101010134:[8];103010143:[]",
 		"before_id": "500103",
@@ -11964,7 +11965,7 @@
 		],
 		"affix_fr": [
 			"5 % de chances d'infliger 1 cumuls de <e id=709>Flétrissement</e>",
-			"Gagne <e id=721>Insaisissable</e> par 5 cumuls de <e id=709>Flétrissement</e> infligé"
+			"Gagne <e id=721>Mystère</e> par tous les 5 cumuls de <e id=709>Flétrissement</e> infligé"
 		],
 		"attr": "103430001:[5,1];725944:[5]",
 		"before_id": "500604",
@@ -12024,7 +12025,7 @@
 	},
 	{
 		"affix_de": [
-			"-20% zusätzlicher erlittener SCH beim Erhalt von <e id=721>Mysterium</e>",
+			"-20% zusätzlicher erlittener SCH beim Erhalt von <e id=721>Unschärfe</e>",
 			"+20% zusätzlicher Schaden für 3 Sekunden nachdem <e id=721>Unschärfe</e> endet"
 		],
 		"affix_en": [
@@ -12032,8 +12033,8 @@
 			"+20% additional Damage for 3 seconds after <e id=721>Blur</e> ends"
 		],
 		"affix_fr": [
-			"-20% de dégâts supplémentaires subis pendant que <e id=721>Insaisissable</e> est actif",
-			"+20 % de dégâts supplémentaires pendant 3 secondes après la fin de <e id=721>Insaisissable</e>"
+			"-20% de dégâts supplémentaires subis pendant que <e id=721>Mystère</e> est actif",
+			"+20 % de dégâts supplémentaires pendant 3 secondes après la fin de <e id=721>Mystère</e>"
 		],
 		"attr": "219581:[-20];336253:[3,20]",
 		"before_id": "",
@@ -12514,7 +12515,7 @@
 	{
 		"affix_de": ["+24% Manaregeneration", "Erhalte <e id=721>Unschärfe</e> für jede 200 verbrauchte Mana"],
 		"affix_en": ["+24% mana regeneration", "Gain <e id=721>Blur</e> for every 200 Mana consumed"],
-		"affix_fr": ["+24 % de régénération de Mana", "Gagne <e id=721>Insaisissable</e> pour chaque 200 de Mana consommé"],
+		"affix_fr": ["+24 % de régénération de Mana", "Gagne <e id=721>Mystère</e> pour chaque 200 de Mana consommé"],
 		"attr": "101010093:[24];640767:[200]",
 		"before_id": "510601",
 		"des": "+24% 魔力自然回复速度\\n每消耗 200 魔力，获得迷踪",
@@ -12619,7 +12620,7 @@
 	{
 		"affix_de": ["+5% <e id=721>Unschärfe</e>-Effekt"],
 		"affix_en": ["+5% <e id=721>Blur</e> Effect"],
-		"affix_fr": ["+5 % d'effet d'<e id=721>Insaisissable</e>"],
+		"affix_fr": ["+5 % d'effet de <e id=721>Mystère</e>"],
 		"attr": "101010343:[5]",
 		"before_id": "",
 		"des": "+5% 迷踪效果",
@@ -12681,7 +12682,7 @@
 	{
 		"affix_de": ["+1% <e id=721>Unschärfe</e> Effekt pro 1% verlorenes Leben"],
 		"affix_en": ["+1% <e id=721>Blur</e> effect per 1% Life lost"],
-		"affix_fr": ["+1 % effet d'<e id=721>Insaisissable</e> par toutes les 1 % de Vie perdue"],
+		"affix_fr": ["+1 % effet de <e id=721>Mystère</e> par toutes les 1 % de Vie perdue"],
 		"attr": "122288:[1]",
 		"before_id": "510804",
 		"des": "每损失1%生命， +1% 迷踪效果",
@@ -12739,10 +12740,12 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["<e id=721>Mysterium </e> erhält zusätzlichen Effekt: +100% Kontrollstatus-Effekt; zusätzlich +20% Anomalie-SCH"],
+		"affix_de": [
+			"<e id=721>Wandern</e> erhält zusätzliche Effekte: +100 % Kontrollstatuseffekte; +20 % zusätzlicher Beeinträchtigungsschaden"
+		],
 		"affix_en": ["<e id=721>Blur</e> gains additional effect: +100% control effects and +20% Ailment Damage."],
 		"affix_fr": [
-			"<e id=721>Insaisissable</e> obtient l'effet supplémentaire : Effet de contrôle +100 % ; dégâts des altérations d'état supplémentaires +20 %"
+			"<e id=721>Mystère</e> gagne des effets supplémentaires : +100 % d'effets de statut de contrôle ; +20 % de dégâts d'altération supplémentaires"
 		],
 		"attr": "90030:[]",
 		"before_id": "",
@@ -13247,7 +13250,7 @@
 	{
 		"affix_de": ["+5% <e id=721>Unschärfe</e>-Effekt"],
 		"affix_en": ["+5% <e id=721>Blur</e> Effect"],
-		"affix_fr": ["+5 % d'effet d'<e id=721>Insaisissable</e>"],
+		"affix_fr": ["+5 % d'effet de <e id=721>Mystère</e>"],
 		"attr": "101010343:[5]",
 		"before_id": "",
 		"des": "+5% 迷踪效果",
@@ -13260,7 +13263,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["Feinde unter <e id=702>Blind</e> können keinen kritischen SCH zufügen"],
+		"affix_de": ["Feinde unter <e id=702>Blind</e> können keinen kritischen SCH nehmen"],
 		"affix_en": ["<e id=702>Blinded</e> enemies are unable to use Critical Strike"],
 		"affix_fr": ["Les ennemis <e id=702>Aveuglés</e> sont incapables de porter de coup critique"],
 		"attr": "323374:[]",
@@ -13329,8 +13332,8 @@
 			"Movement Speed cannot be reduced to below the base value when <e id=721>Blur</e> is active"
 		],
 		"affix_fr": [
-			"+12 % de vitesse de déplacement pendant qu'<e id=721>Insaisissable</e> est actif",
-			"La vitesse de déplacement ne peut être réduite en dessous de la valeur de base lorsqu'<e id=721>Insaisissable</e> est actif"
+			"+12 % de vitesse de déplacement pendant que <e id=721>Mystère</e> est actif",
+			"La vitesse de déplacement ne peut être réduite en dessous de la valeur de base lorsque <e id=721>Mystère</e> est actif"
 		],
 		"attr": "101010157:[12];605335:[]",
 		"before_id": "520703",
@@ -13554,13 +13557,13 @@
 	},
 	{
 		"affix_de": [
-			"Beim Erhalt von <e id=721>Mysterium</e> wird <e id=721>Mysterium</e> nach Verwendung von Kernfähigkeit verloren, diese Fähigkeit erhöht sich zusätzlichen SCH um +35%"
+			"Beim Erhalt von <e id=721>Unschärfe</e> wird <e id=721>Unschäref</e> nach Verwendung von Kernfähigkeit verloren, diese Fähigkeit erhöht sich zusätzlichen SCH um +35%"
 		],
 		"affix_en": [
 			"While <e id=721>Blur</e> is active, lose <e id=721>Blur</e> after using a Main Skill, and the skill deals +35% additional damage"
 		],
 		"affix_fr": [
-			"Pendant qu'<e id=721>Insaisissable</e> est actif, perdez <e id=721>Insaisissable</e> après avoir utilisé une compétence principale, et la compétence inflige +35% de dégâts supplémentaires"
+			"Pendant que <e id=721>Mystère</e> est actif, perdez <e id=721>Insaisissable</e> après avoir utilisé une compétence principale, et la compétence inflige +35% de dégâts supplémentaires"
 		],
 		"attr": "112064:[35]",
 		"before_id": "",
@@ -13932,7 +13935,7 @@
 	},
 	{
 		"affix_de": ["+2 Zauberspruch-Skill-Level"],
-		"affix_en": ["+2 spell skill level"],
+		"affix_en": ["+2 Defensive skill level"],
 		"affix_fr": ["+2 au niveau de compétence des sorts"],
 		"attr": "101080046:[2]",
 		"before_id": "530501",
@@ -14101,7 +14104,7 @@
 	{
 		"affix_de": ["+15% Bewegungsgeschwindigkeit während <e id=721>Unschärfe</e> aktiv ist"],
 		"affix_en": ["+15% Movement Speed while <e id=721>Blur</e> is active"],
-		"affix_fr": ["+15 % de vitesse de déplacement pendant qu'<e id=721>Insaisissable</e> est actif"],
+		"affix_fr": ["+15 % de vitesse de déplacement pendant que <e id=721>Mystère</e> est actif"],
 		"attr": "101010157:[15]",
 		"before_id": "",
 		"des": "具有迷踪时， +15% 移动速度",
@@ -14176,7 +14179,7 @@
 	{
 		"affix_de": ["+100% Chance, bei einer Niederlage <e id=721>Unschärfe</e> zu erhalten"],
 		"affix_en": ["+100% chance to gain <e id=721>Blur</e> on defeat"],
-		"affix_fr": ["+100 % de chances de gagner <e id=721>Insaisissable</e> à la défaite"],
+		"affix_fr": ["+100 % de chances de gagner <e id=721>Mystère</e> lors de la défaite"],
 		"attr": "103010090:[100]",
 		"before_id": "530802",
 		"des": "击败时， +100% 几率获得迷踪",
@@ -14270,7 +14273,7 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["+3 Schergen-Skill-Level", "-25% Schergen-<e id=141>Aggressivität</e>"],
+		"affix_de": ["+3 Schergen-Skill-Level", "-25% Beschwörten-<e id=141>Aggressivität</e>"],
 		"affix_en": ["+3 minion skill level", "-25% minion <e id=141>aggressiveness</e>"],
 		"affix_fr": ["+3 au niveau de compétence des sbires", "-25 % à l'<e id=141>agressivité</e> des sbires"],
 		"attr": "101080039:[3];656117:[-25]",
@@ -14300,7 +14303,7 @@
 		"type": "2"
 	},
 	{
-		"affix_de": ["<e id=111>Haupthandwaffe</e> wird auf Schergen angewendet"],
+		"affix_de": ["<e id=111>Haupthandwaffe</e> wird auf Beschwörte angewendet"],
 		"affix_en": ["<e id=111>Main Hand weapon</e> is applied to Minions"],
 		"affix_fr": ["<e id=111>L'arme de la main principale</e> est appliquée aux sbires"],
 		"attr": "103580002:[]",
@@ -14744,7 +14747,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+25% Schergen-<e id=141>Aggressivität</e>"],
+		"affix_de": ["+25% Beschwörten-<e id=141>Aggressivität</e>"],
 		"affix_en": ["+25% minion <e id=141>aggressiveness</e>"],
 		"affix_fr": ["+25 % à l'<e id=141>agressivité</e> des sbires"],
 		"attr": "656117:[25]",
@@ -14867,8 +14870,8 @@
 	},
 	{
 		"affix_de": [
-			"+25% Schergen-<e id=141>Aggressivität</e>",
-			"100% der Effekte auf die Bewegungsgeschwindigkeit werden auch auf Schergen angewendet",
+			"+25% Beschwörten-<e id=141>Aggressivität</e>",
+			"100% der Effekte auf die Bewegungsgeschwindigkeit werden auch auf Beschwörte angewendet",
 			"50% Chance, dass die Angriffe des Schergen Rüstung ignorieren"
 		],
 		"affix_en": [
@@ -15301,7 +15304,7 @@
 		"type": "1"
 	},
 	{
-		"affix_de": ["+3% Bewegungsgeschwindigkeit"],
+		"affix_de": ["+3% Bewegungsgeschw."],
 		"affix_en": ["+3% movement speed"],
 		"affix_fr": ["+3 % de vitesse de déplacement"],
 		"attr": "101010040:[3]",
@@ -15379,7 +15382,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+6% Bewegungsgeschwindigkeit", "+30% Wachenschaden bei Bewegung"],
+		"affix_de": ["+6% Bewegungsgeschw.", "+30% Wachenschaden bei Bewegung"],
 		"affix_en": ["+6% movement speed", "+30% Sentry Damage when moving"],
 		"affix_fr": ["+6 % de vitesse de déplacement", "+30 % de dégâts des Sentinelles en mouvement"],
 		"attr": "101010040:[6];368084:[30]",
@@ -16705,7 +16708,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["+3% Bewegungsgeschwindigkeit"],
+		"affix_de": ["+3% Bewegungsgeschw."],
 		"affix_en": ["+3% movement speed"],
 		"affix_fr": ["+3 % de vitesse de déplacement"],
 		"attr": "101010040:[3]",
@@ -16901,7 +16904,7 @@
 	},
 	{
 		"affix_de": [
-			"Wenn ein Geistermagus-Scherge <e id=140>Wiederbeschwörung</e> verliert, stellt er 15% zusätzliches Leben pro Sekunde wieder her"
+			"Wenn ein Geistermagus-Beschwörter <e id=140>Wiederbeschwörung</e> verliert, stellt er 15% zusätzliches Leben pro Sekunde wieder her"
 		],
 		"affix_en": ["When a Spirit Magus minion loses <e id=140>Reconjuring</e>, it restores 15% extra Life per second"],
 		"affix_fr": ["Lorsqu'un sbire esprit Magus perd <e id=140>Reconjuration</e>, il restaure 15 % de Vie supplémentaire par seconde."],
@@ -16962,7 +16965,7 @@
 		"type": "3"
 	},
 	{
-		"affix_de": ["6% physischer Schaden als zufälliger <e id=120>Elementar</e>-Schaden für Schergen hinzugefügt"],
+		"affix_de": ["6% physischer Schaden als zufälliger <e id=120>Elementar</e>-Schaden für Beschwörte hinzugefügt"],
 		"affix_en": ["6% Physical Damage added as random <e id=120>Elemental</e> Damage for minions"],
 		"affix_fr": ["6 % de dégâts physiques ajoutés en tant que dégâts <e id=120>Élémentaires</e> aléatoires pour les sbires"],
 		"attr": "438368:[6]",
@@ -16978,7 +16981,7 @@
 	},
 	{
 		"affix_de": [
-			"+15% zusätzlicher Schaden, der von Feinden in der Nähe für 4 Sekunden erlitten wird, nachdem Geistermagus-Schergen wiederbelebt wurden"
+			"+15% zusätzlicher Schaden, der von Feinden in der Nähe für 4 Sekunden erlitten wird, nachdem Geistermagus-Beschwörte wiederbelebt wurden"
 		],
 		"affix_en": ["+15% additional Damage taken by nearby enemies for 4 seconds after Spirit Magus minions are revived"],
 		"affix_fr": [
