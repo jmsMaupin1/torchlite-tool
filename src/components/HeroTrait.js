@@ -23,9 +23,12 @@ function HeroTrait(props) {
 			let spec = perk.find((p) => p.hero_id === heroTraits[0].id && p.level === '1');
 			onSpecChange(heroTraits[0].id, translate(spec.name));
 		}
+		if (currentTrait !== null && currentTrait.specId !== null) {
+			setSelectedTrait(currentTrait.specId);
+		}
+
 		// eslint-disable-next-line
 	}, [currentTrait]);
-
 	return (
 		<>
 			{/* // multiple specialization, we need to select one */}
@@ -38,11 +41,7 @@ function HeroTrait(props) {
 									<div key={index} className="flex flex-col items-center w-full">
 										<div className="flex flex-row items-center gap-2 w-full">
 											<div>
-												<img
-													src={`img/hero/${h.portrait2}.png`}
-													className="h-20 w-18 min-w-18"
-													alt="Hero"
-												/>
+												<img src={`img/hero/${h.portrait2}.png`} className="h-20 w-18 min-w-18" alt="Hero" />
 											</div>
 											<div className="title text-sm">{translate(h.name).split('|')[1]}</div>
 										</div>
@@ -54,16 +53,10 @@ function HeroTrait(props) {
 													className="w-full flex shadow-md shadow-black p-1 border-t border-black items-center justify-center flex-col"
 												>
 													<div className="mx-auto">
-														<img
-															src={`img/icons/Perks/${p.Icon}.png`}
-															className="md:h-20 h-14"
-															alt="Perk"
-														/>
+														<img src={`img/icons/Perks/${p.Icon}.png`} className="md:h-20 h-14" alt="Perk" />
 													</div>
 													<div>
-														<div className="text-center font-bold md:text-xl title">
-															{translate(p.name)}
-														</div>
+														<div className="text-center font-bold md:text-xl title">{translate(p.name)}</div>
 														<div className="text-base text-center font-normal text-white">
 															{t('commons:level')} {p.level}
 														</div>
@@ -71,9 +64,7 @@ function HeroTrait(props) {
 															<input
 																type="radio"
 																checked={currentTrait.specId === h.id}
-																onChange={(e) =>
-																	_setSelectedTrait(e.target.value, p.name)
-																}
+																onChange={(e) => _setSelectedTrait(e.target.value, p.name)}
 																value={h.id}
 																name={`trait`}
 															/>
@@ -117,16 +108,10 @@ function HeroTrait(props) {
 												>
 													<div className="flex flex-col gap-2 items-center justify-center">
 														<div>
-															<img
-																src={`img/icons/Perks/${p.Icon}.png`}
-																className="h-20"
-																alt="Perk"
-															/>
+															<img src={`img/icons/Perks/${p.Icon}.png`} className="h-20" alt="Perk" />
 														</div>
 														<div>
-															<div className="text-center font-bold title">
-																{translate(p.name)}
-															</div>
+															<div className="text-center font-bold title">{translate(p.name)}</div>
 															<div className="text-base text-center font-normal text-white">
 																{t('commons:level')} {p.level}
 															</div>
@@ -134,10 +119,7 @@ function HeroTrait(props) {
 																<div className="text-center ">
 																	<input
 																		type="radio"
-																		checked={
-																			currentTrait[index.toString()] ===
-																			p.character_id
-																		}
+																		checked={currentTrait[index.toString()] === p.character_id}
 																		onChange={onTraitValueChange}
 																		value={p.character_id}
 																		name={`talentLevel_${index}`}
