@@ -58,12 +58,12 @@ function Drop() {
 	return (
 		<>
 			<select onChange={onChangeParament} className="w-auto bg-[#282828] border rounded border-slate-500">
-				<option value="">SElect</option>
+				<option value="">Select</option>
 				{dropParament
 					.filter((d) => dropGroup.find((dg) => dg.parament === d.id) !== undefined)
 					.map((d) => (
 						<option key={d.id} value={d.id}>
-							{d.des_en}
+							{d.enum}
 						</option>
 					))}
 			</select>
