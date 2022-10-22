@@ -1,50 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import CoreTooltip from '../components/CoreTooltip';
-import BuildSkill2 from '../components/BuildSkill2';
-import TalentNode from '../components/TalentNode';
-import { Modal } from 'flowbite-react';
-import Select, { createFilter } from 'react-select';
 import { BuildContext } from '../context/BuildContext';
 import { useSearchParams } from 'react-router-dom';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FaShareAlt } from 'react-icons/fa';
-import { MdTouchApp, MdArrowRight, MdArrowLeft, MdAdd } from 'react-icons/md';
-import { FaTrash } from 'react-icons/fa';
+import { MdArrowRight } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import Loader from '../components/Loader';
-import hero from './../data/hero.json';
-import perk from './../data/perk.json';
-import HeroTrait from '../components/HeroTrait';
-import Legendary from '../components/Legendary';
-import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';
-import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
+import SkillBuild from '../components/build/SkillBuild';
+import TraitBuild from '../components/build/TraitBuild';
+import MandatoryItemsBuild from '../components/build/MandatoryItemsBuild';
+import InitialProfessionBuild from '../components/build/InitialProfessionBuild';
+import Spec1Build from '../components/build/Spec1Build';
+import Spec2Build from '../components/build/Spec2Build';
+import AbilityTreeHelper from '../components/build/AbilityTreeHelper';
+import Prof1TreeBuild from '../components/build/Prof1TreeBuild';
+import Spec1TreeBuild from '../components/build/Spec1TreeBuild';
+import Spec2TreeBuild from '../components/build/Spec2TreeBuild';
 
 function Build() {
-	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
-	const updateXArrow = useXarrow();
+	const { translate, topMenu, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
 	const { t } = useTranslation();
-	const {
-		closeModal,
-		modalVisible,
-		currentModalType,
-		onChangeSkill,
-		skill1,
-		setSkill,
-		skill2,
-		skill3,
-		skill4,
-		skill5,
-		skill6,
-		skill7,
-		skill8,
-		modalValue,
-	} = useContext(BuildContext);
+	const { skill1, setSkill, skill2, skill3, skill4, skill5, skill6, skill7, skill8 } = useContext(BuildContext);
 	const [currentMainProf, setCurrentMainProf] = useState(null);
 	const [sideMenuVisible, setSideMenuVisible] = useState(false);
 	const [currentTrait, setCurrentTrait] = useState({
@@ -65,14 +47,6 @@ function Build() {
 
 	const [buildUrl, setBuildUrl] = useState(null);
 	const [buildUrlMinified, setBuildUrlMinified] = useState(null);
-	/* {
-        "spec" : currentMainProf.id,
-        "spec1": spec1.id,
-        "spec2": spec2.id,
-        tree: ["1,1:3","1,2:1"], format position:value, : => separator
-        tree1: [],
-        tree2: []
-    }*/
 
 	// navigation
 	const fieldRefSkills = React.useRef(null);
@@ -138,62 +112,6 @@ function Build() {
 		}
 		setSpec2(data);
 	};
-	const onTraitValueChange = (e) => {
-		let currentLevel = e.target.name.split('_')[1];
-		//{"15": null,"32":null,"50":null,"62":null,"80":null}
-		let temp = { ...currentTrait };
-		temp[currentLevel] = e.target.value;
-		setCurrentTrait(temp);
-	};
-	const onSpecChange = (id, name) => {
-		let temp = { ...currentTrait };
-		temp['specId'] = id;
-		temp['specName'] = name;
-		setCurrentTrait(temp);
-	};
-	const onProfValueChange = (e) => {
-		setCurrentMainProf(profession.find((p) => p.id === e.target.value));
-	};
-	const onProf1ValueChange = (e) => {
-		setSpec1(profession.find((p) => p.id === e.target.value));
-	};
-	const onProf2ValueChange = (e) => {
-		setSpec2(profession.find((p) => p.id === e.target.value));
-	};
-	const onSpecCoreChange = (e, index, attr) => {
-		let temp = { ...mainProfPoint };
-		if (index === 1) {
-			temp.core1 = e;
-		}
-		if (index === 2) {
-			temp.core2 = e;
-		}
-
-		setMainProfPoint(temp);
-	};
-	const onSpec1CoreChange = (e, index) => {
-		let temp = { ...spec1Point };
-		if (index === 1) {
-			temp.core1 = e;
-		}
-		if (index === 2) {
-			temp.core2 = e;
-		}
-		//this.refs.Tooltip.hide();
-		setSpec1Point(temp);
-	};
-	const onSpec2CoreChange = (e, index) => {
-		let temp = { ...spec2Point };
-		if (index === 1) {
-			temp.core1 = e;
-		}
-		if (index === 2) {
-			temp.core2 = e;
-		}
-		//this.refs.Tooltip.hide();
-		setSpec2Point(temp);
-	};
-
 	useEffect(() => {
 		if (currentMainProf !== null) {
 			displayTalent();
@@ -296,9 +214,6 @@ function Build() {
 			default:
 				break;
 		}
-		// console.log(mainProfPoint)
-		// console.log(spec1Point)
-		// console.log(spec2Point)
 	};
 	const addPoint = (object, current) => {
 		let max = object.level_up_time;
@@ -381,26 +296,6 @@ function Build() {
 					});
 				}
 			}
-			// if(position === "core1" || position === "core2") {
-			//     if(talent !== null) {
-			//         let attr = talent.find((t) => t.id === value)
-			//         if(attr !== undefined) {
-			//             attr = attr.attr.split(';');
-			//             attr.forEach((a) => {
-			//                 if(_mainProfStat[a.split(':')[0]] === undefined) {
-			//                     _mainProfStat[a.split(':')[0]] = []
-			//                 }
-			//                 _mainProfStat[a.split(':')[0]] += a.split(':')[1]
-			//             })
-			//         } else {
-			//             console.log("Talent "+value+" not found");
-			//         }
-			//         //attr.split(';');
-			//         //101010236:[25];101010373:[25]
-			//         //101010059:[45];491348:[5,1]
-
-			//     }
-			// }
 		}
 		setMainProfStat(_mainProfStat);
 	};
@@ -489,40 +384,10 @@ function Build() {
 				tabTalent[x][y] = e;
 			}
 		}
-		// console.table(tabTalent);
-		// console.log(tabTalent.length);
-		// let needDelete = true;
-		// for(let i=1;i<=9;i++) {
-		//     if(tabTalent[9][i] !== undefined) {
-		//         needDelete = false;
-		//     }
-		// }
-		// if(needDelete) {
-		//     for(let i=1;i<=9;i++) {
-		//         tabTalent[i].splice(9,1)
-		//     }
-		// }
-		// needDelete = true
-		// for(let i=1;i<=9;i++) {
-		//     if(tabTalent[8][i] !== undefined) {
-		//         needDelete = false;
-		//     }
-		// }
-		// if(needDelete) {
-		//     for(let i=1;i<=9;i++) {
-		//         tabTalent[i].splice(8,1)
-		//     }
-		// }
-
 		return tabTalent;
 	};
 	const filterNode = (e) => {
-		//console.log("filter",e.target.value);
-		if (e.target.value === '') {
-			setCurrentNodeFilter(null);
-		} else {
-			setCurrentNodeFilter(e.target.value);
-		}
+		setCurrentNodeFilter(e.target.value === '' ? null : e.target.value);
 	};
 	// eslint-disable-next-line
 	const handleScroll = () => {
@@ -744,7 +609,7 @@ function Build() {
 			let supportSkill = tempSkill[1].split('-');
 			let dataSkill = skills.find((e) => e.id === mainSkill);
 			supportSkill = supportSkill.map((supp) => {
-				let currentSupp = skills.find((e) => e.id === supp);
+				let currentSupp = skills.find((e) => e.id === supp && e.type4 !== '0');
 				if (currentSupp === undefined) {
 					return {};
 				} else {
@@ -885,19 +750,6 @@ function Build() {
 			setCurrentItems(tabItems);
 		}
 	};
-
-	const getTalentIdByProfession = (h) => {
-		return (
-			h.id === '310' ||
-			h.id === '600' ||
-			h.id === '610' ||
-			(h.id === '910') | (h.id === '920') ||
-			h.id === '1100' ||
-			h.id === '1300' ||
-			h.id === '1310' ||
-			h.id === '1400'
-		);
-	};
 	const toggleSideMneu = () => {
 		if (!sideMenuVisible) {
 			document.getElementById('sideMenu').style.width = '100%';
@@ -909,43 +761,8 @@ function Build() {
 
 		setSideMenuVisible(!sideMenuVisible);
 	};
-	const addItem = () => {
-		let myItems = itemGold.find((i) => i.id === currentItem);
-		if (currentItems.includes(myItems)) {
-			toast.error('Item already added');
-			return;
-		}
-		//console.log("myItems",myItems)
-		let temp = [...currentItems];
-		temp.push(myItems);
-		setCurrentItems(temp);
-	};
-	const removeItem = (id) => {
-		let temp = [...currentItems];
-		temp.splice(
-			currentItems.findIndex((i) => i.id === id),
-			1
-		);
-		setCurrentItems([...temp]);
-	};
-	const changeItem = (e) => {
-		//console.log(e.value);
-		setCurrentItem(e.value);
-	};
-	const findBase = (e) => {
-		if (e.icon !== '') {
-			// filter for test item
-			if (parseInt(e.id) < 100) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			return false;
-		}
-	};
 	const getMinifier = () => {
-		var fd = new FormData();
+		let fd = new FormData();
 		fd.append('link', buildUrl);
 
 		const requestOptions = {
@@ -976,253 +793,11 @@ function Build() {
 			});
 		//.then(data => {console.log(data.url);
 	};
-	if (profession === null || dataI18n === null || itemGold === null || talent === null || itemGold === null) {
+	if (!profession || !dataI18n || !itemGold || !talent) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (
 		<div className="flex md:flex-row flex-col gap-2 p-2">
-			<div
-				id="sideMenu"
-				className="sideMenu md:hidden flex flex-row fixed top-1/3 left-0 z-10 overflow-hidden"
-				style={{ transition: '0.3s', width: '0px' }}
-			>
-				<div className="flex flex-col w-full">
-					{buildUrlMinified === null ? (
-						<button
-							onClick={() => getMinifier()}
-							className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2"
-						>
-							<FaShareAlt /> {t('commons:generate_build_url')}
-						</button>
-					) : null}
-					{buildUrlMinified !== null ? (
-						<CopyToClipboard
-							onClick={() => getMinifier()}
-							text={buildUrl}
-							onCopy={() => {
-								toast.success('Build url copied !');
-								setBuildUrlMinified(null);
-							}}
-						>
-							<button className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2">
-								<FaShareAlt /> {t('commons:copy_build_url')}
-							</button>
-						</CopyToClipboard>
-					) : null}
-					<div
-						onClick={() => fieldRefSkills.current.scrollIntoView()}
-						className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-					>
-						<div className="flex flex-row gap-2 px-2">
-							<div className="flex flex-row items-center gap-2">
-								<div>{t('commons:skills')}</div>
-								{skill1.skill !== null && skill1.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill1.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill2.skill !== null && skill2.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill2.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill3.skill !== null && skill3.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill3.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill4.skill !== null && skill4.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill4.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill5.skill !== null && skill5.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill5.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-							</div>
-						</div>
-					</div>
-					{currentMainProf !== null ? (
-						<div
-							onClick={() => fieldRefTrait.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${currentMainProf.icon}.png`}
-										alt="Icon"
-									/>
-								</div>
-								<div>{currentTrait['specName']}</div>
-							</div>
-							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:cursor-pointer hover:bg-gray-900"
-									onClick={() => setCurrentTrait(null)}
-								>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefTrait.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							0. {t('commons:select_trait')}
-						</div>
-					)}
-					{currentMainProf !== null ? (
-						<div
-							onClick={() => fieldRefMainProf.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${currentMainProf.icon}.png`}
-										alt="Icon"
-									/>
-								</div>
-								<div>{translate(currentMainProf.name)}</div>
-							</div>
-							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:cursor-pointer hover:bg-gray-900"
-									onClick={() => _setCurrentMainProf(null)}
-								>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefSelectMainProf.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							1. {t('commons:select_initial_profession')}
-						</div>
-					)}
-
-					{spec1 !== null ? (
-						<div
-							onClick={() => fieldRefSpec1.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon" />
-								</div>
-								<div>{translate(spec1.name)}</div>
-							</div>
-							<div className="mr-2">
-								<button className="text-gray-300 hover:cursor-pointer hover:bg-gray-900" onClick={() => _setSpec1(null)}>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefSelectSpec1.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							2. {t('commons:select_sub_profession_1')}
-						</div>
-					)}
-
-					{spec2 !== null ? (
-						<div
-							onClick={() => fieldRefSpec2.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon" />
-								</div>
-								<div>{translate(spec2.name)}</div>
-							</div>
-							<div className="mr-2">
-								<button className="text-gray-300 hover:bg-gray-900 hover:cursor-pointer" onClick={() => _setSpec2(null)}>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefSelectSpec2.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							3. {t('commons:select_sub_profession_2')}
-						</div>
-					)}
-					{totalStat != null ? (
-						<div className="flex flex-col bg-[#282828] hover:bg-gray-900 hover:cursor-pointer border rounded-md justify-between p-1">
-							<div className="text-center border-b border-slate-700">Total Stats</div>
-
-							{Object.entries(totalStat).map(([affix, stat]) => (
-								<HyperLinkTooltip
-									className="text-left text-sm break-words"
-									key={affix}
-									str={translate('affix_class|description|' + affix)
-										.replace('$P1$', stat)
-										.replace('$+P1$', '+' + stat)}
-								/>
-							))}
-						</div>
-					) : null}
-				</div>
-				<div onClick={() => toggleSideMneu()} className="bg-black w-3 flex flex-row items-center" style={{ transition: '0.3s' }}>
-					<MdArrowLeft />
-				</div>
-			</div>
 			<div
 				id="buttonSideMenu"
 				onClick={() => toggleSideMneu()}
@@ -1233,6 +808,11 @@ function Build() {
 			</div>
 
 			<ToastContainer theme={'dark'} autoClose={2000} />
+			{/*<SideMenuBuild
+				skillsImg={[skill1?.skill?.img, skill2?.skill?.img, skill3?.skill?.img, skill4?.skill?.img, skill5?.skill?.img]}
+				fieldRefSkills={fieldRefSkills}
+			/>*/}
+			{/*Start Side Menu*/}
 			<div className={`md:w-[20%] gap-2 flex flex-col relative `}>
 				<div className={`gap-1 flex flex-col ${sticky ? 'sticky top-2' : ''}`}>
 					{buildUrlMinified === null ? (
@@ -1469,662 +1049,93 @@ function Build() {
 					) : null}
 				</div>
 			</div>
+			{/*End Side Menu*/}
 			<div className="w-full">
-				{skills !== null ? (
-					<Modal className="dark" show={modalVisible} size="md" popup={true} onClose={closeModal}>
-						<Modal.Header>{t('commons:select_skills')}</Modal.Header>
-						<Modal.Body>
-							<div className="">
-								<Select
-									id="selectModal"
-									className="w-full"
-									classNamePrefix="select"
-									menuIsOpen={true}
-									isClearable={true}
-									isSearchable={true}
-									captureMenuScroll={false}
-									filterOption={createFilter({ ignoreAccents: false })}
-									onChange={(e) => onChangeSkill(e)}
-									options={skills
-										.filter(
-											(x) =>
-												(currentModalType === '' || x['tag_' + i18n.language].includes(currentModalType)) &&
-												x.name !== translate(x.name)
-										)
-										.sort(sortAlpha)
-										.map((s) => {
-											return { value: s.id, label: translate(s.name), img: s.icon };
-										})}
-									formatOptionLabel={(skill) => (
-										<div className="skill-option flex flex-row gap-2">
-											<div>
-												<img
-													loading="lazy"
-													src={`img/icons/CoreTalentIcon/${skill.img}.png`}
-													className="w-[24px] aspect-square"
-													alt="Icon"
-												/>
-											</div>
-											<div>
-												<span>{skill.label}</span>
-											</div>
-										</div>
-									)}
-									value={modalValue}
-								/>
-							</div>
-						</Modal.Body>
-					</Modal>
-				) : null}
-				<div className="flex flex-col">
-					<div ref={fieldRefSkills} className={`mb-2 `}>
-						<div
-							className={`text-center text-xl font-bold rounded-t-md bg-gradient-to-b from-yellow-400 to-yellow-600 text-black`}
-						>
-							{t('commons:actives_skills')}
-						</div>
-						<div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2 rounded-b-md ">
-							{/* 5 actif skills */}
-							{[1, 2, 3, 4, 5].map((ind) => (
-								<BuildSkill2 key={'actif' + ind} ind={ind} tag="Active" />
-							))}
-						</div>
-						<div
-							className={`mt-2 text-center text-xl font-bold rounded-t-md bg-gradient-to-b from-yellow-400 to-yellow-600 text-black`}
-						>
-							{t('commons:passives_skills')}
-						</div>
-						<div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-2">
-							{/* 3 passives skills */}
-							{[6, 7, 8].map((ind) => (
-								<BuildSkill2 key={'passives' + ind} ind={ind} tag="Passive" />
-							))}
-						</div>
-					</div>
-				</div>
+				{/*Start Skill Build*/}
+				<SkillBuild fieldRefSkills={fieldRefSkills} />
 				{/* TRAIT */}
-				<>
-					<div ref={fieldRefTrait} className={`text-center text-xl font-bold`}>
-						{t('commons:select_trait')}
-					</div>
-					<div className={`trait flex flex-col gap-2 mb-2 w-full`}>
-						<HeroTrait
-							currentTrait={currentTrait}
-							perk={perk}
-							hero={hero.filter((h) => getTalentIdByProfession(h))}
-							onSpecChange={onSpecChange}
-							onTraitValueChange={onTraitValueChange}
-						/>
-					</div>
-				</>
-
-				<div ref={fieldRefItems} className={`text-center text-xl font-bold`}>
-					{t('commons:mandatory_items')}
-				</div>
-				<div className="bg-[#282828] border p-2 rounded-lg shadow-lg ">
-					<div className="flex flex-row items-center">
-						<Select
-							id="selectItems"
-							className="w-1/2"
-							classNamePrefix="select"
-							isClearable={true}
-							isSearchable={true}
-							captureMenuScroll={false}
-							filterOption={createFilter({ ignoreAccents: false })}
-							onChange={(e) => changeItem(e)}
-							options={itemGold
-								.filter(findBase)
-								.sort((a, b) => a.require_level - b.require_level)
-								.map((i) => {
-									return { value: i.id, label: translate(i.name), img: i.icon };
-								})}
-							formatOptionLabel={(item) => (
-								<div className="item-option flex flex-row gap-2">
-									<div>
-										<img
-											loading="lazy"
-											src={`img/icons/${item.img}.png`}
-											className="w-[24px] aspect-square"
-											alt="Icon"
-										/>
-									</div>
-									<div>
-										<span>{item.label}</span>
-									</div>
-								</div>
-							)}
-						/>
-						<div title="Add item" className="hover:cursor-pointer text-3xl" onClick={() => addItem()}>
-							<MdAdd />
-						</div>
-					</div>
-					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-						{currentItems
-							.filter((b) => b !== undefined)
-							.map((b) => (
-								<div key={b.id} className="flex flex-col items-center gap-2  justify-between">
-									<Legendary key={b.id} legendary={b} currentAffix={null} className="h-full w-full" />
-									<div
-										onClick={() => removeItem(b.id)}
-										className="hover:cursor-pointer w-full bg-[#282828] border rounded border-slate-500 flex flex-row items-center gap-2 justify-center"
-									>
-										<div>
-											<FaTrash />
-										</div>
-										<div>{t('commons:remove')}</div>
-									</div>
-								</div>
-							))}
-					</div>
-				</div>
-				<div ref={fieldRefSelectMainProf} className={`${currentMainProf === null ? '' : 'hidden'} text-center text-xl font-bold`}>
-					{t('commons:select_initial_profession')}
-				</div>
-				<div className={`${currentMainProf === null ? '' : 'hidden'} grid grid-cols-1 md:grid-cols-3 gap-2 mb-2`}>
-					{profession
-						.filter((p) => p.before_id === '0')
-						.map((p) => (
-							<div key={p.id} className="bg-[#282828] border p-2 rounded-lg shadow-lg ">
-								<div
-									className="bg-contain flex flex-col justify-between bg-no-repeat bg-right-top"
-									style={{
-										backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`,
-									}}
-								>
-									<div>
-										<div>
-											<img loading="lazy" src={`img/icons/TalentIcon/${p.icon}.png`} alt="Icon" />
-										</div>
-										<div>{translate(p.name)}</div>
-										<HyperLinkTooltip str={translate(p.des).replaceAll('#4', '').replace('|', '<br>')} />
-									</div>
-									<div className="text-center">
-										<input
-											type="radio"
-											value={p.id}
-											checked={currentMainProf !== null && currentMainProf.id === p.id}
-											name="profession"
-											onChange={onProfValueChange}
-										/>
-									</div>
-								</div>
-							</div>
-						))}
-				</div>
+				<TraitBuild fieldRefTrait={fieldRefTrait} currentTrait={currentTrait} setCurrentTrait={setCurrentTrait} />
+				{/* Mandatory Unique */}
+				<MandatoryItemsBuild
+					fieldRefItems={fieldRefItems}
+					currentItem={currentItem}
+					setCurrentItem={setCurrentItem}
+					currentItems={currentItems}
+					setCurrentItems={setCurrentItems}
+				/>
+				{/*Initial Profession*/}
+				<InitialProfessionBuild
+					fieldRefSelectMainProf={fieldRefSelectMainProf}
+					currentMainProf={currentMainProf}
+					setCurrentMainProf={setCurrentMainProf}
+				/>
 
 				{/* SPEC 1 */}
-				<div
-					ref={fieldRefSelectSpec1}
-					className={`${currentMainProf === null || spec1 !== null ? 'hidden' : ''} text-center text-xl font-bold`}
-				>
-					{t('commons:select_sub_profession_1')}
-				</div>
-				<div
-					className={`${currentMainProf !== null && spec1 === null ? '' : 'hidden'} subProf-${
-						currentMainProf != null ? currentMainProf.id : ''
-					} flex flex-col md:flex-row gap-2 mb-2`}
-				>
-					{profession
-						.filter((p) => currentMainProf !== null && p.before_id === currentMainProf.id)
-						.map((subp) => (
-							<div
-								key={subp.id + '-' + subp.id}
-								style={{
-									backgroundImage: `url("img/icons/TalentGodsIcon/${subp.background.split('|')[0]}.png`,
-								}}
-								className="bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg "
-							>
-								<div className="text-center font-bold">{translate(subp.name)}</div>
-								<div className="flex flex-row justify-between items-center gap-4">
-									<div className="flex flex-col items-center">
-										<img loading="lazy" src={`img/icons/TalentIcon/${subp.icon}.png`} className="h-20" alt="Icon" />
-										<div className="text-center font-bold text-xl">{translate(subp.name)}</div>
-									</div>
-									<HyperLinkTooltip str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')} />
-								</div>
-								<div className="text-center">
-									<input
-										type="radio"
-										value={subp.id}
-										checked={spec1 !== null && spec1.id === subp.id}
-										name="profession1"
-										onChange={onProf1ValueChange}
-									/>
-								</div>
-							</div>
-						))}
-				</div>
+				<Spec1Build
+					fieldRefSelectSpec1={fieldRefSelectSpec1}
+					currentMainProf={currentMainProf}
+					setCurrentMainProf={setCurrentMainProf}
+					setSpec1={setSpec1}
+					spec1={spec1}
+				/>
 
 				{/* SPEC 2 */}
-				<div
-					ref={fieldRefSelectSpec2}
-					className={`${spec1 === null || spec2 !== null ? 'hidden' : ''} text-center text-xl font-bold`}
-				>
-					{t('commons:select_sub_profession_2')}
-				</div>
-				{profession
-					.filter((p) => p.before_id === '0')
-					.map((p) => (
-						<div
-							key={p.id}
-							className={`${currentMainProf !== null && spec2 === null && spec1 !== null ? '' : 'hidden'} subProf-${
-								p.id
-							} flex flex-col md:flex-row gap-2 mb-2`}
-						>
-							{profession
-								.filter((p2) => p2.before_id === p.id)
-								.map((subp) => (
-									<div
-										key={p.id + '-' + subp.id}
-										style={{
-											backgroundImage: `url("img/icons/TalentGodsIcon/${p.background.split('|')[0]}.png`,
-										}}
-										className={`${
-											spec1 !== null && spec1.id === subp.id ? 'grayscale text-gray-500' : ''
-										} bg-[#282828] bg-contain bg-no-repeat bg-right-top flex flex-col justify-between w-full md:w-[33%] border p-2 rounded-lg shadow-lg `}
-									>
-										<div className="text-center font-bold">{translate(p.name)}</div>
-										<div className="flex flex-row justify-between items-center gap-4">
-											<div className="flex flex-col items-center">
-												<img
-													loading="lazy"
-													src={`img/icons/TalentIcon/${subp.icon}.png`}
-													className={`h-20 ${spec1 !== null && spec1.id === subp.id ? 'contrast-0' : ''}`}
-													alt="Icon"
-												/>
-												<div className="text-center font-bold text-xl">{translate(subp.name)}</div>
-											</div>
-											<HyperLinkTooltip str={translate(subp.des).replaceAll('#4', '').replace('|', '<br>')} />
-										</div>
-										<div className="text-center">
-											{spec1 !== null && spec1.id === subp.id ? (
-												''
-											) : (
-												<input
-													type="radio"
-													value={subp.id}
-													checked={spec2 !== null && spec2.id === subp.id}
-													name="profession2"
-													onChange={onProf2ValueChange}
-												/>
-											)}
-										</div>
-									</div>
-								))}
-						</div>
-					))}
-				<div className="border border-green-600 bg-green-900 rounded-lg mb-2 p-2 flex flex-row gap-4 justify-between">
-					<div className="flex flex-row gap-2 items-center">
-						<div>
-							<img loading="lazy" src="img/rightBtn.png" alt="Right click" style={{ transform: 'rotateY(180deg)' }} />
-						</div>
-						<div>{t('commons:add_point')}</div>
-						<div>
-							<img loading="lazy" className="hidden md:block" src="img/rightBtn.png" alt="Right click" />
-							<div>
-								<MdTouchApp className="md:hidden" alt="Long Press" />
-							</div>
-						</div>
-						<div>{t('commons:remove_point')}</div>
-					</div>
-				</div>
-				{currentTree !== null ? (
-					<div
-						ref={fieldRefMainProf}
-						style={{
-							backgroundImage: `url("img/icons/TalentGodsIcon/${
-								currentMainProf !== null ? currentMainProf.background.split('|')[0] : null
-							}.png`,
-						}}
-						className="bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2 flex flex-col"
-					>
-						<div>
-							<DebounceInput
-								value={currentNodeFilter}
-								className="w-auto bg-[#282828] border rounded border-slate-500"
-								placeholder="Filter node..."
-								debounceTimeout={500}
-								onChange={(event) => filterNode(event)}
-							/>
-						</div>
-						<div className="text-center flex flex-col justify-center">
-							<div className="font-bold text-xl">{translate(currentMainProf.name)}</div>
-							<div>Core Talent</div>
-							<hr className="self-center border-slate-600 mb-4 w-[50%]"></hr>
-						</div>
-						<div className="flex flex-row gap-4 justify-evenly">
-							<div className="coreTalent flex flex-row gap-2">
-								<div className="flex flex-col items-center">
-									<div className="flex flex-row justify-between">
-										<CoreTooltip
-											currentTree={currentTree}
-											mainProfPoint={mainProfPoint}
-											onSpecCoreChange={onSpecCoreChange}
-											coreNumber={1}
-											spec={0}
-										/>
-									</div>
-									<div>
-										{mainProfPoint.nb} / {currentTree.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
-									</div>
-								</div>
-								<div className="flex flex-col items-center">
-									<div className="flex flex-row justify-between">
-										<CoreTooltip
-											currentTree={currentTree}
-											mainProfPoint={mainProfPoint}
-											onSpecCoreChange={onSpecCoreChange}
-											coreNumber={2}
-											spec={0}
-										/>
-									</div>
-									<div>
-										{mainProfPoint.nb} / {currentTree.filter((e) => e.position === '0|0').slice(3)[0].need_points}
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="text-center">{t('commons:tree')}</div>
-						<div className="text-center">{mainProfPoint.nb}</div>
-						<div className="flex flex-row gap-2 justify-between overflow-clip w-fit">
-							<div>
-								<div>STATS</div>
-								{mainProfStat != null ? (
-									<div className="flex flex-col overflow-y-auto text-sm">
-										{Object.entries(mainProfStat).map(([affix, stat]) => (
-											<HyperLinkTooltip
-												key={affix}
-												str={translate('affix_class|description|' + affix)
-													.replace('$P1$', stat)
-													.replace('$+P1$', '+' + stat)}
-											/>
-										))}
-									</div>
-								) : null}
-							</div>
-							<div
-								onScroll={() => updateXArrow()}
-								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative md:static"
-							>
-								<Xwrapper>
-									{currentTreeOrder.map((line, x) => (
-										<div key={'line' + x} id={'line_' + x} className="flex flex-row justify-center items-center">
-											{line.map((column, y) => (
-												<TalentNode
-													search={currentNodeFilter}
-													key={'talentNode' + y}
-													type={'main'}
-													column={column}
-													y={y}
-													profPoint={mainProfPoint}
-													x={x}
-													removePoint={removePoint}
-													addPoint={addPoint}
-													id={column !== undefined ? column.id : null}
-												/>
-											))}
-										</div>
-									))}
-									{currentTreeOrder.map((line) =>
-										line
-											.filter((column) => column !== undefined && column.before_id !== '')
-											.map((column) => (
-												<Xarrow
-													key={column.id + '-' + column.before_id}
-													startAnchor={'left'}
-													color={'white'}
-													endAnchor={'right'}
-													start={column.id} //can be react ref
-													end={column.before_id} //or an id
-													strokeWidth={2}
-													showHead={false}
-													curveness={0}
-												/>
-											))
-									)}
-								</Xwrapper>
-							</div>
-						</div>
-					</div>
-				) : null}
-				{currentTreeSpec1 !== null ? (
-					<div
-						ref={fieldRefSpec1}
-						style={{
-							backgroundImage: `url("img/icons/TalentGodsIcon/${spec1 !== null ? spec1.background.split('|')[0] : null}.png`,
-						}}
-						className="bg-[#282828] bg-no-repeat bg-contain bg-right-top border rounded-md shadow-lg p-2 mb-2"
-					>
-						<div>
-							<DebounceInput
-								value={currentNodeFilter}
-								className="w-auto bg-[#282828] border rounded border-slate-500"
-								placeholder="Filter node..."
-								debounceTimeout={500}
-								onChange={(event) => filterNode(event)}
-							/>
-						</div>
-						<div className="text-center flex flex-col justify-center">
-							<div className="font-bold text-xl">{translate(spec1.name)}</div>
-							<div>Core Talent</div>
-							<hr className="self-center border-slate-600 mb-4 w-[50%]"></hr>
-						</div>
-						<div className="flex flex-row gap-4 justify-evenly">
-							<div className="coreTalent flex flex-row gap-2">
-								<div className="flex flex-col items-center">
-									<div className="flex flex-row justify-between">
-										<CoreTooltip
-											currentTree={currentTreeSpec1}
-											mainProfPoint={spec1Point}
-											onSpecCoreChange={onSpec1CoreChange}
-											coreNumber={1}
-											spec={1}
-										/>
-									</div>
-									<div>
-										{spec1Point.nb} / {currentTreeSpec1.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
-									</div>
-								</div>
-								<div className="flex flex-col items-center">
-									<div className="flex flex-row justify-between">
-										<CoreTooltip
-											currentTree={currentTreeSpec1}
-											mainProfPoint={spec1Point}
-											onSpecCoreChange={onSpec1CoreChange}
-											coreNumber={2}
-											spec={1}
-										/>
-									</div>
-									<div>
-										{spec1Point.nb} / {currentTreeSpec1.filter((e) => e.position === '0|0').slice(3)[0].need_points}
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="text-center">{t('commons:tree')}</div>
-						<div className="text-center">{spec1Point.nb}</div>
-						<div className="flex flex-row justify-between ">
-							<div>
-								<div>STATS</div>
-								{spec1Stat != null ? (
-									<div className="flex flex-col text-sm">
-										{Object.entries(spec1Stat).map(([affix, stat]) => (
-											<div
-												key={affix}
-												dangerouslySetInnerHTML={{
-													__html: translate('affix_class|description|' + affix)
-														.replace('$P1$', stat)
-														.replace('$+P1$', '+' + stat),
-												}}
-											></div>
-										))}
-									</div>
-								) : null}
-							</div>
-							<div
-								onScroll={() => updateXArrow()}
-								className="overflow-auto md:overflow-visible flex flex-col items-start md:pl-0 relative md:static"
-							>
-								<Xwrapper>
-									{currentTreeOrderSpec1.map((line, x) => (
-										<div key={'line' + x} className="flex flex-row  justify-center items-center">
-											{line.map((column, y) => (
-												<TalentNode
-													search={currentNodeFilter}
-													key={'talentNode' + y}
-													type={'spec1'}
-													column={column}
-													y={y}
-													profPoint={spec1Point}
-													x={x}
-													removePoint={removePoint}
-													addPoint={addPoint}
-													id={column !== undefined ? column.id : null}
-												/>
-											))}
-										</div>
-									))}
-									{currentTreeOrderSpec1.map((line) =>
-										line
-											.filter((column) => column !== undefined && column.before_id !== '')
-											.map((column) => (
-												<Xarrow
-													key={column.id + '-' + column.before_id}
-													startAnchor={'left'}
-													color={'white'}
-													endAnchor={'right'}
-													start={column.id} //can be react ref
-													end={column.before_id} //or an id
-													strokeWidth={2}
-													showHead={false}
-													curveness={0}
-												/>
-											))
-									)}
-								</Xwrapper>
-							</div>
-						</div>
-					</div>
-				) : null}
-				{currentTreeSpec2 !== null ? (
-					<div
-						ref={fieldRefSpec2}
-						style={{
-							backgroundImage: `url("img/icons/TalentGodsIcon/${spec2 !== null ? spec2.background.split('|')[0] : null}.png`,
-						}}
-						className="bg-[#282828] bg-no-repeat bg-contain bg-right-top  border rounded-md shadow-lg p-2 mb-2"
-					>
-						<div>
-							<DebounceInput
-								value={currentNodeFilter}
-								className="w-auto bg-[#282828] border rounded border-slate-500"
-								placeholder="Filter node..."
-								debounceTimeout={500}
-								onChange={(event) => filterNode(event)}
-							/>
-						</div>
-						<div className="text-center flex flex-col justify-center">
-							<div className="font-bold text-xl">{translate(spec2.name)}</div>
-							<div>Core Talent</div>
-							<hr className="self-center border-slate-600 mb-4 w-[50%]"></hr>
-						</div>
-						<div className="flex flex-row gap-4 justify-evenly">
-							<div className="coreTalent flex flex-row gap-2">
-								<div className="flex flex-col items-center">
-									<div className="flex flex-row justify-between">
-										<CoreTooltip
-											currentTree={currentTreeSpec2}
-											mainProfPoint={spec2Point}
-											onSpecCoreChange={onSpec2CoreChange}
-											coreNumber={1}
-											spec={2}
-										/>
-									</div>
-									<div>
-										{spec2Point.nb} / {currentTreeSpec2.filter((e) => e.position === '0|0').slice(0, 3)[0].need_points}
-									</div>
-								</div>
-								<div className="flex flex-col items-center">
-									<div className="flex flex-row justify-between">
-										<CoreTooltip
-											currentTree={currentTreeSpec2}
-											mainProfPoint={spec2Point}
-											onSpecCoreChange={onSpec2CoreChange}
-											coreNumber={2}
-											spec={2}
-										/>
-									</div>
-									<div>
-										{spec2Point.nb} / {currentTreeSpec2.filter((e) => e.position === '0|0').slice(3)[0].need_points}
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="text-center">{t('commons:tree')}</div>
-						<div className="text-center">{spec2Point.nb}</div>
-						<div className="flex flex-row justify-between overflow-clip">
-							<div>
-								<div>STATS</div>
-								{spec2Stat != null ? (
-									<div className="flex flex-col text-sm">
-										{Object.entries(spec2Stat).map(([affix, stat]) => (
-											<div
-												key={affix}
-												dangerouslySetInnerHTML={{
-													__html: translate('affix_class|description|' + affix)
-														.replace('$P1$', stat)
-														.replace('$+P1$', '+' + stat),
-												}}
-											></div>
-										))}
-									</div>
-								) : null}
-							</div>
-							<div
-								onScroll={() => updateXArrow()}
-								className="overflow-x-auto md:overflow-visible flex flex-col items-start md:pl-0 relative md:static"
-							>
-								<Xwrapper>
-									{currentTreeOrderSpec2.map((line, x) => (
-										<div key={'line' + x} className="flex flex-row  justify-center items-center">
-											{line.map((column, y) => (
-												<TalentNode
-													search={currentNodeFilter}
-													key={'talentNode' + y}
-													type={'spec2'}
-													column={column}
-													y={y}
-													profPoint={spec2Point}
-													x={x}
-													removePoint={removePoint}
-													addPoint={addPoint}
-													id={column !== undefined ? column.id : null}
-												/>
-											))}
-										</div>
-									))}
-									{currentTreeOrderSpec2.map((line) =>
-										line
-											.filter((column) => column !== undefined && column.before_id !== '')
-											.map((column) => (
-												<Xarrow
-													key={column.id + '-' + column.before_id}
-													startAnchor={'left'}
-													color={'white'}
-													endAnchor={'right'}
-													start={column.id} //can be react ref
-													end={column.before_id} //or an id
-													strokeWidth={2}
-													showHead={false}
-													curveness={0}
-												/>
-											))
-									)}
-								</Xwrapper>
-							</div>
-						</div>
-					</div>
-				) : null}
+				<Spec2Build
+					fieldRefSelectSpec2={fieldRefSelectSpec2}
+					currentMainProf={currentMainProf}
+					setCurrentMainProf={setCurrentMainProf}
+					spec1={spec1}
+					spec2={spec2}
+					setSpec2={setSpec2}
+				/>
+
+				{/* Ability Tree Helper */}
+				<AbilityTreeHelper />
+
+				{/*Prof1 Tree*/}
+				<Prof1TreeBuild
+					fieldRefMainProf={fieldRefMainProf}
+					currentTree={currentTree}
+					currentMainProf={currentMainProf}
+					filterNode={filterNode}
+					currentNodeFilter={currentNodeFilter}
+					mainProfPoint={mainProfPoint}
+					setMainProfPoint={setMainProfPoint}
+					mainProfStat={mainProfStat}
+					currentTreeOrder={currentTreeOrder}
+					removePoint={removePoint}
+					addPoint={addPoint}
+				/>
+
+				{/*Prof2 Tree*/}
+				<Spec1TreeBuild
+					fieldRefSpec1={fieldRefSpec1}
+					currentTreeSpec1={currentTreeSpec1}
+					filterNode={filterNode}
+					currentNodeFilter={currentNodeFilter}
+					spec1Point={spec1Point}
+					setSpec1Point={setSpec1Point}
+					spec1Stat={spec1Stat}
+					currentTreeOrderSpec1={currentTreeOrderSpec1}
+					removePoint={removePoint}
+					addPoint={addPoint}
+					spec1={spec1}
+				/>
+
+				{/*Prof3 Tree*/}
+				<Spec2TreeBuild
+					fieldRefSpec2={fieldRefSpec2}
+					currentTreeSpec2={currentTreeSpec2}
+					filterNode={filterNode}
+					currentNodeFilter={currentNodeFilter}
+					spec2Point={spec2Point}
+					setSpec2Point={setSpec2Point}
+					spec2Stat={spec2Stat}
+					currentTreeOrderSpec2={currentTreeOrderSpec2}
+					removePoint={removePoint}
+					addPoint={addPoint}
+					spec2={spec2}
+				/>
 			</div>
 		</div>
 	);
