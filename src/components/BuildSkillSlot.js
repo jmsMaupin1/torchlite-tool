@@ -86,7 +86,7 @@ function BuildSkillSlot(props) {
 			>
 				{currentSupport !== undefined && currentSupport !== null && Object.keys(currentSupport).length > 0 ? (
 					<Tooltip
-						content={<Skill showDetail={false} skill={skills.find((s) => s.id === currentSupport.value)} />}
+						content={<Skill showDetail={false} skill={skills.find((s) => s.id === currentSupport.value && s.type4 !== '0')} />}
 						trigger="hover"
 					>
 						<div>
