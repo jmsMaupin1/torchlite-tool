@@ -2,14 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { BuildContext } from '../context/BuildContext';
 import { useSearchParams } from 'react-router-dom';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { FaShareAlt } from 'react-icons/fa';
 import { MdArrowRight } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import HyperLinkTooltip from '../components/HyperLinkTooltip';
 import Loader from '../components/Loader';
-import { useTranslation } from 'react-i18next';
 import SkillBuild from '../components/build/SkillBuild';
 import TraitBuild from '../components/build/TraitBuild';
 import MandatoryItemsBuild from '../components/build/MandatoryItemsBuild';
@@ -20,15 +16,14 @@ import AbilityTreeHelper from '../components/build/AbilityTreeHelper';
 import Prof1TreeBuild from '../components/build/Prof1TreeBuild';
 import Spec1TreeBuild from '../components/build/Spec1TreeBuild';
 import Spec2TreeBuild from '../components/build/Spec2TreeBuild';
+import SideMenuBuild from '../components/build/SideMenuBuild';
 
 function Build() {
-	const { translate, topMenu, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
+	const { translate, topMenu, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
-	const { t } = useTranslation();
 	const { skill1, setSkill, skill2, skill3, skill4, skill5, skill6, skill7, skill8 } = useContext(BuildContext);
 	const [currentMainProf, setCurrentMainProf] = useState(null);
-	const [sideMenuVisible, setSideMenuVisible] = useState(false);
 	const [currentTrait, setCurrentTrait] = useState({
 		specId: null,
 		specName: null,
@@ -46,7 +41,6 @@ function Build() {
 	const [currentNodeFilter, setCurrentNodeFilter] = useState(null);
 
 	const [buildUrl, setBuildUrl] = useState(null);
-	const [buildUrlMinified, setBuildUrlMinified] = useState(null);
 
 	// navigation
 	const fieldRefSkills = React.useRef(null);
@@ -185,7 +179,6 @@ function Build() {
 					_mainProfPoint.nb--;
 					setMainProfPoint(_mainProfPoint);
 				}
-
 				break;
 			case 'spec1':
 				let _spec1Point = { ...spec1Point };
@@ -197,7 +190,6 @@ function Build() {
 					_spec1Point.nb -= 1;
 					setSpec1Point(_spec1Point);
 				}
-
 				break;
 			case 'spec2':
 				let _spec2Point = { ...spec2Point };
@@ -209,7 +201,6 @@ function Build() {
 					_spec2Point.nb -= 1;
 					setSpec2Point(_spec2Point);
 				}
-
 				break;
 			default:
 				break;
@@ -750,306 +741,36 @@ function Build() {
 			setCurrentItems(tabItems);
 		}
 	};
-	const toggleSideMneu = () => {
-		if (!sideMenuVisible) {
-			document.getElementById('sideMenu').style.width = '100%';
-			document.getElementById('buttonSideMenu').style.width = '0';
-		} else {
-			document.getElementById('sideMenu').style.width = '0';
-			document.getElementById('buttonSideMenu').style.width = '0.75rem';
-		}
 
-		setSideMenuVisible(!sideMenuVisible);
-	};
-	const getMinifier = () => {
-		let fd = new FormData();
-		fd.append('link', buildUrl);
-
-		const requestOptions = {
-			method: 'POST',
-			body: fd,
-		};
-		let url = '';
-		const currentURL = window.location.href;
-		if (currentURL.includes('th3conc3pt3ur.github.io')) {
-			url = 'https://tli.fr.nf/minifier';
-		} else {
-			url = 'http://127.0.0.1:8000/minifier';
-		}
-		fetch(url, requestOptions)
-			.then(async (response) => {
-				const isJson = response.headers.get('content-type')?.includes('application/json');
-				const data = isJson && (await response.json());
-				if (!response.ok) {
-					// get error message from body or default to response status
-					const error = (data && data.message) || response.status;
-					return Promise.reject(error);
-				}
-				//console.log(data.url);
-				setBuildUrlMinified(data.url);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-		//.then(data => {console.log(data.url);
-	};
 	if (!profession || !dataI18n || !itemGold || !talent) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 	return (
 		<div className="flex md:flex-row flex-col gap-2 p-2">
-			<div
-				id="buttonSideMenu"
-				onClick={() => toggleSideMneu()}
-				style={{ transition: '0.5s' }}
-				className={`md:hidden bg-black w-3 flex fixed top-1/2 z-10 left-0 flex-row`}
-			>
-				<MdArrowRight />
-			</div>
-
 			<ToastContainer theme={'dark'} autoClose={2000} />
-			{/*<SideMenuBuild
+			{/*Side Menu*/}
+			<SideMenuBuild
 				skillsImg={[skill1?.skill?.img, skill2?.skill?.img, skill3?.skill?.img, skill4?.skill?.img, skill5?.skill?.img]}
 				fieldRefSkills={fieldRefSkills}
-			/>*/}
-			{/*Start Side Menu*/}
-			<div className={`md:w-[20%] gap-2 flex flex-col relative `}>
-				<div className={`gap-1 flex flex-col ${sticky ? 'sticky top-2' : ''}`}>
-					{buildUrlMinified === null ? (
-						<button
-							onClick={() => getMinifier()}
-							className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2"
-						>
-							<FaShareAlt /> {t('commons:generate_build_url')}
-						</button>
-					) : null}
-					{buildUrlMinified !== null ? (
-						<CopyToClipboard
-							text={buildUrlMinified}
-							onCopy={() => {
-								toast.success('Build url copied !');
-								setBuildUrlMinified(null);
-							}}
-						>
-							<button className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2">
-								<FaShareAlt /> {t('commons:copy_build_url')}
-							</button>
-						</CopyToClipboard>
-					) : null}
-
-					<div
-						onClick={() => fieldRefSkills.current.scrollIntoView()}
-						className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-					>
-						<div className="flex flex-row gap-2 px-2">
-							<div className="flex flex-row items-center gap-2">
-								<div>{t('commons:skills')}</div>
-								{skill1.skill !== null && skill1.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill1.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill2.skill !== null && skill2.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill2.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill3.skill !== null && skill3.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill3.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill4.skill !== null && skill4.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill4.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-								{skill5.skill !== null && skill5.skill.img !== undefined ? (
-									<div>
-										<img
-											loading="lazy"
-											className="h-6"
-											src={`img/icons/CoreTalentIcon/${skill5.skill.img}.png`}
-											alt="Icon"
-										/>
-									</div>
-								) : null}
-							</div>
-						</div>
-					</div>
-					{currentMainProf !== null ? (
-						<div
-							onClick={() => fieldRefTrait.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${currentMainProf.icon}.png`}
-										alt="Icon"
-									/>
-								</div>
-								<div>{currentTrait['specName']}</div>
-							</div>
-							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:cursor-pointer hover:bg-gray-900"
-									onClick={() => setCurrentTrait(null)}
-								>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefTrait.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							0. {t('commons:select_trait')}
-						</div>
-					)}
-
-					{currentMainProf !== null ? (
-						<div
-							onClick={() => fieldRefMainProf.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${currentMainProf.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img
-										loading="lazy"
-										className="h-6"
-										src={`img/icons/TalentIcon/${currentMainProf.icon}.png`}
-										alt="Icon"
-									/>
-								</div>
-								<div>{translate(currentMainProf.name)}</div>
-							</div>
-							<div className="mr-2">
-								<button
-									className="text-gray-300 hover:cursor-pointer hover:bg-gray-900"
-									onClick={() => _setCurrentMainProf(null)}
-								>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefSelectMainProf.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							1. {t('commons:select_initial_profession')}
-						</div>
-					)}
-
-					{spec1 !== null ? (
-						<div
-							onClick={() => fieldRefSpec1.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${spec1.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec1.icon}.png`} alt="Icon" />
-								</div>
-								<div>{translate(spec1.name)}</div>
-							</div>
-							<div className="mr-2">
-								<button className="text-gray-300 hover:cursor-pointer hover:bg-gray-900" onClick={() => _setSpec1(null)}>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefSelectSpec1.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							2. {t('commons:select_sub_profession_1')}
-						</div>
-					)}
-
-					{spec2 !== null ? (
-						<div
-							onClick={() => fieldRefSpec2.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer flex flex-row h-10 gap-2 items-center border rounded-md bg-no-repeat bg-right-top justify-between"
-							style={{
-								backgroundSize: '50%',
-								backgroundImage: `url("img/icons/TalentGodsIcon/${spec2.background.split('|')[0]}.png`,
-							}}
-						>
-							<div className="flex flex-row gap-2">
-								<div>
-									<img loading="lazy" className="h-6" src={`img/icons/TalentIcon/${spec2.icon}.png`} alt="Icon" />
-								</div>
-								<div>{translate(spec2.name)}</div>
-							</div>
-							<div className="mr-2">
-								<button className="text-gray-300 hover:bg-gray-900 hover:cursor-pointer" onClick={() => _setSpec2(null)}>
-									x
-								</button>
-							</div>
-						</div>
-					) : (
-						<div
-							onClick={() => fieldRefSelectSpec2.current.scrollIntoView()}
-							className="bg-[#282828] hover:bg-gray-900 hover:cursor-pointer h-10 border rounded-md items-center flex flex-row p-2"
-						>
-							3. {t('commons:select_sub_profession_2')}
-						</div>
-					)}
-					{totalStat != null ? (
-						<div className="flex flex-col bg-[#282828] hover:bg-gray-900 hover:cursor-pointer border rounded-md justify-between p-1">
-							<div className="text-center border-b border-slate-700">{t('commons:total_stats')}</div>
-
-							{Object.entries(totalStat).map(([affix, stat]) => (
-								<HyperLinkTooltip
-									className="text-left text-sm break-words"
-									key={affix}
-									str={translate('affix_class|description|' + affix)
-										.replace('$P1$', stat)
-										.replace('$+P1$', '+' + stat)}
-								/>
-							))}
-						</div>
-					) : null}
-				</div>
-			</div>
-			{/*End Side Menu*/}
+				buildUrl={buildUrl}
+				currentMainProf={currentMainProf}
+				fieldRefTrait={fieldRefTrait}
+				currentTrait={currentTrait}
+				setCurrentTrait={setCurrentTrait}
+				fieldRefMainProf={fieldRefMainProf}
+				fieldRefSelectMainProf={fieldRefSelectMainProf}
+				fieldRefSpec1={fieldRefSpec1}
+				spec1={spec1}
+				fieldRefSelectSpec1={fieldRefSelectSpec1}
+				spec2={spec2}
+				fieldRefSpec2={fieldRefSpec2}
+				fieldRefSelectSpec2={fieldRefSelectSpec2}
+				totalStat={totalStat}
+				_setSpec1={_setSpec1}
+				_setSpec2={_setSpec2}
+				_setCurrentMainProf={_setCurrentMainProf}
+				sticky={sticky}
+			/>
 			<div className="w-full">
 				{/*Start Skill Build*/}
 				<SkillBuild fieldRefSkills={fieldRefSkills} />
@@ -1140,4 +861,5 @@ function Build() {
 		</div>
 	);
 }
+
 export default Build;
