@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { BuildContext } from '../context/BuildContext';
 import { useSearchParams } from 'react-router-dom';
-import { MdArrowRight } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Loader from '../components/Loader';
@@ -81,7 +80,7 @@ function Build() {
 
 	// skills
 	const _setCurrentMainProf = (data) => {
-		if (data == null) {
+		if (!data) {
 			setMainProfPoint({ nb: 0, core1: null, core2: null });
 			setMainProfStat(null);
 			setCurrentTree(null);
@@ -90,7 +89,7 @@ function Build() {
 		setCurrentMainProf(data);
 	};
 	const _setSpec1 = (data) => {
-		if (data == null) {
+		if (!data) {
 			setSpec1Point({ nb: 0, core1: null, core2: null });
 			setSpec1Stat(null);
 			setCurrentTreeSpec1(null);
@@ -98,7 +97,7 @@ function Build() {
 		setSpec1(data);
 	};
 	const _setSpec2 = (data) => {
-		if (data == null) {
+		if (!data) {
 			setSpec2Point({ nb: 0, core1: null, core2: null });
 			setSpec2Stat(null);
 			setCurrentTreeSpec2(null);
@@ -106,7 +105,7 @@ function Build() {
 		setSpec2(data);
 	};
 	useEffect(() => {
-		if (currentMainProf !== null) {
+		if (currentMainProf) {
 			displayTalent();
 		}
 		// eslint-disable-next-line
@@ -128,12 +127,12 @@ function Build() {
 	}, [spec2Point]);
 
 	useEffect(() => {
-		if (spec1 !== null) displayTalentSpec1();
+		if (spec1) displayTalentSpec1();
 		// eslint-disable-next-line
 	}, [spec1]);
 
 	useEffect(() => {
-		if (spec2 !== null) displayTalentSpec2();
+		if (spec2) displayTalentSpec2();
 		// eslint-disable-next-line
 	}, [spec2]);
 
@@ -381,7 +380,7 @@ function Build() {
 	};
 	// eslint-disable-next-line
 	const handleScroll = () => {
-		if (topMenu.current !== null) window.scrollY > topMenu.current.getBoundingClientRect().bottom ? setSticky(true) : setSticky(false);
+		if (topMenu.current) setSticky(window.scrollY > topMenu.current.getBoundingClientRect().bottom);
 	};
 
 	// This function handles the scroll performance issue
@@ -410,14 +409,7 @@ function Build() {
 	}, [debounce, handleScroll]);
 
 	useEffect(() => {
-		if (
-			searchParams.get('skills') !== null &&
-			skills !== null &&
-			dataI18n !== null &&
-			profession !== null &&
-			talent !== null &&
-			itemGold !== null
-		) {
+		if (searchParams.get('skills') && skills && dataI18n && profession && talent && itemGold) {
 			loadBuild();
 		}
 		// eslint-disable-next-line
