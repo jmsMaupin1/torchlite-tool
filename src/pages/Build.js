@@ -61,7 +61,6 @@ function Build() {
 	const [currentItem, setCurrentItem] = useState(null);
 
 	// keep track of point
-
 	const [mainProfPoint, setMainProfPoint] = useState({ nb: 0, core1: null, core2: null });
 	const [spec1Point, setSpec1Point] = useState({ nb: 0, core1: null, core2: null });
 	const [spec2Point, setSpec2Point] = useState({ nb: 0, core1: null, core2: null });
@@ -353,7 +352,7 @@ function Build() {
 		setTotalStat(merged2);
 	};
 	useEffect(() => {
-		if (mainProfStat !== null || spec1Stat !== null || spec2Stat != null) computedTotalStat();
+		if (mainProfStat || spec1Stat || spec2Stat) computedTotalStat();
 
 		// eslint-disable-next-line
 	}, [mainProfStat, spec1Stat, spec2Stat]);

@@ -101,7 +101,7 @@ const SideMenuBuild = (props) => {
 				<MdArrowRight />
 			</div>
 			<div className={isMedium ? `gap-1 flex flex-col ${sticky ? 'sticky top-2' : ''}` : 'flex flex-col w-full'}>
-				{buildUrlMinified && (
+				{!buildUrlMinified && (
 					<button
 						onClick={() => getMinifier()}
 						className="bg-[#282828] hover:bg-gray-900 border rounded-md h-10 flex flex-row gap-2 items-center px-2"
