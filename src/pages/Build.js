@@ -12,10 +12,11 @@ import InitialProfessionBuild from '../components/build/InitialProfessionBuild';
 import Spec1Build from '../components/build/Spec1Build';
 import Spec2Build from '../components/build/Spec2Build';
 import AbilityTreeHelper from '../components/build/AbilityTreeHelper';
-import Prof1TreeBuild from '../components/build/Prof1TreeBuild';
+/*import Prof1TreeBuild from '../components/build/Prof1TreeBuild';
 import Spec1TreeBuild from '../components/build/Spec1TreeBuild';
-import Spec2TreeBuild from '../components/build/Spec2TreeBuild';
+import Spec2TreeBuild from '../components/build/Spec2TreeBuild';*/
 import SideMenuBuild from '../components/build/SideMenuBuild';
+import TreeBuild from '../components/build/TreeBuild';
 
 function Build() {
 	const { translate, topMenu, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
@@ -805,7 +806,22 @@ function Build() {
 				<AbilityTreeHelper />
 
 				{/*Prof1 Tree*/}
-				<Prof1TreeBuild
+				<TreeBuild
+					fieldRef={fieldRefMainProf}
+					currentTree={currentTree}
+					spec={currentMainProf}
+					specPoint={mainProfPoint}
+					setPoint={setMainProfPoint}
+					specStat={mainProfStat}
+					currentTreeOrder={currentTreeOrder}
+					removePoint={removePoint}
+					addPoint={addPoint}
+					filterNode={filterNode}
+					currentNodeFilter={currentNodeFilter}
+					index={0}
+					type={'main'}
+				/>
+				{/*<Prof1TreeBuild
 					fieldRefMainProf={fieldRefMainProf}
 					currentTree={currentTree}
 					currentMainProf={currentMainProf}
@@ -817,10 +833,25 @@ function Build() {
 					currentTreeOrder={currentTreeOrder}
 					removePoint={removePoint}
 					addPoint={addPoint}
-				/>
+				/>*/}
 
 				{/*Prof2 Tree*/}
-				<Spec1TreeBuild
+				<TreeBuild
+					fieldRef={fieldRefSpec1}
+					currentTree={currentTreeSpec1}
+					spec={currentMainProf}
+					specPoint={spec1Point}
+					setPoint={setSpec1Point}
+					specStat={spec1Stat}
+					currentTreeOrder={currentTreeOrderSpec1}
+					removePoint={removePoint}
+					addPoint={addPoint}
+					filterNode={filterNode}
+					currentNodeFilter={currentNodeFilter}
+					index={1}
+					type={'spec1'}
+				/>
+				{/*<Spec1TreeBuild
 					fieldRefSpec1={fieldRefSpec1}
 					currentTreeSpec1={currentTreeSpec1}
 					filterNode={filterNode}
@@ -832,10 +863,25 @@ function Build() {
 					removePoint={removePoint}
 					addPoint={addPoint}
 					spec1={spec1}
-				/>
+				/>*/}
 
 				{/*Prof3 Tree*/}
-				<Spec2TreeBuild
+				<TreeBuild
+					fieldRef={fieldRefSpec2}
+					currentTree={currentTreeSpec2}
+					spec={currentMainProf}
+					specPoint={spec2Point}
+					setPoint={setSpec2Point}
+					specStat={spec2Stat}
+					currentTreeOrder={currentTreeOrderSpec2}
+					removePoint={removePoint}
+					addPoint={addPoint}
+					filterNode={filterNode}
+					currentNodeFilter={currentNodeFilter}
+					index={2}
+					type={'spec2'}
+				/>
+				{/*<Spec2TreeBuild
 					fieldRefSpec2={fieldRefSpec2}
 					currentTreeSpec2={currentTreeSpec2}
 					filterNode={filterNode}
@@ -847,7 +893,7 @@ function Build() {
 					removePoint={removePoint}
 					addPoint={addPoint}
 					spec2={spec2}
-				/>
+				/>*/}
 			</div>
 		</div>
 	);
