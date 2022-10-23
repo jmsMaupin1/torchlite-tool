@@ -34,7 +34,6 @@ const TreeBuild = ({
 			temp.core2 = e;
 		}
 		//this.refs.Tooltip.hide();
-		console.log('test, temp', temp);
 		setPoint(temp);
 	};
 
