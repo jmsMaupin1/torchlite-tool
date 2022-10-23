@@ -4,14 +4,14 @@ export const formatArray = (data, dataPerRow) => {
 	let result = [];
 
 	data.forEach((item, key) => {
-		if (tmp1.length < dataPerRow) {
-			tmp1.push(item);
-			//add last row to result if we parse all the data
-			if (key === data.length - 1) result.push(tmp1);
-		} else {
+		if (tmp1.length >= dataPerRow) {
 			result.push(tmp1);
 			tmp1 = [];
 		}
+
+		tmp1.push(item);
+		//add last row to result if we parse all the data
+		if (key === data.length - 1) result.push(tmp1);
 	});
 
 	return result;
