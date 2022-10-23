@@ -41,7 +41,7 @@ function Legendaries() {
 		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 	useEffect(() => {
-		if (!itemBase) {
+		if (itemBase) {
 			let test = [
 				...new Set(
 					itemBase
@@ -174,7 +174,7 @@ function Legendaries() {
 					<label className="font-bold">{t('commons:Type')}</label>
 					<select onChange={onChangeTypeSecondary} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
-						{listTypeSecondary.map((type, index) => (
+						{listTypeSecondary?.map((type, index) => (
 							<option key={type} value={type}>
 								{translate(type)}
 							</option>
@@ -185,7 +185,7 @@ function Legendaries() {
 					<label className="font-bold">{t('commons:Secondary_type')}</label>
 					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
-						{listType.map((type, index) => (
+						{listType?.map((type, index) => (
 							<option key={type} value={type}>
 								{translate(type)}
 							</option>

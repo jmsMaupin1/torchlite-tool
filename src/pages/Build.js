@@ -744,7 +744,7 @@ function Build() {
 			let supportSkill = tempSkill[1].split('-');
 			let dataSkill = skills.find((e) => e.id === mainSkill);
 			supportSkill = supportSkill.map((supp) => {
-				let currentSupp = skills.find((e) => e.id === supp);
+				let currentSupp = skills.find((e) => e.id === supp && e.type4 !== '0');
 				if (currentSupp === undefined) {
 					return {};
 				} else {
