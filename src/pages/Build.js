@@ -1012,7 +1012,6 @@ function Build() {
 		let temp = [...currentItems];
 		temp.push(myItems);
 		setCurrentItems(temp);
-		console.log(temp);
 	};
 	const removeItem = (id) => {
 		let temp = [...currentItems];
