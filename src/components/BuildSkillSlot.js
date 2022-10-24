@@ -59,7 +59,10 @@ function BuildSkillSlot(props) {
 		if (primary > 5) {
 			setCurrentModalType('');
 		} else {
-			setCurrentModalType('Support');
+			//6000200 => active
+			//6000201 => passive
+			//6000100 => support
+			setCurrentModalType('6000100');
 		}
 
 		changePrimarySecondary(primary, secondary);

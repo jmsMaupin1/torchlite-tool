@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
 
 function Build() {
-	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
+	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
 	const updateXArrow = useXarrow();
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -1488,7 +1488,7 @@ function Build() {
 									options={skills
 										.filter(
 											(x) =>
-												(currentModalType === '' || x['tag_' + i18n.language].includes(currentModalType)) &&
+												(currentModalType === '' || x.tag.includes(currentModalType)) &&
 												x.name !== translate(x.name)
 										)
 										.sort(sortAlpha)
