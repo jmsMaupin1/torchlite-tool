@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import Xarrow, { Xwrapper, useXarrow } from 'react-xarrows';
 
 function Build() {
-	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold, i18n } = useContext(AppContext);
+	const { translate, topMenu, sortAlpha, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
 	const updateXArrow = useXarrow();
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -256,9 +256,19 @@ function Build() {
 		let position = object.position;
 		//let max = object.level_up_time
 		//let pointNeed = object.need_points;
+		let nextIdObject = null;
+		// todo we can factorise that
 		switch (current) {
 			case 'main':
 				let _mainProfPoint = { ...mainProfPoint };
+				nextIdObject = returnTabObjectOfBeforeId(object.id, currentTreeOrder);
+				for (let i = 0; i <= nextIdObject.length; i++) {
+					let el = nextIdObject[i];
+					if (_mainProfPoint[el?.position] !== undefined && _mainProfPoint[el?.position] > 0) {
+						toast.error(t('commons:remove_point_error'));
+						return;
+					}
+				}
 				if (_mainProfPoint[position] === undefined) {
 					_mainProfPoint[position] = 0;
 				}
@@ -271,6 +281,14 @@ function Build() {
 				break;
 			case 'spec1':
 				let _spec1Point = { ...spec1Point };
+				nextIdObject = returnTabObjectOfBeforeId(object.id, currentTreeOrderSpec1);
+				for (let i = 0; i <= nextIdObject.length; i++) {
+					let el = nextIdObject[i];
+					if (_spec1Point[el?.position] !== undefined && _spec1Point[el?.position] > 0) {
+						toast.error(t('commons:remove_point_error'));
+						return;
+					}
+				}
 				if (_spec1Point[position] === undefined) {
 					_spec1Point[position] = 0;
 				}
@@ -283,6 +301,14 @@ function Build() {
 				break;
 			case 'spec2':
 				let _spec2Point = { ...spec2Point };
+				nextIdObject = returnTabObjectOfBeforeId(object.id, currentTreeOrderSpec2);
+				for (let i = 0; i <= nextIdObject.length; i++) {
+					let el = nextIdObject[i];
+					if (_spec2Point[el?.position] !== undefined && _spec2Point[el?.position] > 0) {
+						toast.error(t('commons:remove_point_error'));
+						return;
+					}
+				}
 				if (_spec2Point[position] === undefined) {
 					_spec2Point[position] = 0;
 				}
@@ -296,65 +322,126 @@ function Build() {
 			default:
 				break;
 		}
-		// console.log(mainProfPoint)
-		// console.log(spec1Point)
-		// console.log(spec2Point)
+	};
+	/**
+	 * It returns the node object of the _id in the table
+	 * @param _id - The id of the node you want to find.
+	 * @param _tab - The table that contains the id
+	 * @returns the node object in the tab.
+	 */
+	const returnPositionOfId = (_id, _tab) => {
+		for (let x = 1; x <= 9; x++) {
+			for (let y = 1; y <= 9; y++) {
+				if (_tab[x][y]?.id === _id) {
+					return _tab[x][y];
+				}
+			}
+		}
+		return null;
+	};
+
+	/**
+	 * It returns an array of node objects that have a before_id = _beforeId
+	 * @param _beforeId - the id of the parent node
+	 * @param _tab - the current tab
+	 * @returns An array of objects.
+	 */
+	const returnTabObjectOfBeforeId = (_beforeId, _tab) => {
+		let tabReturn = [];
+		for (let x = 1; x <= 9; x++) {
+			for (let y = 1; y <= 9; y++) {
+				//console.log(currentTreeOrder[x][y]?.id);
+				if (_tab[x][y]?.before_id === _beforeId) {
+					tabReturn.push(_tab[x][y]);
+				}
+			}
+		}
+		return tabReturn;
 	};
 	const addPoint = (object, current) => {
 		let max = object.level_up_time;
 		let pointNeed = parseInt(object.need_points);
-
 		let position = object.position;
+		let beforeIdObject = null;
+		// todo we can factorise that
 		switch (current) {
 			case 'main':
 				let _mainProfPoint = { ...mainProfPoint };
+				beforeIdObject = returnPositionOfId(object.before_id, currentTreeOrder);
 				if (_mainProfPoint[position] === undefined) {
 					_mainProfPoint[position] = 0;
 				}
 
 				if (_mainProfPoint[position] === parseInt(max)) {
-					toast.error('Already at max !');
+					toast.error(t('commons:error_already_at_max'));
 				} else {
-					if (pointNeed <= _mainProfPoint.nb) {
-						_mainProfPoint[position] += 1;
-						_mainProfPoint.nb++;
-						setMainProfPoint(_mainProfPoint);
+					// we toast.error if the before_id is not fullify
+					if (
+						object.before_id !== '' &&
+						(_mainProfPoint[beforeIdObject?.position] === undefined ||
+							_mainProfPoint[beforeIdObject?.position] < parseInt(beforeIdObject?.level_up_time))
+					) {
+						toast.error(t('commons:error_you_must_max_previous_talent'));
 					} else {
-						toast.error('Not enought points !');
+						if (pointNeed <= _mainProfPoint.nb) {
+							_mainProfPoint[position] += 1;
+							_mainProfPoint.nb++;
+							setMainProfPoint(_mainProfPoint);
+						} else {
+							toast.error(t('commons:error_not_enought_points'));
+						}
 					}
 				}
 				break;
 			case 'spec1':
 				let _spec1Point = { ...spec1Point };
+				beforeIdObject = returnPositionOfId(object.before_id, currentTreeOrderSpec1);
 				if (_spec1Point[position] === undefined) {
 					_spec1Point[position] = 0;
 				}
 				if (_spec1Point[position] === parseInt(max)) {
-					toast.error('Already at max !');
+					toast.error(t('commons:error_already_at_max'));
 				} else {
-					if (pointNeed <= _spec1Point.nb) {
-						_spec1Point.nb++;
-						_spec1Point[position] += 1;
-						setSpec1Point(_spec1Point);
+					if (
+						object.before_id !== '' &&
+						(_spec1Point[beforeIdObject?.position] === undefined ||
+							_spec1Point[beforeIdObject?.position] < parseInt(beforeIdObject?.level_up_time))
+					) {
+						toast.error(t('commons:error_you_must_max_previous_talent'));
 					} else {
-						toast.error('Not enought points !');
+						if (pointNeed <= _spec1Point.nb) {
+							_spec1Point.nb++;
+							_spec1Point[position] += 1;
+							setSpec1Point(_spec1Point);
+						} else {
+							toast.error(t('commons:error_not_enought_points'));
+						}
 					}
 				}
 				break;
 			case 'spec2':
 				let _spec2Point = { ...spec2Point };
+				beforeIdObject = returnPositionOfId(object.before_id, currentTreeOrderSpec2);
 				if (_spec2Point[position] === undefined) {
 					_spec2Point[position] = 0;
 				}
 				if (_spec2Point[position] === parseInt(max)) {
-					toast.error('Already at max !');
+					toast.error(t('commons:error_already_at_max'));
 				} else {
-					if (pointNeed <= _spec2Point.nb) {
-						_spec2Point.nb++;
-						_spec2Point[position] += 1;
-						setSpec2Point(_spec2Point);
+					if (
+						object.before_id !== '' &&
+						(_spec2Point[beforeIdObject?.position] === undefined ||
+							_spec2Point[beforeIdObject?.position] < parseInt(beforeIdObject?.level_up_time))
+					) {
+						toast.error(t('commons:error_you_must_max_previous_talent'));
 					} else {
-						toast.error('Not enought points !');
+						if (pointNeed <= _spec2Point.nb) {
+							_spec2Point.nb++;
+							_spec2Point[position] += 1;
+							setSpec2Point(_spec2Point);
+						} else {
+							toast.error(t('commons:error_not_enought_points'));
+						}
 					}
 				}
 				break;
@@ -912,10 +999,16 @@ function Build() {
 	const addItem = () => {
 		let myItems = itemGold.find((i) => i.id === currentItem);
 		if (currentItems.includes(myItems)) {
-			toast.error('Item already added');
-			return;
+			// block items if more than 2 ? like ring and weapon
+			// todo maybe look at base for block only if item are ring or 1h weapon ?
+			// item_base.type4 = "21" => ring
+			// item_base.type4 ,1-8 1 handed, 9-14 2 handed,26-29 1 handed,80-82 shield
+
+			if (currentItems.filter((x) => x === myItems).length > 1) {
+				toast.error('Item already added');
+				return;
+			}
 		}
-		//console.log("myItems",myItems)
 		let temp = [...currentItems];
 		temp.push(myItems);
 		setCurrentItems(temp);
@@ -1488,7 +1581,7 @@ function Build() {
 									options={skills
 										.filter(
 											(x) =>
-												(currentModalType === '' || x['tag_' + i18n.language].includes(currentModalType)) &&
+												(currentModalType === '' || x.tag.includes(currentModalType)) &&
 												x.name !== translate(x.name)
 										)
 										.sort(sortAlpha)
@@ -1601,8 +1694,8 @@ function Build() {
 					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
 						{currentItems
 							.filter((b) => b !== undefined)
-							.map((b) => (
-								<div key={b.id} className="flex flex-col items-center gap-2  justify-between">
+							.map((b, ind) => (
+								<div key={b.id + '-' + ind} className="flex flex-col items-center gap-2  justify-between">
 									<Legendary key={b.id} legendary={b} currentAffix={null} className="h-full w-full" />
 									<div
 										onClick={() => removeItem(b.id)}
