@@ -67,7 +67,6 @@ const SideMenuBuild = (props) => {
 			.catch((error) => {
 				console.log(error);
 			});
-		//.then(data => {console.log(data.url);
 	};
 
 	const toggleSideMenu = () => {
@@ -112,7 +111,7 @@ const SideMenuBuild = (props) => {
 				{buildUrlMinified && (
 					<CopyToClipboard
 						onClick={() => getMinifier()}
-						text={buildUrl}
+						text={buildUrlMinified}
 						onCopy={() => {
 							toast.success('Build url copied !');
 							setBuildUrlMinified(null);

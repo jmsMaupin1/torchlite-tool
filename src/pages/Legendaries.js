@@ -25,7 +25,7 @@ function Legendaries() {
 	const [currentMinimumLevel, setCurrentMinimumLevel] = useState(null);
 
 	useEffect(() => {
-		if (itemBase !== null) {
+		if (itemBase) {
 			let test = [
 				...new Set(
 					itemBase
@@ -41,7 +41,7 @@ function Legendaries() {
 		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 	useEffect(() => {
-		if (itemBase !== null) {
+		if (itemBase) {
 			let test = [
 				...new Set(
 					itemBase
@@ -58,12 +58,12 @@ function Legendaries() {
 	}, [itemBase, dataI18n]);
 	useEffect(() => {
 		// on change currentType we need to adapt listType
-		if (itemBase !== null) {
+		if (itemBase) {
 			let test = [
 				...new Set(
 					itemBase
 						.filter((i) => i.type1 === '1')
-						.filter((i) => currentTypeSecondary === null || translate(i.description2) === currentTypeSecondary)
+						.filter((i) => !currentTypeSecondary || translate(i.description2) === currentTypeSecondary)
 						.map((x) => {
 							return translate(x.description1);
 						})
@@ -76,77 +76,43 @@ function Legendaries() {
 	}, [currentTypeSecondary, dataI18n]);
 
 	const onChangeType = (e) => {
-		if (e.target.value === '') {
-			setCurrentType(null);
-		} else {
-			setCurrentType(e.target.value);
-		}
+		setCurrentType(e.target.value === '' ? null : e.target.value);
 	};
-
 	const onChangeName = (value) => {
-		if (value === '') {
-			setCurrentName(null);
-		} else {
-			setCurrentName(value);
-		}
+		setCurrentName(value === '' ? null : value);
 	};
-
 	const onChangeAffix = (value) => {
-		if (value === '') {
-			setCurrentAffix(null);
-		} else {
-			setCurrentAffix(value);
-		}
+		setCurrentAffix(value === '' ? null : value);
 	};
 	const onChangeTypeSecondary = (e) => {
-		if (e.target.value === '') {
-			setCurrentTypeSecondary(null);
-		} else {
-			setCurrentTypeSecondary(e.target.value);
-		}
+		setCurrentTypeSecondary(e.target.value === '' ? null : e.target.value);
 	};
 	const onChangeCurrentLevel = (value) => {
-		console.log('value', value);
-		if (value === '') {
-			setCurrentMinimumLevel(null);
-		} else {
-			setCurrentMinimumLevel(value);
-		}
+		setCurrentMinimumLevel(value === '' ? null : value);
 	};
 
 	const findBase = (e) => {
 		let baseTemp = itemBase.find((b) => b.id === e.base_id);
 		if (
 			e.icon !== '' &&
-			(currentTypeSecondary === null || translate(baseTemp.description2) === currentTypeSecondary) &&
-			(currentType === null || translate(baseTemp.description1) === currentType)
-		) {
-			// filter for test item
-			if (parseInt(e.id) < 100) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			return false;
-		}
+			(!currentTypeSecondary || translate(baseTemp.description2) === currentTypeSecondary) &&
+			(!currentType || translate(baseTemp.description1) === currentType)
+		)
+			return parseInt(e.id) >= 100;
+
+		return false;
 	};
 	const filterByName = (e) => {
-		if (currentName != null) {
-			if (translate(e.name).toLowerCase().includes(currentName.toLowerCase())) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return true;
+		if (currentName) {
+			return translate(e.name).toLowerCase().includes(currentName.toLowerCase());
 		}
+
+		return true;
 	};
 	const filterByAffix = (e) => {
 		const currentLang = i18n.language;
-		if (currentAffix === null) {
-			return true;
-		}
+		if (!currentAffix) return true;
+
 		let tabAffix = [];
 		let isFind = false;
 		if (e.prefix !== undefined && e.prefix !== []) {
@@ -175,7 +141,7 @@ function Legendaries() {
 		return isFind;
 	};
 
-	if (listType == null || dataI18n == null || itemGold == null) {
+	if (!listType || !dataI18n || !itemGold) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 
@@ -184,7 +150,7 @@ function Legendaries() {
 		.filter(filterByName)
 		// add this filter
 		.filter(filterByAffix)
-		.filter((e) => currentMinimumLevel === null || parseInt(e.require_level) >= parseInt(currentMinimumLevel))
+		.filter((e) => !currentMinimumLevel || parseInt(e.require_level) >= parseInt(currentMinimumLevel))
 		.sort((a, b) => a.require_level - b.require_level);
 
 	//format Array for matching 2/4 items per chunks
@@ -208,7 +174,7 @@ function Legendaries() {
 					<label className="font-bold">{t('commons:Type')}</label>
 					<select onChange={onChangeTypeSecondary} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
-						{listTypeSecondary.map((type, index) => (
+						{listTypeSecondary?.map((type, index) => (
 							<option key={type} value={type}>
 								{translate(type)}
 							</option>
@@ -219,7 +185,7 @@ function Legendaries() {
 					<label className="font-bold">{t('commons:Secondary_type')}</label>
 					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
-						{listType.map((type, index) => (
+						{listType?.map((type, index) => (
 							<option key={type} value={type}>
 								{translate(type)}
 							</option>
@@ -273,4 +239,5 @@ function Legendaries() {
 		</>
 	);
 }
+
 export default Legendaries;

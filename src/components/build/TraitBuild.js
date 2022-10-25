@@ -20,8 +20,7 @@ const TraitBuild = ({ fieldRefTrait, currentTrait, setCurrentTrait }) => {
 			h.id === '310' ||
 			h.id === '600' ||
 			h.id === '610' ||
-			h.id === '910' ||
-			h.id === '920' ||
+			(h.id === '910') | (h.id === '920') ||
 			h.id === '1100' ||
 			h.id === '1300' ||
 			h.id === '1310' ||

@@ -7,7 +7,7 @@ import { BuildContext } from '../../context/BuildContext';
 import { AppContext } from '../../context/AppContext';
 
 const SkillBuild = ({ fieldRefSkills }) => {
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 	const { closeModal, modalVisible, currentModalType, onChangeSkill, modalValue } = useContext(BuildContext);
 	const { translate, sortAlpha, skills } = useContext(AppContext);
 
@@ -31,9 +31,7 @@ const SkillBuild = ({ fieldRefSkills }) => {
 							onChange={(e) => onChangeSkill(e)}
 							options={skills
 								.filter(
-									(x) =>
-										(currentModalType === '' || x['tag_' + i18n.language].includes(currentModalType)) &&
-										x.name !== translate(x.name)
+									(x) => (currentModalType === '' || x.tag.includes(currentModalType)) && x.name !== translate(x.name)
 								)
 								.sort(sortAlpha)
 								.map((s) => {

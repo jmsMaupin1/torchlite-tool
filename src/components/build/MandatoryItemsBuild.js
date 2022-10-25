@@ -18,10 +18,16 @@ const MandatoryItemsBuild = ({ fieldRefItems, currentItem, setCurrentItem, curre
 	const addItem = () => {
 		let myItems = itemGold.find((i) => i.id === currentItem);
 		if (currentItems.includes(myItems)) {
-			toast.error('Item already added');
-			return;
+			// block items if more than 2 ? like ring and weapon
+			// todo maybe look at base for block only if item are ring or 1h weapon ?
+			// item_base.type4 = "21" => ring
+			// item_base.type4 ,1-8 1 handed, 9-14 2 handed,26-29 1 handed,80-82 shield
+
+			if (currentItems.filter((x) => x === myItems).length > 1) {
+				toast.error('Item already added');
+				return;
+			}
 		}
-		//console.log("myItems",myItems)
 		let temp = [...currentItems];
 		temp.push(myItems);
 		setCurrentItems(temp);
@@ -39,7 +45,7 @@ const MandatoryItemsBuild = ({ fieldRefItems, currentItem, setCurrentItem, curre
 	const findBase = (e) => {
 		if (e.icon === '') return false;
 
-		return parseInt(e.id) < 100;
+		return parseInt(e.id) > 100;
 	};
 
 	return (
@@ -82,8 +88,8 @@ const MandatoryItemsBuild = ({ fieldRefItems, currentItem, setCurrentItem, curre
 				<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
 					{currentItems
 						.filter((b) => b !== undefined)
-						.map((b) => (
-							<div key={b.id} className="flex flex-col items-center gap-2  justify-between">
+						.map((b, ind) => (
+							<div key={b.id + '-' + ind} className="flex flex-col items-center gap-2  justify-between">
 								<Legendary key={b.id} legendary={b} currentAffix={null} className="h-full w-full" />
 								<div
 									onClick={() => removeItem(b.id)}

@@ -35,9 +35,12 @@ function BuildSkill2(props) {
 
 	const onClickSkill = (primary, secondary) => {
 		if (tag === 'Active') {
-			setCurrentModalType('Active');
+			//6000200 => active
+			//6000201 => passive
+			//6000100 => support
+			setCurrentModalType('6000200');
 		} else {
-			setCurrentModalType('Passive');
+			setCurrentModalType('6000201');
 		}
 
 		changePrimarySecondary(primary, secondary);
