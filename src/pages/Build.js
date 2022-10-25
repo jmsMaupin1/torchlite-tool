@@ -33,8 +33,10 @@ function Build() {
 		skill8,
 		talentSkill1,
 		talentSkill2,
+		talentSkill3,
 		setTalentSkill1,
 		setTalentSkill2,
+		setTalentSkill3,
 	} = useContext(BuildContext);
 	const [currentMainProf, setCurrentMainProf] = useState(null);
 	const [currentTrait, setCurrentTrait] = useState({
@@ -533,6 +535,7 @@ function Build() {
 		skill8,
 		talentSkill1,
 		talentSkill2,
+		talentSkill3,
 		currentMainProf,
 		spec1,
 		spec2,
@@ -670,7 +673,7 @@ function Build() {
 			currentTrait['80'];
 
 		// add talent skill support => rehan skill attach to burst
-		string += '&trait_skill=' + talentSkill1?.value + ',' + talentSkill2?.value;
+		string += '&trait_skill=' + talentSkill1?.value + ',' + talentSkill2?.value + ',' + talentSkill3?.value;
 
 		//add items data
 		string +=
@@ -839,6 +842,12 @@ function Build() {
 				let mySkill2 = skills.find((x) => x.id === trait_skill[1]);
 				let currentTraitSkill2 = { img: mySkill2.icon, label: translate(mySkill2.name), value: mySkill2.id };
 				setTalentSkill2(currentTraitSkill2);
+			}
+			// check in case no data are provided
+			if (trait_skill[2] !== 'undefined') {
+				let mySkill3 = skills.find((x) => x.id === trait_skill[2]);
+				let currentTraitSkill3 = { img: mySkill3.icon, label: translate(mySkill3.name), value: mySkill3.id };
+				setTalentSkill3(currentTraitSkill3);
 			}
 		}
 

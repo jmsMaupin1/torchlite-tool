@@ -13,7 +13,7 @@ function HeroTrait(props) {
 	const currentTrait = props.currentTrait;
 
 	const { translate } = useContext(AppContext);
-	const { talentSkill1, setTalentSkill1, talentSkill2, setTalentSkill2 } = useContext(BuildContext);
+	const { talentSkill1, setTalentSkill1, talentSkill2, setTalentSkill2, talentSkill3, setTalentSkill3 } = useContext(BuildContext);
 	const [selectedTrait, setSelectedTrait] = useState(currentTrait.specId);
 	const { t } = useTranslation();
 
@@ -135,12 +135,38 @@ function HeroTrait(props) {
 											</div>
 										</div>
 									))}
+								{/* special case for rehan burst skill */}
 								{currentTrait?.specId === '310' && index === 50 && (
 									<div>
 										<div className="title text-center">{t('commons:Burst_support_skill')}</div>
 										<div className="flex flex-row shadow-md shadow-black border-t border-black items-center justify-center p-2">
 											<TalentSkillSlot currentSupport={talentSkill1} primary={101} setSupport={setTalentSkill1} />
 											<TalentSkillSlot currentSupport={talentSkill2} primary={102} setSupport={setTalentSkill2} />
+										</div>
+									</div>
+								)}
+								{/* special for carino potential 3 skills */}
+								{currentTrait?.specId === '600' && index === 15 && (
+									<div>
+										<div className="title text-center">{t('commons:Support_skill')}</div>
+										<div className="flex flex-row shadow-md shadow-black border-t border-black items-center justify-center p-2">
+											<TalentSkillSlot currentSupport={talentSkill1} primary={101} setSupport={setTalentSkill1} />
+										</div>
+									</div>
+								)}
+								{currentTrait?.specId === '600' && index === 50 && (
+									<div>
+										<div className="title text-center">{t('commons:Support_skill')}</div>
+										<div className="flex flex-row shadow-md shadow-black border-t border-black items-center justify-center p-2">
+											<TalentSkillSlot currentSupport={talentSkill2} primary={102} setSupport={setTalentSkill2} />
+										</div>
+									</div>
+								)}
+								{currentTrait?.specId === '600' && index === 80 && (
+									<div>
+										<div className="title text-center">{t('commons:Support_skill')}</div>
+										<div className="flex flex-row shadow-md shadow-black border-t border-black items-center justify-center p-2">
+											<TalentSkillSlot currentSupport={talentSkill3} primary={103} setSupport={setTalentSkill3} />
 										</div>
 									</div>
 								)}

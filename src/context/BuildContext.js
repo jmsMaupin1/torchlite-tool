@@ -24,6 +24,7 @@ const BuildContextProvider = (props) => {
 	// talent support skills for rehan
 	const [talentSkill1, setTalentSkill1] = useState(null);
 	const [talentSkill2, setTalentSkill2] = useState(null);
+	const [talentSkill3, setTalentSkill3] = useState(null);
 
 	const changePrimarySecondary = (primary, secondary) => {
 		setCurrentPrimary(primary);
@@ -157,6 +158,9 @@ const BuildContextProvider = (props) => {
 			case 102:
 				currentFnc = setTalentSkill2;
 				break;
+			case 103:
+				currentFnc = setTalentSkill3;
+				break;
 			default:
 				break;
 		}
@@ -276,6 +280,8 @@ const BuildContextProvider = (props) => {
 				setTalentSkill1,
 				talentSkill2,
 				setTalentSkill2,
+				talentSkill3,
+				setTalentSkill3,
 			}}
 		>
 			{props.children}
