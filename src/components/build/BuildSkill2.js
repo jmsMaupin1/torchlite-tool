@@ -1,10 +1,10 @@
 import React from 'react';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import { useContext } from 'react';
 import BuildSkillSlot from './BuildSkillSlot';
-import { BuildContext } from '../context/BuildContext';
+import { BuildContext } from '../../context/BuildContext';
 import { Tooltip } from 'flowbite-react';
-import Skill from '../components/Skill';
+import Skill from '../Skill';
 import { useTranslation } from 'react-i18next';
 
 function BuildSkill2(props) {
@@ -12,11 +12,7 @@ function BuildSkill2(props) {
 	const { changePrimarySecondary, setCurrentModalType, openModal, getSkillByPrimary, onChangeSkillForced } = useContext(BuildContext);
 	const { t } = useTranslation();
 	let ind = props.ind;
-	// let onChangeCurrentModalType = props.onChangeCurrentModalType;
-	// let onChangeSupport=props.onChangeSupport;
-	// const changePrimarySecondary = props.changePrimarySecondary
-	// let onChangeSkill=props.onChangeSkill;
-	// const openModal = props.openModal
+
 	let tag = props.tag;
 	if (tag === undefined) {
 		tag = 'Active';

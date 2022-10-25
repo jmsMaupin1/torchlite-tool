@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
-import BaseCard from '../components/BaseCard';
+import BaseCard from '../components/base/BaseCard';
 import Loader from '../components/Loader';
 import { formatArray } from '../utils/utils';
 import { DebounceInput } from 'react-debounce-input';

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../context/AppContext';
-import HyperLinkTooltip from './HyperLinkTooltip';
+import { AppContext } from '../../context/AppContext';
+import HyperLinkTooltip from './../HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 import LegendaryLine from './LegendaryLine';
 

@@ -1,8 +1,8 @@
-import { BuildContext } from '../context/BuildContext';
+import { BuildContext } from './../../context/BuildContext';
 import { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from './../../context/AppContext';
 import { Tooltip } from 'flowbite-react';
-import Skill from '../components/Skill';
+import Skill from './../Skill';
 
 function BuildSkillSlot(props) {
 	const { skills } = useContext(AppContext);

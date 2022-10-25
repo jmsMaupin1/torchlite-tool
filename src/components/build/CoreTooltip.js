@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import { Tooltip } from 'flowbite-react';
-import HyperLinkTooltip from './HyperLinkTooltip';
+import HyperLinkTooltip from '../HyperLinkTooltip';
 
 function CoreTooltip(props) {
 	const { translate, i18n } = useContext(AppContext);

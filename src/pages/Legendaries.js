@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import Legendary from '../components/Legendary';
+import Legendary from '../components/legendary/Legendary';
 import { AppContext } from '../context/AppContext';
 import { DebounceInput } from 'react-debounce-input';
 import Loader from '../components/Loader';

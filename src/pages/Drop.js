@@ -6,7 +6,7 @@ import itemGold from './../data/item_gold.json';
 
 import { AppContext } from '../context/AppContext';
 import { useContext, useState } from 'react';
-import Legendary from '../components/Legendary';
+import Legendary from '../components/legendary/Legendary';
 
 function Drop() {
 	const { translate, dataI18n } = useContext(AppContext);

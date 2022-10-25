@@ -1,10 +1,10 @@
-import rewardGroup from './../data/rewardGroup.json';
+import rewardGroup from './../../data/rewardGroup.json';
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../context/AppContext';
-import Loader from './Loader';
+import { AppContext } from '../../context/AppContext';
+import Loader from '../Loader';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'flowbite-react';
-import Legendary from './Legendary';
+import Legendary from '../legendary/Legendary';
 function FateCardCard({ card }) {
 	const { translate, itemBase, itemGold, skills } = useContext(AppContext);
 	const [isShow, setIsShow] = useState(false);
@@ -15,6 +15,7 @@ function FateCardCard({ card }) {
 	const rewardGroupId = card.reward_group_id.split(';').map((g) => {
 		return g.split(':')[0];
 	});
+	// eslint-disable-next-line array-callback-return
 	const rewardUniqueId = card.recipe_unique.split(';').map((u) => {
 		if (u !== undefined && u !== '') return { id: u.split(':')[0], weight: u.split(':')[1].split('|')[0] };
 	});

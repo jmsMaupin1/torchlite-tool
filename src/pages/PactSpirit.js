@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { DebounceInput } from 'react-debounce-input';
 import Loader from '../components/Loader';
 import { ViewportList } from 'react-viewport-list';
-import PactSpiritCard from '../components/PactSpiritCard';
+import PactSpiritCard from '../components/pactSpirit/PactSpiritCard';
 import { useMediaQuery } from 'react-responsive';
 import { formatArray } from '../utils/utils';
 
@@ -99,9 +99,7 @@ function PactSpirit() {
 	}
 	return (
 		<>
-			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">
-				{t('commons:legendaries')}
-			</div>
+			<div className="md:hidden title text-xl p-2 text-center border-b border-slate-500 mb-2">{t('commons:legendaries')}</div>
 			<div className="flex flex-col md:flex-row md:gap-2 md:items-center mb-2 w-full p-2 md:p-0">
 				<label>{t('commons:name')}</label>
 				<DebounceInput
@@ -111,10 +109,7 @@ function PactSpirit() {
 					onChange={(event) => onChangeName(event.target.value)}
 				/>
 				<label>{t('commons:type')}</label>
-				<select
-					onChange={onChangeType}
-					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
-				>
+				<select onChange={onChangeType} className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full">
 					<option value=""> -- {t('commons:select_type')} --</option>
 					{listType.map((type, index) => (
 						<option key={type.id} value={type.id}>
@@ -123,10 +118,7 @@ function PactSpirit() {
 					))}
 				</select>
 				<label>{t('commons:rarity')}</label>
-				<select
-					onChange={onChangeRarity}
-					className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full"
-				>
+				<select onChange={onChangeRarity} className="md:w-auto bg-[#282828] border rounded border-slate-500 w-full">
 					<option value=""> -- {t('commons:select_rarity')} --</option>
 					{listRarity.map((rarity, index) => (
 						<option key={rarity.id} value={rarity.id}>

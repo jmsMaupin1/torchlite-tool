@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Select, { createFilter } from 'react-select';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 
 function SelectWithImage(props) {
 	const { translate, sortAlpha, skills } = useContext(AppContext);

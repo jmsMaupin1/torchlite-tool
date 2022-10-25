@@ -1,9 +1,9 @@
 /* eslint-disable no-eval */
 import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from './../../context/AppContext';
 import { useTranslation } from 'react-i18next';
-import HyperLinkTooltip from '../components/HyperLinkTooltip';
-import Loader from '../components/Loader';
+import HyperLinkTooltip from '../HyperLinkTooltip';
+import Loader from '../Loader';
 
 function PactSpiritCard({ p }) {
 	const { translate } = useContext(AppContext);
@@ -85,12 +85,7 @@ function PactSpiritCard({ p }) {
 		<div className=" flex flex-col border rounded bg-[#222] text-white p-2 gap-1 shadow-lg shadow-black">
 			<div className="flex flex-row items-center gap-2">
 				<div className="">
-					<img
-						loading="lazy"
-						className="h-20 aspect-square"
-						src={`img/icons/PetIcons/${p.icon_small}.png`}
-						alt="Icons"
-					/>
+					<img loading="lazy" className="h-20 aspect-square" src={`img/icons/PetIcons/${p.icon_small}.png`} alt="Icons" />
 				</div>
 				<div className="flex flex-col">
 					<div className="title">{translate(p.name)}</div>
@@ -104,41 +99,25 @@ function PactSpiritCard({ p }) {
 				</div>
 			)}
 
-			<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">
-				{t('commons:Effect')}
-			</div>
+			<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">{t('commons:Effect')}</div>
 			<div className="text-center">{translate(p.des_effect)}</div>
-			<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">
-				{t('commons:Upgrade')}
-			</div>
-			<div
-				className="text-center"
-				dangerouslySetInnerHTML={{ __html: translate(p.des_promotion).split('|').join('<br>') }}
-			></div>
-			<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">
-				{t('commons:Affix')}
-			</div>
+			<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">{t('commons:Upgrade')}</div>
+			<div className="text-center" dangerouslySetInnerHTML={{ __html: translate(p.des_promotion).split('|').join('<br>') }}></div>
+			<div className="title text-white text-center border-b border-slate-500 mt-2 mx-auto">{t('commons:Affix')}</div>
 			<div className="grid grid-cols-1 items-center gap-1 justify-between">
 				{p.information_point_icon
 					.split(';')
 					.slice(0, -1)
 					.map((point, index) => (
 						<div key={index} className="flex flex-row items-start gap-2">
-							<img
-								className="w-6"
-								src={`img/icons/PetIcons/contract/${point.split(':')[1]}.png`}
-								alt="Contract"
-							/>
+							<img className="w-6" src={`img/icons/PetIcons/contract/${point.split(':')[1]}.png`} alt="Contract" />
 							<div className="text-sm text-slate-400 w-[45px] min-w-[45px]">
 								{point.split(':')[1].indexOf('Small') > -1 ? t('commons:Inner') : null}
 								{point.split(':')[1].indexOf('Middle') > -1 ? t('commons:Middle') : null}
 								{point.split(':')[1].indexOf('Large') > -1 ? t('commons:Outer') : null}
 							</div>
 
-							<HyperLinkTooltip
-								className="text-sm"
-								str={convertTransformation(p.transformation.split('||')[index])}
-							/>
+							<HyperLinkTooltip className="text-sm" str={convertTransformation(p.transformation.split('||')[index])} />
 						</div>
 					))}
 			</div>

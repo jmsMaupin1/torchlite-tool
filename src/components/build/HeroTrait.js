@@ -1,7 +1,9 @@
 import { Tooltip } from 'flowbite-react';
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
+import TalentSkillSlot from './TalentSkillSlot';
+import { BuildContext } from '../../context/BuildContext';
 
 function HeroTrait(props) {
 	const perk = props.perk;
@@ -11,6 +13,7 @@ function HeroTrait(props) {
 	const currentTrait = props.currentTrait;
 
 	const { translate } = useContext(AppContext);
+	const { talentSkill1, setTalentSkill1, talentSkill2, setTalentSkill2 } = useContext(BuildContext);
 	const [selectedTrait, setSelectedTrait] = useState(currentTrait.specId);
 	const { t } = useTranslation();
 
@@ -132,6 +135,15 @@ function HeroTrait(props) {
 											</div>
 										</div>
 									))}
+								{currentTrait?.specId === '310' && index === 50 && (
+									<div>
+										<div className="title text-center">{t('commons:Burst_support_skill')}</div>
+										<div className="flex flex-row shadow-md shadow-black border-t border-black items-center justify-center p-2">
+											<TalentSkillSlot currentSupport={talentSkill1} primary={101} setSupport={setTalentSkill1} />
+											<TalentSkillSlot currentSupport={talentSkill2} primary={102} setSupport={setTalentSkill2} />
+										</div>
+									</div>
+								)}
 							</div>
 						))}
 					</div>

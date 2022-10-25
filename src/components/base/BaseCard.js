@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
-import HyperLinkTooltip from '../components/HyperLinkTooltip';
+import { AppContext } from './../../context/AppContext';
+import HyperLinkTooltip from './../HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 
 function BaseCard({ cardData, currentAttr }) {
