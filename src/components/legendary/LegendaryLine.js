@@ -1,8 +1,8 @@
-import { AppContext } from '../context/AppContext';
+import { AppContext } from './../../context/AppContext';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'flowbite-react';
-import HyperLinkTooltip from './HyperLinkTooltip';
+import HyperLinkTooltip from '../HyperLinkTooltip';
 
 function LegendaryLine({ tierNumber, s, i, hightlightSearch }) {
 	const { i18n } = useContext(AppContext);

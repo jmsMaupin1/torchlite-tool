@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import BuildSkill2 from '../BuildSkill2';
+import BuildSkill2 from './BuildSkill2';
 import React, { useContext } from 'react';
 import { Modal } from 'flowbite-react';
 import Select, { createFilter } from 'react-select';

@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next';
 import React, { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 import { DebounceInput } from 'react-debounce-input';
-import CoreTooltip from '../CoreTooltip';
+import CoreTooltip from './CoreTooltip';
 import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
-import TalentNode from '../TalentNode';
+import TalentNode from './TalentNode';
 
 const TreeBuild = ({
 	fieldRef,

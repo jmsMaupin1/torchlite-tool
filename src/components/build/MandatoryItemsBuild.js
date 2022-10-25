@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useContext } from 'react';
 import Select, { createFilter } from 'react-select';
 import { MdAdd } from 'react-icons/md';
-import Legendary from '../Legendary';
+import Legendary from '../legendary/Legendary';
 import { FaTrash } from 'react-icons/fa';
 import { AppContext } from '../../context/AppContext';
 import { toast } from 'react-toastify';

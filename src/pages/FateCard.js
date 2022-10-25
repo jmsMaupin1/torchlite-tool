@@ -2,7 +2,7 @@ import cardRecipe from './../data/cardRecipe.json';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import Loader from '../components/Loader';
-import FateCardCard from '../components/FateCardCard';
+import FateCardCard from '../components/fateCard/FateCardCard';
 import { useState, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { useTranslation } from 'react-i18next';

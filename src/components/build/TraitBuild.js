@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import React from 'react';
-import HeroTrait from '../HeroTrait';
+import HeroTrait from './HeroTrait';
 import perk from '../../data/perk.json';
 import hero from '../../data/hero.json';
 

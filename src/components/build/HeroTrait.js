@@ -1,6 +1,6 @@
 import { Tooltip } from 'flowbite-react';
 import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import { useTranslation } from 'react-i18next';
 
 function HeroTrait(props) {

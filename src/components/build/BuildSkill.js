@@ -1,6 +1,6 @@
 import React from 'react';
 import Select, { createFilter } from 'react-select';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SelectWithImage from './SelectWithImage';
