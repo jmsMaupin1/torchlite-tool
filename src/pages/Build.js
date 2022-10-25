@@ -21,7 +21,21 @@ function Build() {
 	const { translate, topMenu, profession, skills, talent, dataI18n, itemGold } = useContext(AppContext);
 	// eslint-disable-next-line
 	const [searchParams, setSearchParams] = useSearchParams();
-	const { skill1, setSkill, skill2, skill3, skill4, skill5, skill6, skill7, skill8 } = useContext(BuildContext);
+	const {
+		skill1,
+		setSkill,
+		skill2,
+		skill3,
+		skill4,
+		skill5,
+		skill6,
+		skill7,
+		skill8,
+		talentSkill1,
+		talentSkill2,
+		setTalentSkill1,
+		setTalentSkill2,
+	} = useContext(BuildContext);
 	const [currentMainProf, setCurrentMainProf] = useState(null);
 	const [currentTrait, setCurrentTrait] = useState({
 		specId: null,
@@ -517,6 +531,8 @@ function Build() {
 		skill6,
 		skill7,
 		skill8,
+		talentSkill1,
+		talentSkill2,
 		currentMainProf,
 		spec1,
 		spec2,
@@ -652,6 +668,9 @@ function Build() {
 			currentTrait['62'] +
 			',' +
 			currentTrait['80'];
+
+		// add talent skill support => rehan skill attach to burst
+		string += '&trait_skill=' + talentSkill1?.value + ',' + talentSkill2?.value;
 
 		//add items data
 		string +=
@@ -804,6 +823,23 @@ function Build() {
 				62: traitData[3],
 				80: traitData[4],
 			});
+		}
+		// add talent skill support => rehan skill attach to burst
+		if (searchParams.get('trait_skill') !== null) {
+			let trait_skill = searchParams.get('trait_skill').split(',');
+			console.log(trait_skill);
+			// check in case no data are provided
+			if (trait_skill[0] !== 'undefined') {
+				let mySkill = skills.find((x) => x.id === trait_skill[0]);
+				let currentTraitSkill = { img: mySkill.icon, label: translate(mySkill.name), value: mySkill.id };
+				setTalentSkill1(currentTraitSkill);
+			}
+			// check in case no data are provided
+			if (trait_skill[1] !== 'undefined') {
+				let mySkill2 = skills.find((x) => x.id === trait_skill[1]);
+				let currentTraitSkill2 = { img: mySkill2.icon, label: translate(mySkill2.name), value: mySkill2.id };
+				setTalentSkill2(currentTraitSkill2);
+			}
 		}
 
 		// add item data

@@ -21,6 +21,10 @@ const BuildContextProvider = (props) => {
 
 	//const fieldRefInput = useRef(null);
 
+	// talent support skills for rehan
+	const [talentSkill1, setTalentSkill1] = useState(null);
+	const [talentSkill2, setTalentSkill2] = useState(null);
+
 	const changePrimarySecondary = (primary, secondary) => {
 		setCurrentPrimary(primary);
 		setCurrentSecondary(secondary);
@@ -146,6 +150,13 @@ const BuildContextProvider = (props) => {
 				currentSkill = { ...skill8 };
 				currentFnc = setSkill8;
 				break;
+			// add talent skill support => rehan
+			case 101:
+				currentFnc = setTalentSkill1;
+				break;
+			case 102:
+				currentFnc = setTalentSkill2;
+				break;
 			default:
 				break;
 		}
@@ -156,10 +167,16 @@ const BuildContextProvider = (props) => {
 				currentSkill.skill = e;
 			}
 		} else {
-			if (e === null) {
-				currentSkill.support[currentSecondary] = {};
+			if (currentSecondary === -1) {
+				// talent skill
+				currentSkill = e;
+				console.log(currentSkill);
 			} else {
-				currentSkill.support[currentSecondary] = e;
+				if (e === null) {
+					currentSkill.support[currentSecondary] = {};
+				} else {
+					currentSkill.support[currentSecondary] = e;
+				}
 			}
 		}
 
@@ -255,6 +272,10 @@ const BuildContextProvider = (props) => {
 				currentModalType,
 				currentPrimary,
 				currentSecondary,
+				talentSkill1,
+				setTalentSkill1,
+				talentSkill2,
+				setTalentSkill2,
 			}}
 		>
 			{props.children}

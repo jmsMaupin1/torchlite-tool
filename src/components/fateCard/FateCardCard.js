@@ -15,6 +15,7 @@ function FateCardCard({ card }) {
 	const rewardGroupId = card.reward_group_id.split(';').map((g) => {
 		return g.split(':')[0];
 	});
+	// eslint-disable-next-line array-callback-return
 	const rewardUniqueId = card.recipe_unique.split(';').map((u) => {
 		if (u !== undefined && u !== '') return { id: u.split(':')[0], weight: u.split(':')[1].split('|')[0] };
 	});
