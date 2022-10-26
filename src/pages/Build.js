@@ -832,22 +832,28 @@ function Build() {
 			let trait_skill = searchParams.get('trait_skill').split(',');
 			console.log(trait_skill);
 			// check in case no data are provided
-			if (trait_skill[0] !== 'undefined') {
+			if (trait_skill[0] !== 'undefined' && trait_skill[0] !== undefined && trait_skill[0] !== '') {
 				let mySkill = skills.find((x) => x.id === trait_skill[0]);
-				let currentTraitSkill = { img: mySkill.icon, label: translate(mySkill.name), value: mySkill.id };
-				setTalentSkill1(currentTraitSkill);
+				if (mySkill !== undefined) {
+					let currentTraitSkill = { img: mySkill.icon, label: translate(mySkill.name), value: mySkill.id };
+					setTalentSkill1(currentTraitSkill);
+				}
 			}
 			// check in case no data are provided
-			if (trait_skill[1] !== 'undefined') {
+			if (trait_skill[1] !== 'undefined' && trait_skill[1] !== undefined && trait_skill[1] !== '') {
 				let mySkill2 = skills.find((x) => x.id === trait_skill[1]);
-				let currentTraitSkill2 = { img: mySkill2.icon, label: translate(mySkill2.name), value: mySkill2.id };
-				setTalentSkill2(currentTraitSkill2);
+				if (mySkill2 !== undefined) {
+					let currentTraitSkill2 = { img: mySkill2.icon, label: translate(mySkill2.name), value: mySkill2.id };
+					setTalentSkill2(currentTraitSkill2);
+				}
 			}
 			// check in case no data are provided
-			if (trait_skill[2] !== 'undefined') {
+			if (trait_skill[2] !== 'undefined' && trait_skill[2] !== undefined && trait_skill[2] !== '') {
 				let mySkill3 = skills.find((x) => x.id === trait_skill[2]);
-				let currentTraitSkill3 = { img: mySkill3.icon, label: translate(mySkill3.name), value: mySkill3.id };
-				setTalentSkill3(currentTraitSkill3);
+				if (mySkill3 !== undefined) {
+					let currentTraitSkill3 = { img: mySkill3.icon, label: translate(mySkill3.name), value: mySkill3.id };
+					setTalentSkill3(currentTraitSkill3);
+				}
 			}
 		}
 
