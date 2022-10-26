@@ -3,20 +3,17 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loader from '../Loader';
 
-function EmberCard({ ember }) {
+function EmberCard({ ember, currentType, currentSubType, currentWeaponType }) {
 	const { translate, modifiers, dataI18n, itemBase, replaceTag } = useContext(AppContext);
 	const { t } = useTranslation();
 
 	const [showMod, setShowMod] = useState(false);
-	const [currentType, setCurrentType] = useState('');
-	const [currentSubType, setCurrentSubType] = useState('');
-
 	if (itemBase === null || dataI18n === null || modifiers === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 
 	return (
-		<div className="bg-[#222] shadow-lg shadow-black border rounded px-2">
+		<div className="bg-[#222] shadow-lg shadow-black rounded px-2">
 			<div className="flex flex-col items-center gap-2 w-full ">
 				<div className="flex flex-row items-center gap-2 justify-between w-full">
 					<div className="flex flex-row gap-2 items-center">
@@ -25,6 +22,15 @@ function EmberCard({ ember }) {
 							{translate(ember.name)} {ember.id}
 						</div>
 					</div>
+					<div>
+						{
+							modifiers
+								.filter((m) => m.Ashes === ember.id && m.tier === '1' && m.type1 === '1')
+								.filter((m) => m.type2 === currentType || currentType === '')
+								.filter((m) => m.type3 === currentSubType || currentSubType === '')
+								.filter((m) => m.type4 === currentWeaponType || currentWeaponType === '').length
+						}
+					</div>
 					<div className="hover:cursor-pointer" onClick={() => setShowMod(!showMod)}>
 						V
 					</div>
@@ -32,35 +38,47 @@ function EmberCard({ ember }) {
 				<div className={`flex flex-col items-center gap-2 ${!showMod ? 'hidden' : ''}`}>
 					{modifiers
 						.filter((m) => m.Ashes === ember.id && m.tier === '1' && m.type1 === '1')
+						.filter((m) => m.type2 === currentType || currentType === '')
+						.filter((m) => m.type3 === currentSubType || currentSubType === '')
+						.filter((m) => m.type4 === currentWeaponType || currentWeaponType === '')
 						.map((mod) => (
 							<div
 								key={mod.id}
-								className="flex items-center justify-between flex-row border w-full gap-2 bg-[#222] shadow-lg shadow-black rounded"
+								className="flex items-center justify-between flex-row border border-[#333] w-full gap-2 bg-[#222] shadow-lg shadow-black rounded"
 							>
 								<div className="flex flex-row">
 									<div className="text-[#f67370] border rounded-tl-lg rounded-br-lg my-1 px-2 font-bold bg-gradient-to-b from-[#2a2626] to-[#734423] border-[#c86620]">
-										T1
+										<div title={mod.modifier_type === '3' ? 'prefix' : mod.modifier_type === '4' ? 'suffix' : null}>
+											T1
+										</div>
 									</div>
 									{mod.affix.map((a, ind) => (
 										<div key={ind} dangerouslySetInnerHTML={{ __html: replaceTag(a) }}></div>
 									))}
+									{mod.id}
 								</div>
-								<div className="flex flex-row">
-									<div>Lvl {mod.forge_level}</div>
-									<div>W {mod.forge_weight}</div>
-									<div className="flex flex-col items-center border">
+								<div className="flex flex-row gap-1">
+									<div className="flex flex-col items-center border border-[#333]">
+										<div>Lvl</div>
+										<div>{mod.forge_level}</div>
+									</div>
+									<div className="flex flex-col items-center border border-[#333]">
+										<div>W</div>
+										<div>{mod.forge_weight}</div>
+									</div>
+									<div className="flex flex-col items-center border border-[#333]">
 										<div>Typ1</div>
 										<div>{mod.type1}</div>
 									</div>
-									<div className="flex flex-col items-center border">
+									<div className="flex flex-col items-center border border-[#333]">
 										<div>Typ2</div>
 										<div>{mod.type2}</div>
 									</div>
-									<div className="flex flex-col items-center border">
+									<div className="flex flex-col items-center border border-[#333]">
 										<div>Typ3</div>
 										<div>{mod.type3}</div>
 									</div>
-									<div className="flex flex-col items-center border">
+									<div className="flex flex-col items-center border border-[#333]">
 										<div>Typ4</div>
 										<div>{mod.type4}</div>
 									</div>

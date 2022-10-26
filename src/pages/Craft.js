@@ -1,5 +1,5 @@
 import { AppContext } from '../context/AppContext';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loader from '../components/Loader';
 import EmberCard from '../components/craft/EmberCard';
@@ -10,7 +10,12 @@ function Craft() {
 
 	const [currentType, setCurrentType] = useState('');
 	const [currentSubType, setCurrentSubType] = useState('');
-
+	const [currentWeaponType, setCurrentWeaponType] = useState('');
+	useEffect(() => {
+		console.log('currentType', currentType);
+		console.log('currentSubType', currentSubType);
+		console.log('currentWeaponType', currentWeaponType);
+	}, [currentSubType, currentType, currentWeaponType]);
 	if (itemBase === null || dataI18n === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
@@ -50,14 +55,14 @@ function Craft() {
 							onChange={(e) => setCurrentSubType(e.target.value)}
 						>
 							<option value="">Select sub type</option>
-							<option value="1">one handed hammer</option>
-							<option value="2">one handed sword</option>
+							<option value="1">hammer</option>
+							<option value="2">sword</option>
 							<option value="3">pistol</option>
 							<option value="4">crossbow</option>
 							<option value="5">cane</option>
 							<option value="8">dagger</option>
 							<option value="9">claw</option>
-							<option value="10">one handed axe</option>
+							<option value="10">axe</option>
 							<option value="11">shield</option>
 							<option value="12">gloves</option>
 							<option value="13">Shoes</option>
@@ -68,12 +73,30 @@ function Craft() {
 							<option value="18">Rings</option>
 						</select>
 					</div>
+					<div>
+						Select weapon type
+						<select
+							value={currentWeaponType}
+							className="w-auto bg-[#282828] border rounded border-slate-500"
+							onChange={(e) => setCurrentWeaponType(e.target.value)}
+						>
+							<option value="">Select sub sub type</option>
+							<option value="7">one handed</option>
+							<option value="13">two handed</option>
+						</select>
+					</div>
 				</div>
 				<div className="flex flex-col gap-2 basis-1/2">
 					{itemBase
 						.filter((e) => e.type1 === '15' && e.name !== translate(e.name))
 						.map((ember) => (
-							<EmberCard key={ember.id} ember={ember} />
+							<EmberCard
+								key={ember.id}
+								ember={ember}
+								currentType={currentType}
+								currentWeaponType={currentWeaponType}
+								currentSubType={currentSubType}
+							/>
 						))}
 				</div>
 			</div>
