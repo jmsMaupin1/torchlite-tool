@@ -310,6 +310,25 @@ const Header = () => {
 								<Link
 									onClick={() => setMenuOpen(false)}
 									className={`title hover:text-white block py-2 pr-4 pl-3 ${
+										currentPage === 'craft' ? 'text-white' : 'text-gray-700'
+									} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
+									to="craft"
+								>
+									<div
+										className={`flex flex-row gap-2 items-center relative ${
+											currentPage === 'craft' ? 'text-white' : ''
+										}`}
+									>
+										<img className="w-[30px]" src="img/icons/ui/UI_Fight_MenuIconCZ.png" alt="Craft" />
+										{t('commons:Craft')}
+										<div className="absolute text-sm text-red-600 -top-2 -right-2 rotate-12">{t('commons:beta')}</div>
+									</div>
+								</Link>
+							</li>
+							<li>
+								<Link
+									onClick={() => setMenuOpen(false)}
+									className={`title hover:text-white block py-2 pr-4 pl-3 ${
 										currentPage === 'build' ? 'text-white' : 'text-gray-700'
 									} rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 dark:hover:bg-gray-700  md:dark:hover:bg-transparent dark:border-gray-700`}
 									to="build"

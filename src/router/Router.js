@@ -13,6 +13,7 @@ import Base from '../pages/Base';
 import PactSpirit from '../pages/PactSpirit';
 import FateCard from '../pages/FateCard';
 import Drop from '../pages/Drop';
+import Craft from '../pages/Craft';
 
 const Router = () => {
 	return (
@@ -28,6 +29,7 @@ const Router = () => {
 				<Route path="pact-spirit" element={<PactSpirit />} />
 				<Route path="fate-card" element={<FateCard />} />
 				<Route path="drop" element={<Drop />} />
+				<Route path="craft" element={<Craft />} />
 				<Route
 					path="build"
 					element={
