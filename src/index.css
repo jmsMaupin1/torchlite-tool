@@ -102,3 +102,55 @@ mark {
 	background-color: rgb(255 255 0 / 60%);
 	color: black !important;
 }
+.lozange {
+	height: 12px;
+	width: 12px;
+	max-width: 12px;
+	max-height: 12px;
+	-ms-transform: rotate(45deg); /* Internet Explorer */
+	-moz-transform: rotate(45deg); /* Firefox */
+	-webkit-transform: rotate(45deg); /* Safari et Chrome */
+	-o-transform: rotate(45deg); /* Opera */
+}
+.t1 {
+	background: #fe8a1f;
+}
+.t2 {
+	background: #f537f7;
+}
+.t3 {
+	background: #2fc9ff;
+}
+.t4,
+.t5,
+.t6,
+.t7,
+.t8 {
+	background: #838383;
+}
+.t9,
+.t10,
+.t11,
+.t12 {
+	background: #83838369;
+}
+.text-t1 {
+	color: #f67370;
+}
+.text-t2 {
+	background: #f537f7;
+}
+.text-t3 {
+	background: #2fc9ff;
+}
+.text-t4,
+.text-t5,
+.text-t6,
+.text-t7,
+.text-t8,
+.text-t9,
+.text-t10,
+.text-t11,
+.text-t12 {
+	background: #838383;
+}
