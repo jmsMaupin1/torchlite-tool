@@ -19,39 +19,8 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 	const [currentMinimumLevel, setCurrentMinimumLevel] = useState(null);
 	const [currentAttr, setCurrentAttr] = useState('');
 	const isMedium = useMediaQuery({ query: '(min-width: 768px)' });
+	const perChunk = isMedium ? 3 : 1;
 
-	const onChangeType = (e) => {
-		if (e.target.value === '') {
-			setCurrentType(null);
-		} else {
-			setCurrentType(e.target.value);
-		}
-		console.log('changeType', e.target.value);
-	};
-	const onChangeTypeSecondary = (e) => {
-		if (e.target.value === '') {
-			setCurrentTypeSecondary(null);
-		} else {
-			setCurrentTypeSecondary(e.target.value);
-		}
-		console.log('changeTypeSecondary', e.target.value);
-	};
-	useEffect(() => {
-		if (itemBase !== null) {
-			let test = [
-				...new Set(
-					itemBase
-						.filter((i) => i.type1 === '1')
-						.map((x) => {
-							return translate(x.description1);
-						})
-				),
-			].sort();
-			let tempType = test.filter((e) => e !== undefined);
-			setListType(tempType);
-		}
-		// eslint-disable-next-line
-	}, [itemBase, dataI18n]);
 	useEffect(() => {
 		if (itemBase !== null) {
 			let test = [
@@ -69,8 +38,10 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 		// eslint-disable-next-line
 	}, [itemBase, dataI18n]);
 
+
 	useEffect(() => {
 		// on change currentType we need to adapt listType
+		setCurrentType(null)
 		if (itemBase !== null) {
 			let test = [
 				...new Set(
@@ -88,69 +59,49 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 		// eslint-disable-next-line
 	}, [currentTypeSecondary, dataI18n]);
 
+	const onDropDownChange = (e) => {
+		const typeChange = {
+				"primary": setCurrentType,
+				"secondary": setCurrentTypeSecondary
+		};
+		const { dataset, value } = e.target;
+		typeChange[dataset.type](value || null);
+	};
+
 	const onChangeCurrentLevel = (value) => {
-		if (value === '') {
-			setCurrentMinimumLevel(null);
-		} else {
-			setCurrentMinimumLevel(value);
-		}
+		setCurrentMinimumLevel(value || null)
 	};
+
 	const onChangeAttr = (e) => {
-		if (e.target.value !== '') {
-			setCurrentAttr(e.target.value);
-		} else {
-			setCurrentAttr('');
-		}
+		setCurrentAttr(e.target.value.toLowerCase())
 	};
+
 	const filterAttribut = (e) => {
 		const currentLang = i18n.language;
-		let baseAttr = '';
-		let suffix = '';
-		//base_attr_display_en, suffix_en
+		let baseAttr = 'base_attr_display_' + currentLang;
+		let suffix = 'suffix_' + currentLang;
+
 		if (currentAttr === '') {
 			return true;
 		}
-		baseAttr = 'base_attr_display_' + currentLang;
-		suffix = 'suffix_' + currentLang;
-		let isFind = false;
-		if (e[baseAttr] !== undefined) {
-			e[baseAttr].forEach((b) => {
-				if (b[0].toLowerCase().indexOf(currentAttr.toLowerCase()) > -1) isFind = true;
-			});
-		}
-		if (e[suffix] !== undefined) {
-			e[suffix].forEach((b) => {
-				if (b.toLowerCase().indexOf(currentAttr.toLowerCase()) > -1) isFind = true;
-			});
-		}
-		return isFind;
+
+		return e[baseAttr] && e[baseAttr].some(b => b[0].toLowerCase().indexOf(currentAttr) > -1) || 
+		e[suffix] && e[suffix].some(b => b.toLowerCase().indexOf(currentAttr.toLowerCase()) > -1);
 	};
+
 	const filteredBase = itemBase
 		.filter(
 			(el) =>
 				el.type1 === '1' &&
-				el.icon !== '' &&
+				el.icon &&
 				el.name !== translate(el.name) &&
-				(currentType == null || translate(el.description1) === currentType)
+				(currentType == null || translate(el.description1) === currentType) &&
+				(currentTypeSecondary == null || translate(el.description2) === currentTypeSecondary) &&
+				(currentMinimumLevel === null || parseInt(el.require_level) >= parseInt(currentMinimumLevel)) &&
+				filterAttribut(el) 
 		)
-		.filter(
-			(el) =>
-				el.type1 === '1' &&
-				el.icon !== '' &&
-				el.name !== translate(el.name) &&
-				(currentTypeSecondary == null || translate(el.description2) === currentTypeSecondary)
-		)
-		.filter((e) => currentMinimumLevel === null || parseInt(e.require_level) >= parseInt(currentMinimumLevel))
-		.filter(filterAttribut)
-		.filter((e) => e['suffix_' + i18n.language] !== undefined || e['base_attr_display_' + i18n.language] !== undefined)
 		.sort((a, b) => a.require_level - b.require_level);
-	//format Array for matching 2/4 items per chunks
-	let formatedArray = null;
-	if (isMedium) {
-		formatedArray = formatArray(filteredBase, 3);
-	} else {
-		formatedArray = formatArray(filteredBase, 1);
-	}
+
 	if (itemBase === null || listType === null || dataI18n === null) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
@@ -160,9 +111,9 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 			<div className={`flex flex-col md:flex-row gap-1 ${currentBase === null ? '' : 'hidden'}`}>
 				<div className="flex flex-col px-2 md:w-auto w-full">
 					<label className="font-bold">{t('commons:Type')}</label>
-					<select onChange={onChangeTypeSecondary} className="w-auto bg-[#282828] border rounded border-slate-500">
+					<select data-type="secondary" onChange={onDropDownChange} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
-						{listTypeSecondary.map((type, index) => (
+						{listTypeSecondary.map((type) => (
 							<option key={type} value={type}>
 								{translate(type)}
 							</option>
@@ -171,9 +122,9 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 				</div>
 				<div className="flex flex-col px-2 md:w-auto w-full">
 					<label className="font-bold">{t('commons:Secondary_type')}</label>
-					<select onChange={onChangeType} className="w-auto bg-[#282828] border rounded border-slate-500">
+					<select data-type="primary" onChange={onDropDownChange} className="w-auto bg-[#282828] border rounded border-slate-500">
 						<option value=""> -- {t('commons:select_type')} --</option>
-						{listType.map((type, index) => (
+						{listType.map((type) => (
 							<option key={type} value={type}>
 								{translate(type)}
 							</option>
@@ -181,7 +132,7 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 					</select>
 				</div>
 
-				{/* <div className="flex flex-col px-2 md:w-auto w-full">
+				<div className="flex flex-col px-2 md:w-auto w-full">
 					<label className="font-bold md:w-auto w-full">{t('commons:minimum_level_require')}</label>
 					<DebounceInput
 						type="number"
@@ -201,11 +152,11 @@ function SelectBase({ currentBase, setCurrentBase, currentILevel, setCurrentILev
 						value={currentAttr}
 						onChange={(event) => onChangeAttr(event)}
 					/>
-				</div> */}
+				</div>
 			</div>
 			{currentBase === null ? (
 				<div className="grid grid-cols-1 gap-2 mx-auto">
-					<ViewportList items={formatedArray}>
+					<ViewportList items={formatArray(filteredBase, perChunk)}>
 						{(items, index) => {
 							return (
 								<div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-2" key={index}>
