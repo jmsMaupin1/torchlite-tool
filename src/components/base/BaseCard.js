@@ -4,7 +4,7 @@ import HyperLinkTooltip from './../HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 import { DebounceInput } from 'react-debounce-input';
 
-function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILevel, setCurrentILevel }) {
+function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILevel, setCurrentILevel, onClick}) {
 	const { translate, i18n } = useContext(AppContext);
 	const { t } = useTranslation();
 	if (!cardData) return;
@@ -24,7 +24,7 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 		return replace;
 	};
 	return (
-		<div key={cardData?.id} className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start">
+		<div key={cardData?.id} onClick={() => onClick(cardData)} className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start">
 			<div className="flex flex-row gap-2 items-center relative">
 				{setCurrentBase !== undefined && showAffix !== undefined && (
 					<div className="absolute top-0 right-0 hover:cursor-pointer" onClick={() => setCurrentBase(null)}>

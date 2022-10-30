@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatItemBases } from '../utils/utils';
 
 const AppContext = createContext(null);
 
@@ -9,6 +10,7 @@ const AppContextProvider = (props) => {
 	const [skills, setSkills] = useState(null);
 	const [dataI18n, setDataI18n] = useState(null);
 	const [itemBase, setItemBase] = useState(null);
+	const [fitemBase, setfItemBase] = useState(null);
 	const [itemGold, setItemGold] = useState(null);
 	const [modifiers, setModifiers] = useState(null);
 	const [profession, setProfession] = useState(null);
@@ -117,6 +119,14 @@ const AppContextProvider = (props) => {
 		return transA.localeCompare(transB);
 	};
 
+	useEffect(() => {
+		if (!itemBase || !i18n.language || !translate) {
+			return
+		}
+
+		setfItemBase(formatItemBases(JSON.parse(JSON.stringify(itemBase)), i18n.language, translate))
+	}, [itemBase, i18n.language])
+
 	return (
 		<AppContext.Provider
 			value={{
@@ -137,6 +147,7 @@ const AppContextProvider = (props) => {
 				skills,
 				topMenu,
 				i18n,
+				fitemBase
 			}}
 		>
 			{props.children}
