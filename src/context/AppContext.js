@@ -11,6 +11,7 @@ const AppContextProvider = (props) => {
 	const [dataI18n, setDataI18n] = useState(null);
 	const [itemBase, setItemBase] = useState(null);
 	const [fitemBase, setfItemBase] = useState(null);
+	const [embers, setEmbers] = useState(null);
 	const [itemGold, setItemGold] = useState(null);
 	const [modifiers, setModifiers] = useState(null);
 	const [profession, setProfession] = useState(null);
@@ -120,12 +121,15 @@ const AppContextProvider = (props) => {
 	};
 
 	useEffect(() => {
-		if (!itemBase || !i18n.language || !translate) {
+		if (!itemBase || !i18n.language || !translate || !modifiers) {
 			return
 		}
 
-		setfItemBase(formatItemBases(JSON.parse(JSON.stringify(itemBase)), i18n.language, translate))
-	}, [itemBase, i18n.language])
+		const itemBaseCopy = JSON.parse(JSON.stringify(itemBase));
+
+		const formattedBases = formatItemBases(itemBaseCopy, i18n.language, translate, modifiers);
+		setfItemBase(formattedBases);
+	}, [itemBase, i18n.language, modifiers])
 
 	return (
 		<AppContext.Provider
@@ -147,7 +151,7 @@ const AppContextProvider = (props) => {
 				skills,
 				topMenu,
 				i18n,
-				fitemBase
+				...fitemBase
 			}}
 		>
 			{props.children}

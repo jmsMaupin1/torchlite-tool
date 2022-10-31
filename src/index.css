@@ -115,24 +115,24 @@ mark {
 .t1 {
 	background: #fe8a1f;
 }
-.t2 {
+.t2,
+.t3,
+.t4 {
 	background: #f537f7;
 }
-.t3 {
-	background: #2fc9ff;
-}
-.t4,
+
 .t5,
 .t6,
-.t7,
-.t8 {
-	background: #838383;
+.t7 {
+	background: #2fc9ff;
 }
+
+.t8,
 .t9,
 .t10,
 .t11,
 .t12 {
-	background: #83838369;
+	background: #838383;
 }
 .text-t1 {
 	color: #f67370;

@@ -25,10 +25,6 @@ const reducer = (state, action) => {
             return {...state, currentType: action.payload.currentType, listTypeSecondary: action.payload.listTypeSecondary, currentTypeSecondary: null};
         case "UPDATE_CURRENT_TYPE_SECONDARY":
             return {...state, currentTypeSecondary: action.payload};
-        case "UPDATE_CURRENT_MIN_LEVEL":
-            return {...state, currentMinLevel: action.payload};
-        case "UPDATE_CURRENT_ATTR":
-            return {...state, currentAttr: action.payload};
         case "UPDATE_FILTERED_BASES":
             return {...state, filteredBases: action.payload};     
         default:
@@ -37,7 +33,7 @@ const reducer = (state, action) => {
 }
 
 export default function SelectBaseNew({ onSelect }) {
-    const { fitemBase } = useContext(AppContext);
+    const { gear } = useContext(AppContext);
     const { t } = useTranslation();
     const [state, dispatch] = useReducer(reducer, initialState);
     const { listType, listTypeSecondary, currentType, currentTypeSecondary, filteredBases} = state;
@@ -47,10 +43,10 @@ export default function SelectBaseNew({ onSelect }) {
         let bases = []
 
         if (type) {
-            for (const subtype of Object.keys(fitemBase[type]))
-                bases = [...bases, ...fitemBase[type][subtype]]
+            for (const subtype of Object.keys(gear[type]))
+                bases = [...bases, ...gear[type][subtype]]
         } else {
-            for (const type of Object.keys(fitemBase))
+            for (const type of Object.keys(gear))
                 bases = [...bases, ...getAllBases(type)]
         }
 
@@ -63,7 +59,7 @@ export default function SelectBaseNew({ onSelect }) {
             type: "UPDATE_CURRENT_TYPE", 
             payload: {
                 currentType: value,
-                listTypeSecondary: Object.keys(fitemBase[value] || {})
+                listTypeSecondary: Object.keys(gear[value] || {})
             }
         })
     }
@@ -77,20 +73,20 @@ export default function SelectBaseNew({ onSelect }) {
     }
 
     useEffect(() => {
-        if (fitemBase) {
+        if (gear) {
             dispatch({
                 type: "UPDATE_LIST_TYPE", 
-                payload: {listType: Object.keys(fitemBase)}
+                payload: {listType: Object.keys(gear)}
             })
         }
-    }, [fitemBase])
+    }, [gear])
 
     useEffect(() => {
         let payload = []
 
-        if (fitemBase) {
+        if (gear) {
             if (currentType && currentTypeSecondary) 
-                payload = fitemBase[currentType][currentTypeSecondary].sort((a, b) => a.require_level - b.require_level)
+                payload = gear[currentType][currentTypeSecondary].sort((a, b) => a.require_level - b.require_level)
             else 
                 payload = getAllBases(currentType).sort((a, b) => a.require_level - b.require_level)
 
@@ -98,7 +94,7 @@ export default function SelectBaseNew({ onSelect }) {
         }
     }, [currentType, currentTypeSecondary])
 
-    if (fitemBase === null || listType === null) {
+    if (gear === null || listType === null) {
         return <Loader className="w-full container mx-auto max-h-40 flex"/>
     }
 
