@@ -1,12 +1,15 @@
 import React, { useContext } from 'react';
-import { AppContext } from './../../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import HyperLinkTooltip from './../HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 import { DebounceInput } from 'react-debounce-input';
+import { CraftContext } from '../../context/CraftContext';
 
-function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILevel, setCurrentILevel, onClick}) {
+function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILevel, setCurrentILevel, onClick }) {
 	const { translate, i18n } = useContext(AppContext);
+	const { craftedItem } = useContext(CraftContext);
 	const { t } = useTranslation();
+
 	if (!cardData) return;
 
 	const hightlightSearch = (str) => {
@@ -24,7 +27,11 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 		return replace;
 	};
 	return (
-		<div key={cardData?.id} onClick={() => onClick(cardData)} className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start">
+		<div
+			key={cardData?.id}
+			onClick={() => onClick(cardData)}
+			className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start"
+		>
 			<div className="flex flex-row gap-2 items-center relative">
 				{setCurrentBase !== undefined && showAffix !== undefined && (
 					<div className="absolute top-0 right-0 hover:cursor-pointer" onClick={() => setCurrentBase(null)}>
@@ -79,7 +86,7 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 					)}
 				</>
 			)}
-			{setCurrentBase !== undefined && showAffix === undefined && (
+			{setCurrentBase && !showAffix && (
 				<div className="text-center">
 					<input
 						onChange={() => {
@@ -92,38 +99,39 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 					/>
 				</div>
 			)}
-			{showAffix !== undefined && showAffix === true && (
+			{showAffix && (
 				<div className="flex flex-col">
 					<div className="bg-[#222] title bg-gradient-to-r from-black to-transparent -ml-2 p-2">Pre-fix</div>
 					<div className="flex flex-row items-center gap-2">
-						<div className="lozange t1"></div>
-						<div>1</div>
+						<div className={`lozange t${craftedItem?.prefix1?.tier}`} />
+						<HyperLinkTooltip str={craftedItem?.prefix1?.affix || '1'} />
 					</div>
 					<div className="flex flex-row items-center gap-2">
-						<div className="lozange t2"></div>
-						<div>2</div>
+						<div className={`lozange t${craftedItem?.prefix2?.tier}`} />
+						<HyperLinkTooltip str={craftedItem?.prefix2?.affix || '2'} />
 					</div>
 					<div className="flex flex-row items-center gap-2">
-						<div className="lozange t3"></div>
-						<div>3</div>
+						<div className={`lozange t${craftedItem?.prefix3?.tier}`} />
+						<HyperLinkTooltip str={craftedItem?.prefix3?.affix || '3'} />
 					</div>
 
 					<div className="bg-[#222] title bg-gradient-to-r from-black to-transparent -ml-2 p-2">Post-fix</div>
 					<div className="flex flex-row items-center gap-2">
-						<div className="lozange t4"></div>
-						<div>1</div>
+						<div className={`lozange t${craftedItem?.postfix1?.tier}`} />
+						<HyperLinkTooltip str={craftedItem?.postfix1?.affix || '1'} />
 					</div>
 					<div className="flex flex-row items-center gap-2">
-						<div className="lozange t1"></div>
-						<div>2</div>
+						<div className={`lozange t${craftedItem?.postfix2?.tier}`} />
+						<HyperLinkTooltip str={craftedItem?.postfix2?.affix || '2'} />
 					</div>
 					<div className="flex flex-row items-center gap-2">
-						<div className="lozange t2"></div>
-						<div>3</div>
+						<div className={`lozange t${craftedItem?.postfix3?.tier}`} />
+						<HyperLinkTooltip str={craftedItem?.postfix3?.affix || '3'} />
 					</div>
 				</div>
 			)}
 		</div>
 	);
 }
+
 export default React.memo(BaseCard);

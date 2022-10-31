@@ -1,49 +1,64 @@
-import React, { useState } from 'react'
-import CollapsibleCard from './CollapsibleCard';
+import React, { useEffect, useRef, useState } from 'react';
 import HyperLinkTooltip from '../HyperLinkTooltip';
+import SubTierAffiixCard from './SubTierAffiixCard';
 
-export default function EmberCardNew({ember, selectedBase}) {
-    const [showMod, setShowMod] = useState(false);
-    const [showTiers, setShowTiers] = useState(false);
+const A = './img/icons/ui/UI_Reward_Xiala02.png';
+const V = './img/icons/ui/UI_Reward_Xiala.png';
 
-    return (
-        <div className="bg-[#222] shadow-lg shadow-black rounded px-2">
-            <CollapsibleCard
-                img={`img/icons/${ember.icon}.png`}
-                title={ember.name}
-            >
-                {Object.keys(ember.mods).map(key => (
-                    <div className='flex flex-row justify-between border border-[#333] w-full gap-2 bg-[#222] shadow-lg shadow-black rounded'>
-                        <div className='w-full'>
-                        <CollapsibleCard ember={ember} mod={ember.mods[key]}>
-                            {ember.mods[key].tiers.map((tier, idx) => (
-                                <div key={module.id + idx} className="flex flex-row items-center justify-between shadow-sm shadow-black border-[#333] p-1 m-1">
-                                    <div className='flex gap-2 m-1 items-center'>
-                                        <div className={`lozange t${tier.tier} aspect-square ml-2`}></div>
-                                        <div>T{tier.tier}</div>
-                                        <HyperLinkTooltip str={tier.affix}/>
-                                    </div>
-                                    <div className='flex flex-row items-center gap-1'>
-                                        <div className='flex flex-col items-center border border-[#333] px-2 text-sm'>
-                                            <div>iLvl</div>
-                                            <div>{tier.required_level}</div>
-                                        </div>
-                                        <div className='flex flex-col items-center border border-[#333] px-2 text-sm'>
-                                            <div>Weight</div>
-                                            <div>{tier.weight}</div>
-                                        </div>
-                                        <div className='flex flex-col items-center border border-[#333] px-2 text-sm'>
-                                            <div>Hit %</div>
-                                            <div>{(tier.weight * 100 / ember.mods[key].weight).toFixed(2)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </CollapsibleCard>
-                        </div>
-                    </div>
-                ))}
-            </CollapsibleCard>
-        </div>
-    )
+export default function EmberCardNew({ ember, selectedBase }) {
+	const [expand, setExpand] = useState(false);
+
+	return (
+		<div className="hover:bg-[#3A353D] bg-[#000] rounded mb-3">
+			<>
+				<table className="w-full">
+					<thead>
+						<tr className={'w-full'} onClick={() => setExpand(!expand)}>
+							<th className={'w-2/3'}>
+								<div className={'flex flex-row items-center'}>
+									<div className="mr-3 pl-2">{expand ? <img src={A} alt="A" /> : <img src={V} alt="V" />}</div>
+									<img className="h-11 aspect-square" src={`img/icons/${ember.icon}.png`} alt={`${ember?.name}'s icon`} />
+									<div className="text-xl">{ember?.name}</div>
+								</div>
+							</th>
+							<th className={'px-2'}>Tiers</th>
+							<th className={'px-2'}>iLvl</th>
+							<th className={'px-2'}>Weight</th>
+							<th className={'px-2'}>Hit %</th>
+						</tr>
+					</thead>
+					{expand && (
+						<tbody>
+							{Object.values(ember?.mods).map((mod, key) => {
+								return <EmberAffix key={key} ember={ember} mod={mod} index={key} />;
+							})}
+						</tbody>
+					)}
+				</table>
+			</>
+		</div>
+	);
 }
+
+const EmberAffix = ({ mod, ember, index }) => {
+	const ref = useRef(null);
+
+	const onClick = () => {
+		if (ref?.current?.openCollapse) ref.current.openCollapse();
+	};
+
+	return (
+		<>
+			<tr onClick={onClick} className={`text-right w-full p-1 hover:bg-[#AAA] ${index % 2 === 0 ? 'bg-[#555555]' : 'bg-[#444444]'}`}>
+				<td className="text-left gap-2 m-1 pl-2">
+					<HyperLinkTooltip str={mod?.affix} />
+				</td>
+				<td className={'px-2'}>{mod?.tiers?.length}</td>
+				<td className={'px-2'}>{mod?.tiers[mod?.tiers.length - 1]?.required_level}</td>
+				<td className={'px-2'}>{mod?.weight}</td>
+				<td className={'px-2'}>{((mod.weight * 100) / ember.weight).toFixed(2)}</td>
+			</tr>
+			<SubTierAffiixCard ref={ref} mod={mod} ember={ember} />
+		</>
+	);
+};

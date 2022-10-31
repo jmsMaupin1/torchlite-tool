@@ -14,6 +14,7 @@ function HyperLinkTooltip({ str, className, style }) {
 	let myReg = /<e([^>]*)[^>]*>(.*?)<\/e>/gim;
 	let myMatch = myReg.exec(str);
 	let content = null;
+
 	if (myMatch !== null) {
 		let myId = myMatch[1].replace('id=', '').replace(' ', '');
 		content = dataI18n.find((h) => h.index === 'hyperlink|des|' + myId);
@@ -28,7 +29,7 @@ function HyperLinkTooltip({ str, className, style }) {
 		return <div style={style} className={className} dangerouslySetInnerHTML={{ __html: myStringReturn }}></div>;
 	} else {
 		return (
-			<Tooltip content={<div dangerouslySetInnerHTML={{ __html: content }}></div>} trigger="hover">
+			<Tooltip content={<div dangerouslySetInnerHTML={{ __html: content }} />} trigger="hover">
 				<div style={style} className={className} dangerouslySetInnerHTML={{ __html: myStringReturn }}></div>
 			</Tooltip>
 		);

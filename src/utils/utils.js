@@ -1,6 +1,3 @@
-import { max, min } from "lodash";
-import BaseCard from "../components/base/BaseCard";
-
 //format an array of data to [[], [], [], ...x] (x define by dataPerRow) for ViewportList
 export const formatArray = (data, dataPerRow) => {
 	let tmp1 = [];
@@ -20,52 +17,55 @@ export const formatArray = (data, dataPerRow) => {
 	return result;
 };
 
-
 /*
 	formats the gear portion of our item base
 */
 const formatGear = (bases, language, translate) => {
-	const formattedBases = {}
+	const formattedBases = {};
 
 	const type2Map = {
-		"1": ["one-handed", "two-handed"],
-		"2": ["chest", "helmet", "feet", "hands"],
-		"3": ["off hand"],
-		"4": ["finger", "neck", "waist"]
-	}
+		1: ['one-handed', 'two-handed'],
+		2: ['chest', 'helmet', 'feet', 'hands'],
+		3: ['off hand'],
+		4: ['finger', 'neck', 'waist'],
+	};
 
 	for (const base of bases) {
-		if (!base.icon || base.name === translate(base.name) || !(base.type2 in type2Map) || (!base.base_attr_modifier && base.type2 !== "4"))
-			continue
+		if (
+			!base.icon ||
+			base.name === translate(base.name) ||
+			!(base.type2 in type2Map) ||
+			(!base.base_attr_modifier && base.type2 !== '4')
+		)
+			continue;
 
-		base.description1 = translate(base.description1)
-		base.description2 = translate(base.description2)
-		base.name = translate(base.name)
-		base.weapon_type = translate(base.weapon_type)
-		base.base_attr_display = base['base_attr_display_' + language]
-		base.suffix = base['suffix_' + language]
+		base.description1 = translate(base.description1);
+		base.description2 = translate(base.description2);
+		base.name = translate(base.name);
+		base.weapon_type = translate(base.weapon_type);
+		base.base_attr_display = base['base_attr_display_' + language];
+		base.suffix = base['suffix_' + language];
 
-		const allowed_subtypes = type2Map[base.type2]
+		const allowed_subtypes = type2Map[base.type2];
 
 		// The wildcard notation here is mostly for testing purposes. Basically change the allowed_subtypes
 		// in the type2Map object to just a "*" and it will allow all base.description2's in the formattedBases map
 		// this is useful when you want to see what else we may need to add to the allowed_subtypes array for example.
-		if ((allowed_subtypes === "*" || allowed_subtypes.indexOf(base.description2.toLowerCase()) > -1)) {
+		if (allowed_subtypes === '*' || allowed_subtypes.indexOf(base.description2.toLowerCase()) > -1) {
 			if (base.description2 in formattedBases) {
 				if (base.description1 in formattedBases[base.description2]) {
-					formattedBases[base.description2][base.description1].push(base)
+					formattedBases[base.description2][base.description1].push(base);
 				} else {
-					formattedBases[base.description2][base.description1] = [base]
+					formattedBases[base.description2][base.description1] = [base];
 				}
 			} else {
-				formattedBases[base.description2] = {[base.description1]:[base]}
+				formattedBases[base.description2] = { [base.description1]: [base] };
 			}
 		}
 	}
 
-	return formattedBases
-}
-
+	return formattedBases;
+};
 
 /*
 	We want to format the embers map like so:
@@ -79,7 +79,7 @@ const formatGear = (bases, language, translate) => {
 
 			mods = {
 
-				we probably dont actually need to keep track of group weight, min, max values etc. because we will have to 
+				we probably dont actually need to keep track of group weight, min, max values etc. because we will have to
 				dynamically calculate that each time for each new base depending on the item level
 				group: {
 					affix: (min - max) some text where min is min of worst tier and max is max of t1
@@ -106,8 +106,8 @@ const formatGear = (bases, language, translate) => {
 	}
 */
 const formatEmbers = (emberBases, mods, translate) => {
-	const embers = {}
-	const emberIDMap = {}
+	const embers = {};
+	const emberIDMap = {};
 
 	for (const base of emberBases) {
 		embers[translate(base.name)] = {
@@ -117,57 +117,63 @@ const formatEmbers = (emberBases, mods, translate) => {
 			id: base.id,
 			icon: base.icon,
 			name: translate(base.name),
-			mods: {}
-		}
-		emberIDMap[base.id] = translate(base.name)
+			mods: {},
+			// add modifier type ( 3 === pre fix, 4 === post fix)
+			modifier_type: null,
+		};
+		emberIDMap[base.id] = translate(base.name);
 	}
 
 	for (const mod of mods) {
 		// mod.Ashes 200001 looks to be corrupted mods
-		if (mod.tier === "0" || mod.type1 !== "1" || mod.forge_weight === "0" || mod.Ashes === "200001")
-			continue;
-	
+		if (mod.tier === '0' || mod.type1 !== '1' || mod.forge_weight === '0' || mod.Ashes === '200001') continue;
+
 		const ember = embers[emberIDMap[mod.Ashes]],
-			  dparams = mod.dynmc_params;
+			dparams = mod.dynmc_params;
 
 		let ranges = [];
 
-			if (dparams.indexOf(';') > -1) {
-				ranges = dparams.split(";").sort((a, b) => parseInt(a.split("|")[1]) - parseInt(b.split('|')[1]));
-			} else {
-				ranges = dparams.split("|").sort((a, b) => parseInt(a) - parseInt(b));
-			}
-
+		if (dparams.indexOf(';') > -1) {
+			ranges = dparams.split(';').sort((a, b) => parseInt(a.split('|')[1]) - parseInt(b.split('|')[1]));
+		} else {
+			ranges = dparams.split('|').sort((a, b) => parseInt(a) - parseInt(b));
+		}
 
 		if (!(mod.group in ember.mods)) {
+			ember.modifier_type = mod.modifier_type;
+
 			ember.mods[mod.group] = {
 				affix: mod.affix[0].replace(/\(-?\d+--?\d+\)|[\+|-](\d+)%/g, '(#-#)'),
 				exclusive_group: mod.exclusive_group,
 				modifier_type: mod.modifier_type,
 				type4: mod.type4,
-				tiers: [{
-					min: ranges[0],
-					max: ranges[1],
-					tier: mod.tier,
-					dynamic: mod.dynmc_params,
-					affix: mod.affix,
-					weight: parseInt(mod.forge_weight),
-					required_level: parseInt(mod.forge_level)
-				}]
-			}
+				tiers: [
+					{
+						exclusive_group: mod.exclusive_group,
+						min: ranges[0],
+						max: ranges[1],
+						tier: mod.tier,
+						dynamic: mod.dynmc_params,
+						affix: mod.affix,
+						weight: parseInt(mod.forge_weight),
+						required_level: parseInt(mod.forge_level),
+					},
+				],
+			};
 		} else {
 			ember.mods[mod.group].tiers.push({
+				exclusive_group: mod.exclusive_group,
 				min: ranges[0],
 				max: ranges[1],
 				tier: mod.tier,
 				affix: mod.affix,
 				weight: parseInt(mod.forge_weight),
-				required_level: parseInt(mod.forge_level)
-			})
+				required_level: parseInt(mod.forge_level),
+			});
 		}
 	}
-	return embers
-}
+	return embers;
+};
 
 /*
 	Formats the original itemBases object into a more user friendly object that behaves like a pseudo-database
@@ -175,7 +181,7 @@ const formatEmbers = (emberBases, mods, translate) => {
 	TODO: currently this ignores everything thats not gear in the itemBase. This should be modified to accomodate those other types of items
 	such as embers etc.
 
-	notes: 
+	notes:
 		- type1:
 			-  1: gear
 			-  4: nothing
@@ -195,8 +201,8 @@ const formatEmbers = (emberBases, mods, translate) => {
 			- 20: Corroding mats
 			- 21: Reward chests
 			- 22: Black Gold
-		
-			
+
+
 
 		- type1: 1 (gear), type2: 1 (weapons)
 			- type3:
@@ -235,32 +241,29 @@ export const formatItemBases = (bases, language, translate, emberMods) => {
 		embers = [];
 
 	for (const base of bases) {
-		if (base.name === translate(base.name))
-			continue
+		if (base.name === translate(base.name)) continue;
 
-		if (base.type1 === "15")
-			embers.push(base)
-		else if (base.type1 === "1") {
-			gear.push(base)
+		if (base.type1 === '15') embers.push(base);
+		else if (base.type1 === '1') {
+			gear.push(base);
 		}
 	}
-	
+
 	const newib = {
 		embers: formatEmbers(embers, emberMods, translate),
-		gear: formatGear(gear, language, translate)
-	}
+		gear: formatGear(gear, language, translate),
+	};
 
-	console.log(newib)
+	console.log(newib);
 
-	return newib
-}
+	return newib;
+};
 
-
-/* 
+/*
 	After we update our embers to match a basetype we need to recalculate what the mod group
 	weights will be, as well as the roll ranges and attempt to update the affix
 */
-export const updateEmberWeightsAndAffix = ember => {
+export const updateEmberWeightsAndAffix = (ember) => {
 	const mods = ember.mods;
 	let emberweight = 0;
 
@@ -274,12 +277,12 @@ export const updateEmberWeightsAndAffix = ember => {
 		mod.min = mod.tiers[mod.tiers.length - 1].min;
 
 		if (mod.max) {
-			if (mod.max.indexOf("|") > -1) {
-				let min_roll = mod.min.split("|"),
-					max_roll = mod.max.split("|")
-				replaceStr = `(${min_roll[0]}-${min_roll[1]}) - (${max_roll[0]}-${max_roll[1]})`
+			if (mod.max.indexOf('|') > -1) {
+				let min_roll = mod.min.split('|'),
+					max_roll = mod.max.split('|');
+				replaceStr = `(${min_roll[0]}-${min_roll[1]}) - (${max_roll[0]}-${max_roll[1]})`;
 			} else {
-				replaceStr = `(${mod.min}-${mod.max})`
+				replaceStr = `(${mod.min}-${mod.max})`;
 			}
 
 			mod.affix = mod.affix.replace(/(\(#-#\) - \(#-#\))|\(#-#\)/g, replaceStr);
@@ -289,4 +292,4 @@ export const updateEmberWeightsAndAffix = ember => {
 	ember['weight'] = emberweight;
 
 	return ember;
-}
+};
