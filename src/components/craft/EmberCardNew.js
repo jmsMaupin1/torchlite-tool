@@ -5,7 +5,7 @@ import SubTierAffiixCard from './SubTierAffiixCard';
 const A = './img/icons/ui/UI_Reward_Xiala02.png';
 const V = './img/icons/ui/UI_Reward_Xiala.png';
 
-export default function EmberCardNew({ ember, selectedBase }) {
+export default function EmberCardNew({ ember }) {
 	const [expand, setExpand] = useState(false);
 
 	return (

@@ -2,12 +2,9 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
 import HyperLinkTooltip from './../HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
-import { DebounceInput } from 'react-debounce-input';
-import { CraftContext } from '../../context/CraftContext';
 
-function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILevel, setCurrentILevel, onClick }) {
+function BaseCard({ cardData, currentAttr, showAffix, onClick }) {
 	const { translate, i18n } = useContext(AppContext);
-	const { craftedItem } = useContext(CraftContext);
 	const { t } = useTranslation();
 
 	if (!cardData) return;
@@ -29,15 +26,12 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 	return (
 		<div
 			key={cardData?.id}
-			onClick={() => onClick(cardData)}
-			className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start"
+			onClick={onClick ? () => onClick(cardData) : () => {}}
+			className={`flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start ${
+				onClick && 'hover:cursor-pointer hover:bg-[#211]'
+			}`}
 		>
 			<div className="flex flex-row gap-2 items-center relative">
-				{setCurrentBase !== undefined && showAffix !== undefined && (
-					<div className="absolute top-0 right-0 hover:cursor-pointer" onClick={() => setCurrentBase(null)}>
-						<img src="img/icons/ui/UI_Common_Png9_536.png" alt="Return" loading="lazy" />
-					</div>
-				)}
 				<div className="flex min-w-[40px]">
 					<img loading="lazy" src={`img/icons/${cardData?.icon}.png`} className="w-[64px]" alt="Icon" />
 				</div>
@@ -52,17 +46,6 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 						</div>
 					</div>
 				</div>
-				{currentILevel !== undefined && (
-					<div>
-						<DebounceInput
-							value={currentILevel}
-							className="w-auto bg-[#282828] border rounded border-slate-500"
-							placeholder="ILevel"
-							debounceTimeout={500}
-							onChange={(event) => setCurrentILevel(event.target.value)}
-						/>
-					</div>
-				)}
 			</div>
 			{showAffix === undefined && (
 				<>
@@ -85,50 +68,6 @@ function BaseCard({ cardData, currentAttr, setCurrentBase, showAffix, currentILe
 						</div>
 					)}
 				</>
-			)}
-			{setCurrentBase && !showAffix && (
-				<div className="text-center">
-					<input
-						onChange={() => {
-							setCurrentBase(cardData?.id);
-							setCurrentILevel(cardData?.require_level);
-						}}
-						type="radio"
-						name="selectBase"
-						value=""
-					/>
-				</div>
-			)}
-			{showAffix && (
-				<div className="flex flex-col">
-					<div className="bg-[#222] title bg-gradient-to-r from-black to-transparent -ml-2 p-2">Pre-fix</div>
-					<div className="flex flex-row items-center gap-2">
-						<div className={`lozange t${craftedItem?.prefix1?.tier}`} />
-						<HyperLinkTooltip str={craftedItem?.prefix1?.affix || '1'} />
-					</div>
-					<div className="flex flex-row items-center gap-2">
-						<div className={`lozange t${craftedItem?.prefix2?.tier}`} />
-						<HyperLinkTooltip str={craftedItem?.prefix2?.affix || '2'} />
-					</div>
-					<div className="flex flex-row items-center gap-2">
-						<div className={`lozange t${craftedItem?.prefix3?.tier}`} />
-						<HyperLinkTooltip str={craftedItem?.prefix3?.affix || '3'} />
-					</div>
-
-					<div className="bg-[#222] title bg-gradient-to-r from-black to-transparent -ml-2 p-2">Post-fix</div>
-					<div className="flex flex-row items-center gap-2">
-						<div className={`lozange t${craftedItem?.postfix1?.tier}`} />
-						<HyperLinkTooltip str={craftedItem?.postfix1?.affix || '1'} />
-					</div>
-					<div className="flex flex-row items-center gap-2">
-						<div className={`lozange t${craftedItem?.postfix2?.tier}`} />
-						<HyperLinkTooltip str={craftedItem?.postfix2?.affix || '2'} />
-					</div>
-					<div className="flex flex-row items-center gap-2">
-						<div className={`lozange t${craftedItem?.postfix3?.tier}`} />
-						<HyperLinkTooltip str={craftedItem?.postfix3?.affix || '3'} />
-					</div>
-				</div>
 			)}
 		</div>
 	);

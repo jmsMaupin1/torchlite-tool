@@ -147,6 +147,24 @@ const SubTierAffiixCard = ({ mod, ember, setSelectedAffix }, ref) => {
 	return (
 		<>
 			{mod?.tiers?.map((tier, key) => {
+				//if ilvl < required_level
+				if (craftedItem.ilvl && craftedItem.ilvl < tier?.required_level)
+					return (
+						<tr
+							key={key}
+							onClick={() => toast.error('ITEAM LEVEL TOO LOW')}
+							className={`text-right w-full p-1 ${highlight === key ? 'bg-[#FFF9E0]' : 'bg-[#333333] hover:bg-[#AAA]'}`}
+						>
+							<td className="text-left gap-2 m-1 pl-2">
+								<HyperLinkTooltip str={tier?.affix} className={'text-decoration-line: line-through'} />
+							</td>
+							<td className={`px-2 text-decoration-line: line-through`}>{tier?.tier}</td>
+							<td className={`px-2 text-decoration-line: line-through`}>{tier?.required_level}</td>
+							<td className={`px-2 text-decoration-line: line-through`}>{tier?.weight}</td>
+							<td className={`px-2 text-decoration-line: line-through`}>{((tier.weight * 100) / ember.weight).toFixed(2)}</td>
+						</tr>
+					);
+
 				const TEXT_COLOR = highlight === key ? 'text-[#000]' : 'text-[#fff]';
 				return (
 					<tr
