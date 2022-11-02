@@ -1,5 +1,4 @@
 import React, { useReducer, useContext, useEffect } from 'react';
-import { DebounceInput } from 'react-debounce-input';
 import { ViewportList } from 'react-viewport-list';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
@@ -98,12 +97,12 @@ export default function SelectBaseNew({ onSelect }) {
 
 	console.log('render');
 
-	if (gear === null || listType === null) {
+	if (!gear || !listType) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col flex-1">
 			<div className={`flex flex-col md:flex-row gap-1'}`}>
 				<div className="flex flex-col px-2 md:w-auto w-full">
 					<label className="font-bold">{t('commons:Type')}</label>
@@ -130,7 +129,7 @@ export default function SelectBaseNew({ onSelect }) {
 					</div>
 				)}
 			</div>
-			<div className="grid grid-cols-1 gap-2 mx-auto">
+			<div className="flex flex-1 flex-col gap-2">
 				<ViewportList items={formatArray(filteredBases || getAllBases(), isMedium ? 3 : 1)}>
 					{(items, index) => {
 						return (

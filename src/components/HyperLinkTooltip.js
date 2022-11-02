@@ -35,4 +35,5 @@ function HyperLinkTooltip({ str, className, style, disable = false }) {
 		);
 	}
 }
+
 export default HyperLinkTooltip;
