@@ -50,8 +50,17 @@ const EmberAffix = ({ mod, ember, index }) => {
 
 	return (
 		<>
-			<tr onClick={onClick} className={`text-right w-full p-1 hover:bg-[#AAA] ${index % 2 === 0 ? 'bg-[#555555]' : 'bg-[#444444]'}`}>
-				<td className={`text-left gap-2 m-1 pl-2 ${selectedAffix && 'title'}`}>
+			<tr
+				onClick={onClick}
+				className={`text-right w-full p-1 hover:bg-[#AAA] ${
+					selectedAffix && mod?.tiers.length === 1 ? 'bg-[#FFF9E0]' : index % 2 === 0 ? 'bg-[#555555]' : 'bg-[#444444]'
+				}`}
+			>
+				<td
+					className={`text-left gap-2 m-1 pl-2 ${
+						mod?.tiers.length === 1 && selectedAffix ? 'text-[#000]' : selectedAffix && 'title'
+					}`}
+				>
 					<HyperLinkTooltip str={mod?.affix} />
 				</td>
 				<td className={'px-2'}>{mod?.tiers?.length}</td>
