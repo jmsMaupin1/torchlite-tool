@@ -3,7 +3,6 @@ import { AppContext } from '../context/AppContext';
 import { BuildContext } from '../context/BuildContext';
 import { useSearchParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
 import Loader from '../components/Loader';
 import SkillBuild from '../components/build/SkillBuild';
 import TraitBuild from '../components/build/TraitBuild';
@@ -879,7 +878,7 @@ function Build() {
 	}
 	return (
 		<div className="flex md:flex-row flex-col gap-2 p-2">
-			<ToastContainer theme={'dark'} autoClose={2000} />
+			{/*<ToastContainer theme={'dark'} autoClose={2000} />*/}
 			{/*Side Menu*/}
 			<SideMenuBuild
 				skillsImg={[skill1?.skill?.img, skill2?.skill?.img, skill3?.skill?.img, skill4?.skill?.img, skill5?.skill?.img]}

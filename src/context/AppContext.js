@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatItemBases } from '../utils/utils';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const AppContext = createContext(null);
 
@@ -9,6 +12,8 @@ const AppContextProvider = (props) => {
 	const [skills, setSkills] = useState(null);
 	const [dataI18n, setDataI18n] = useState(null);
 	const [itemBase, setItemBase] = useState(null);
+	const [fitemBase, setfItemBase] = useState(null);
+	const [embers, setEmbers] = useState(null);
 	const [itemGold, setItemGold] = useState(null);
 	const [modifiers, setModifiers] = useState(null);
 	const [profession, setProfession] = useState(null);
@@ -103,10 +108,7 @@ const AppContextProvider = (props) => {
 		//let myReg = /<e[^>]*>(.*?)<\/e>/img;
 		let myReg = /<e([^>]*)[^>]*>(.*?)<\/e>/gim;
 		return str
-			.replace(
-				myReg,
-				"<a style='color:#00ffff;font-weight:bold' class='tooltip hover:cursor-pointer' $1 href=''>$2</a>"
-			)
+			.replace(myReg, "<a style='color:#00ffff;font-weight:bold' class='tooltip hover:cursor-pointer' $1 href=''>$2</a>")
 			.replace('\\n', '<br>');
 	};
 
@@ -116,6 +118,17 @@ const AppContextProvider = (props) => {
 
 		return transA.localeCompare(transB);
 	};
+
+	useEffect(() => {
+		if (!itemBase || !i18n.language || !translate || !modifiers) {
+			return;
+		}
+
+		const itemBaseCopy = JSON.parse(JSON.stringify(itemBase));
+
+		const formattedBases = formatItemBases(itemBaseCopy, i18n.language, translate, modifiers);
+		setfItemBase(formattedBases);
+	}, [itemBase, i18n.language, modifiers]);
 
 	return (
 		<AppContext.Provider
@@ -137,8 +150,10 @@ const AppContextProvider = (props) => {
 				skills,
 				topMenu,
 				i18n,
+				...fitemBase,
 			}}
 		>
+			<ToastContainer theme={'dark'} autoClose={2000} />
 			{props.children}
 		</AppContext.Provider>
 	);

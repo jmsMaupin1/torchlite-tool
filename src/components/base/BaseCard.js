@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { AppContext } from './../../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import HyperLinkTooltip from './../HyperLinkTooltip';
 import { useTranslation } from 'react-i18next';
 
-function BaseCard({ cardData, currentAttr }) {
+function BaseCard({ cardData, currentAttr, showAffix, onClick }) {
 	const { translate, i18n } = useContext(AppContext);
 	const { t } = useTranslation();
+
 	if (!cardData) return;
 
 	const hightlightSearch = (str) => {
@@ -23,8 +24,14 @@ function BaseCard({ cardData, currentAttr }) {
 		return replace;
 	};
 	return (
-		<div key={cardData?.id} className="flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start">
-			<div className="flex flex-row gap-2 items-center">
+		<div
+			key={cardData?.id}
+			onClick={onClick ? () => onClick(cardData) : () => {}}
+			className={`flex flex-col border rounded shadow-md bg-[#222] text-white p-2 gap-2 justify-start ${
+				onClick && 'hover:cursor-pointer hover:bg-[#211]'
+			}`}
+		>
+			<div className="flex flex-row gap-2 items-center relative">
 				<div className="flex min-w-[40px]">
 					<img loading="lazy" src={`img/icons/${cardData?.icon}.png`} className="w-[64px]" alt="Icon" />
 				</div>
@@ -40,25 +47,30 @@ function BaseCard({ cardData, currentAttr }) {
 					</div>
 				</div>
 			</div>
-			<div className="flex flex-col items-center">
-				{cardData['suffix_' + i18n.language] !== undefined &&
-					cardData['suffix_' + i18n.language] !== [] &&
-					cardData['suffix_' + i18n.language].map((s, i) => (
-						<div className=" border-b border-slate-600 pb-1" key={i}>
-							<HyperLinkTooltip key={'suffix-' + i} className="text-center" str={hightlightSearch(s)} />
-						</div>
-					))}
-			</div>
-			{cardData['base_attr_display_' + i18n.language] !== undefined && (
-				<div className="">
-					<div className="base_list flex flex-col text-center">
-						{cardData['base_attr_display_' + i18n.language]?.map((attr, i) => (
-							<div key={i} dangerouslySetInnerHTML={{ __html: hightlightSearch(attr) }}></div>
-						))}
+			{showAffix === undefined && (
+				<>
+					<div className="flex flex-col items-center">
+						{cardData['suffix_' + i18n.language] !== undefined &&
+							cardData['suffix_' + i18n.language] !== [] &&
+							cardData['suffix_' + i18n.language].map((s, i) => (
+								<div className=" border-b border-slate-600 pb-1" key={i}>
+									<HyperLinkTooltip key={'suffix-' + i} className="text-center" str={hightlightSearch(s)} />
+								</div>
+							))}
 					</div>
-				</div>
+					{cardData['base_attr_display_' + i18n.language] !== undefined && (
+						<div className="">
+							<div className="base_list flex flex-col text-center">
+								{cardData['base_attr_display_' + i18n.language]?.map((attr, i) => (
+									<div key={i} dangerouslySetInnerHTML={{ __html: hightlightSearch(attr) }}></div>
+								))}
+							</div>
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);
 }
+
 export default React.memo(BaseCard);
