@@ -10,17 +10,15 @@ const CraftContextProvider = (props) => {
 		base: null,
 		ilvl: null,
 		prefix: [],
-		postfix:[]
+		postfix: [],
 	};
 	const [craftedItem, setCraftedItem] = useState({
 		base: null,
 		ilvl: null,
 		prefix: [],
-		postfix:[],
+		postfix: [],
 	});
 	const [filteredEmbers, setFilteredEmbers] = useState(null);
-
-	
 
 	const filterEmbers = useCallback(
 		(base) => {
@@ -64,8 +62,6 @@ const CraftContextProvider = (props) => {
 		if (craftedItem?.base) setFilteredEmbers(filterEmbers(craftedItem.base));
 		else setFilteredEmbers(null);
 	}, [craftedItem?.base, filterEmbers]);
-
-	console.log('craftedItem', craftedItem);
 
 	return (
 		<CraftContext.Provider

@@ -8,20 +8,20 @@ const V = './img/icons/ui/UI_Reward_Xiala.png';
 
 export default function EmberCard({ ember }) {
 	const [expand, setExpand] = useState(false);
-	const { craftedItem } = useContext(CraftContext)
+	const { craftedItem } = useContext(CraftContext);
 
-	const isExcluded = ({exclusive_group}) => {
-		let exclusionGroups = [...craftedItem.prefix, ...craftedItem.postfix].map(affix => {
+	const isExcluded = ({ exclusive_group }) => {
+		let exclusionGroups = [...craftedItem.prefix, ...craftedItem.postfix].map((affix) => {
 			return affix.exclusive_group;
 		});
 
 		return exclusionGroups.indexOf(exclusive_group) > -1;
-	}
+	};
 
 	return (
-		<div className="hover:bg-[#3A353D] bg-[#000] rounded mb-3">
+		<div className="bg-[#000] rounded mb-3">
 			<>
-				<table className="w-full">
+				<table className="w-full cursor-pointer">
 					<thead>
 						<tr className={'w-full'} onClick={() => setExpand(!expand)}>
 							<th className={'w-2/3'}>
@@ -40,14 +40,8 @@ export default function EmberCard({ ember }) {
 					{expand && (
 						<tbody>
 							{Object.values(ember?.mods).map((mod, key) => {
-								let excluded = isExcluded(mod)
-								return <EmberAffix 
-									key={key} 
-									ember={ember} 
-									mod={mod} 
-									index={key} 
-									isExcluded={excluded}
-								/>;
+								let excluded = isExcluded(mod);
+								return <EmberAffix key={key} ember={ember} mod={mod} index={key} isExcluded={excluded} />;
 							})}
 						</tbody>
 					)}
@@ -65,7 +59,7 @@ const EmberAffix = ({ mod, ember, index, isExcluded }) => {
 		if (ref?.current?.openCollapse) ref.current.openCollapse();
 	};
 
-	const STRIKE = isExcluded ? "line-through" : "";
+	const STRIKE = isExcluded ? 'line-through' : '';
 
 	return (
 		<>

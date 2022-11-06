@@ -11,22 +11,22 @@ export const BaseCardCrafting = () => {
 	if (!craftedItem?.base) return;
 
 	const removeAffix = (modType, index) => {
-		if (modType === "prefix") {
+		if (modType === 'prefix') {
 			let tempPrefix = [...craftedItem.prefix];
-			tempPrefix.splice(index, 1)
+			tempPrefix.splice(index, 1);
 			setCraftedItem({
 				...craftedItem,
-				prefix: tempPrefix
+				prefix: tempPrefix,
 			});
 		} else if (modType === 'postfix') {
 			let tempPostfix = [...craftedItem.postfix];
 			tempPostfix.splice(index, 1);
 			setCraftedItem({
 				...craftedItem,
-				postfix: tempPostfix
+				postfix: tempPostfix,
 			});
 		}
-	}
+	};
 
 	return (
 		<div
@@ -64,43 +64,53 @@ export const BaseCardCrafting = () => {
 			</div>
 			<div>
 				<div className="bg-[#222] title bg-gradient-to-r from-black to-transparent -ml-2 p-2">Pre-fix</div>
-				{
-					craftedItem?.prefix ? [1, 2, 3].map((affixIndex, index) => {
-						const {prefix} = craftedItem;
-						return <AffixLine 
-							key={index}
-							mod={prefix[index] || {index: affixIndex}}
-							onClick={()=>removeAffix('prefix', index)}
-						/>
-					}) : null
-					
-				}
+				{craftedItem?.prefix
+					? [1, 2, 3].map((affixIndex, index) => {
+							const { prefix } = craftedItem;
+							return (
+								<AffixLine
+									key={index}
+									mod={prefix[index] || { index: affixIndex }}
+									onClick={() => removeAffix('prefix', index)}
+								/>
+							);
+					  })
+					: null}
 				<div className="bg-[#222] title bg-gradient-to-r from-black to-transparent -ml-2 p-2">Post-fix</div>
-				{
-					craftedItem?.postfix ? [1, 2, 3].map((affixIndex, index) => {
-						const {postfix} = craftedItem;
-						return <AffixLine
-							key={index}
-							mod={postfix[index] || {index: affixIndex}}
-							onClick={()=>removeAffix('postfix', index)}
-						/>
-					}) : null
-				}
+				{craftedItem?.postfix
+					? [1, 2, 3].map((affixIndex, index) => {
+							const { postfix } = craftedItem;
+							return (
+								<AffixLine
+									key={index}
+									mod={postfix[index] || { index: affixIndex }}
+									onClick={() => removeAffix('postfix', index)}
+								/>
+							);
+					  })
+					: null}
 			</div>
 		</div>
 	);
 };
 
-const AffixLine = ({mod, onClick}) => {
+const AffixLine = ({ mod, onClick }) => {
 	return (
-		<div 
-			className="flex flex-row items-center gap-2 hover:line-through cursor-pointer"
-			onClick={()=>onClick ? onClick(mod) : null}
+		<div
+			className={`relative flex flex-row items-center gap-2 ${!mod?.tier ? '' : 'hover:line-through'} cursor-pointer`}
+			onClick={() => (onClick ? onClick(mod) : null)}
 		>
 			<div className={`lozange t${mod?.tier || 10}`} />
 			<HyperLinkTooltip str={mod?.affix || String(mod?.index)} />
+			{mod?.tier && (
+				<div className="text-slate-600 -mt-3">
+					<button title="remove mod" onClick={() => (onClick ? onClick(mod) : null)}>
+						x
+					</button>
+				</div>
+			)}
 		</div>
-	)
-}
+	);
+};
 
 export default React.memo(BaseCardCrafting);
