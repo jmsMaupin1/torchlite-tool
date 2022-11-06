@@ -10,14 +10,12 @@ export default function EmberCard({ ember }) {
 	const [expand, setExpand] = useState(false);
 	const { craftedItem } = useContext(CraftContext)
 
-	const isExcluded = excluded_group => {
-		console.log(excluded_group);
-
+	const isExcluded = ({exclusive_group}) => {
 		let exclusionGroups = [...craftedItem.prefix, ...craftedItem.postfix].map(affix => {
 			return affix.exclusive_group;
 		});
 
-		return exclusionGroups.indexOf(excluded_group) > -1;
+		return exclusionGroups.indexOf(exclusive_group) > -1;
 	}
 
 	return (
@@ -42,7 +40,7 @@ export default function EmberCard({ ember }) {
 					{expand && (
 						<tbody>
 							{Object.values(ember?.mods).map((mod, key) => {
-								let excluded = isExcluded(mod.exclusive_group)
+								let excluded = isExcluded(mod)
 								return <EmberAffix 
 									key={key} 
 									ember={ember} 

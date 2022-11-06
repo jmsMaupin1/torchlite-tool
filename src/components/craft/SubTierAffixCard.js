@@ -15,26 +15,12 @@ const SubTierAffiixCard = ({ mod, ember }, ref) => {
 		},
 	}));
 
-	const isExcluded = (tier) => {
-		if (craftedItem && ember) {
-			if (craftedItem.prefix && ember.modifier_type === MODIFIER_TYPE.PRE_FIX) {
-				for (const affix of craftedItem.prefix) {
-					if (affix.exclusive_group === tier.exclusive_group) {
-						return true;
-					}
-				}
-			} else {
-                if (craftedItem.postfix) {
-                    for (const affix of craftedItem.postfix) {
-                        if (affix.exclusive_group === tier.exclusive_group) {
-                            return true;
-                        }
-                    }
-                }
-			}
-		}
+	const isExcluded = ({exclusive_group}) => {
+		let exclusionGroups = [...craftedItem.prefix, ...craftedItem.postfix].map(affix => {
+			return affix.exclusive_group;
+		});
 
-		return false;
+		return exclusionGroups.indexOf(exclusive_group) > -1;
 	}
 
 	const onClick = (tier) => {
