@@ -272,7 +272,6 @@ function Build() {
 		let tabReturn = [];
 		for (let x = 1; x <= 9; x++) {
 			for (let y = 1; y <= 9; y++) {
-				//console.log(currentTreeOrder[x][y]?.id);
 				if (_tab[x][y]?.before_id === _beforeId) {
 					tabReturn.push(_tab[x][y]);
 				}
@@ -372,9 +371,6 @@ function Build() {
 		}
 	};
 	const computedStatFromTree = () => {
-		//mainProfPoint
-		//currentTree
-		//console.log(mainProfPoint);
 		let _mainProfStat = {};
 		for (const [position, value] of Object.entries(mainProfPoint)) {
 			if (position !== 'nb' && position !== 'core1' && position !== 'core2') {
