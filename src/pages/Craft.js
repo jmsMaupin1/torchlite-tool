@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import SelectBase from '../components/craft/SelectBase';
-import EmberCardNew from '../components/craft/EmberCardNew';
+import EmberCard from '../components/craft/EmberCard';
 import { MODIFIER_TYPE } from '../constant';
 import { BaseCardCrafting } from '../components/craft/BaseCardCrafting';
 import { CraftContext } from '../context/CraftContext';
@@ -29,7 +29,7 @@ const Craft = () => {
 								<div className="title p-2 bg-gradient-to-r from-[#111827] to-transparent rounded mb-2">Pre-Fix</div>
 								{filteredEmbers?.map(
 									(ember, key) =>
-										ember?.modifier_type === MODIFIER_TYPE.PRE_FIX && <EmberCardNew key={key} ember={ember} />
+										ember?.modifier_type === MODIFIER_TYPE.PRE_FIX && <EmberCard key={key} ember={ember} />
 								)}
 							</div>
 							<div className="px-3" />
@@ -37,7 +37,7 @@ const Craft = () => {
 								<div className="title p-2 bg-gradient-to-r from-[#111827] to-transparent rounded mb-2">Post-Fix</div>
 								{filteredEmbers?.map(
 									(ember, key) =>
-										ember?.modifier_type === MODIFIER_TYPE.POST_FIX && <EmberCardNew key={key} ember={ember} />
+										ember?.modifier_type === MODIFIER_TYPE.POST_FIX && <EmberCard key={key} ember={ember} />
 								)}
 							</div>
 						</div>

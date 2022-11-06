@@ -6,17 +6,21 @@ const CraftContext = createContext(null);
 
 const CraftContextProvider = (props) => {
 	const { embers } = useContext(AppContext);
+	const defaultCraftedItem = {
+		base: null,
+		ilvl: null,
+		prefix: [],
+		postfix:[]
+	};
 	const [craftedItem, setCraftedItem] = useState({
 		base: null,
 		ilvl: null,
-		prefix1: null,
-		prefix2: null,
-		prefix3: null,
-		postfix1: null,
-		postfix2: null,
-		postfix3: null,
+		prefix: [],
+		postfix:[],
 	});
 	const [filteredEmbers, setFilteredEmbers] = useState(null);
+
+	
 
 	const filterEmbers = useCallback(
 		(base) => {
@@ -67,6 +71,7 @@ const CraftContextProvider = (props) => {
 		<CraftContext.Provider
 			value={{
 				craftedItem,
+				defaultCraftedItem,
 				setCraftedItem,
 				filteredEmbers,
 			}}

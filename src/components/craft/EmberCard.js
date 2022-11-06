@@ -1,12 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
+import { CraftContext } from '../../context/CraftContext';
 import HyperLinkTooltip from '../HyperLinkTooltip';
-import SubTierAffiixCard from './SubTierAffiixCard';
+import SubTierAffixCard from './SubTierAffixCard';
 
 const A = './img/icons/ui/UI_Reward_Xiala02.png';
 const V = './img/icons/ui/UI_Reward_Xiala.png';
 
-export default function EmberCardNew({ ember }) {
+export default function EmberCard({ ember }) {
 	const [expand, setExpand] = useState(false);
+	const { craftedItem } = useContext(CraftContext)
+
+	const isExcluded = excluded_group => {
+		console.log(excluded_group);
+
+		let exclusionGroups = [...craftedItem.prefix, ...craftedItem.postfix].map(affix => {
+			return affix.exclusive_group;
+		});
+
+		return exclusionGroups.indexOf(excluded_group) > -1;
+	}
 
 	return (
 		<div className="hover:bg-[#3A353D] bg-[#000] rounded mb-3">
@@ -30,7 +42,14 @@ export default function EmberCardNew({ ember }) {
 					{expand && (
 						<tbody>
 							{Object.values(ember?.mods).map((mod, key) => {
-								return <EmberAffix key={key} ember={ember} mod={mod} index={key} />;
+								let excluded = isExcluded(mod.exclusive_group)
+								return <EmberAffix 
+									key={key} 
+									ember={ember} 
+									mod={mod} 
+									index={key} 
+									isExcluded={excluded}
+								/>;
 							})}
 						</tbody>
 					)}
@@ -40,7 +59,7 @@ export default function EmberCardNew({ ember }) {
 	);
 }
 
-const EmberAffix = ({ mod, ember, index }) => {
+const EmberAffix = ({ mod, ember, index, isExcluded }) => {
 	const ref = useRef(null);
 	const [selectedAffix, setSelectedAffix] = useState(false);
 
@@ -48,11 +67,13 @@ const EmberAffix = ({ mod, ember, index }) => {
 		if (ref?.current?.openCollapse) ref.current.openCollapse();
 	};
 
+	const STRIKE = isExcluded ? "line-through" : "";
+
 	return (
 		<>
 			<tr
 				onClick={onClick}
-				className={`text-right w-full p-1 hover:bg-[#AAA] ${
+				className={`text-right w-full p-1 hover:bg-[#AAA] ${STRIKE} ${
 					selectedAffix && mod?.tiers.length === 1 ? 'bg-[#FFF9E0]' : index % 2 === 0 ? 'bg-[#555555]' : 'bg-[#444444]'
 				}`}
 			>
@@ -68,7 +89,7 @@ const EmberAffix = ({ mod, ember, index }) => {
 				<td className={'px-2'}>{mod?.weight}</td>
 				<td className={'px-2'}>{((mod.weight * 100) / ember.weight).toFixed(2)}</td>
 			</tr>
-			<SubTierAffiixCard ref={ref} mod={mod} ember={ember} setSelectedAffix={setSelectedAffix} />
+			<SubTierAffixCard ref={ref} mod={mod} ember={ember} setSelectedAffix={setSelectedAffix} />
 		</>
 	);
 };
