@@ -61,7 +61,6 @@ const SideMenuBuild = (props) => {
 					const error = (data && data.message) || response.status;
 					return Promise.reject(error);
 				}
-				//console.log(data.url);
 				setBuildUrlMinified(data.url);
 			})
 			.catch((error) => {

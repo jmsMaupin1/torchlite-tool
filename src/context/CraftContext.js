@@ -42,7 +42,6 @@ const CraftContextProvider = (props) => {
 					}, {});
 
 					let updatedEmber = updateEmberWeightsAndAffix({ ...embers[e], mods });
-					// console.log(updatedEmber)
 					// when implementing iLevel we will need to make a filter pass through the tiers
 					// of each of these mods as well to remove any we cant hit.
 					filteredEmbers.push(updatedEmber);

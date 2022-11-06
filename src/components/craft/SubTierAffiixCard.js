@@ -148,11 +148,11 @@ const SubTierAffiixCard = ({ mod, ember, setSelectedAffix }, ref) => {
 		<>
 			{mod?.tiers?.map((tier, key) => {
 				//if ilvl < required_level
-				if (craftedItem.ilvl && craftedItem.ilvl < tier?.required_level)
+				if (craftedItem?.ilvl && craftedItem?.ilvl < tier?.required_level)
 					return (
 						<tr
 							key={key}
-							onClick={() => toast.error('ITEAM LEVEL TOO LOW')}
+							onClick={() => toast.error('ITEM LEVEL TOO LOW')}
 							className={`text-right w-full p-1 ${highlight === key ? 'bg-[#FFF9E0]' : 'bg-[#333333] hover:bg-[#AAA]'}`}
 						>
 							<td className="text-left gap-2 m-1 pl-2">

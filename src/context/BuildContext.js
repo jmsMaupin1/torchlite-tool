@@ -31,7 +31,6 @@ const BuildContextProvider = (props) => {
 		setCurrentSecondary(secondary);
 	};
 	const openModal = () => {
-		//console.log("openModal");
 		setModalValue(null);
 		setModalVisible(true);
 	};
@@ -44,7 +43,6 @@ const BuildContextProvider = (props) => {
 	}, [modalVisible]);
 
 	const closeModal = () => {
-		//console.log("close modal");
 		setModalVisible(false);
 	};
 	const getSkillByPrimary = (primary) => {

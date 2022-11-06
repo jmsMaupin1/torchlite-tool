@@ -95,8 +95,6 @@ export default function SelectBaseNew({ onSelect }) {
 		}
 	}, [currentType, currentTypeSecondary]);
 
-	console.log('render');
-
 	if (!gear || !listType) {
 		return <Loader className="w-full container mx-auto max-h-40 flex" />;
 	}
