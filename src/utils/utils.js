@@ -254,7 +254,7 @@ export const formatItemBases = (bases, language, translate, emberMods) => {
 		gear: formatGear(gear, language, translate),
 	};
 
-	console.log(newib);
+	//console.log(newib);
 
 	return newib;
 };

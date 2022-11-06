@@ -154,3 +154,6 @@ mark {
 .text-t12 {
 	background: #838383;
 }
+.w-fit {
+	width: auto !important;
+}
